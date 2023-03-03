@@ -17,7 +17,13 @@ export class AppComponent {
 
   @ViewChild('messageContainer', { static: false }) messageContainer: ElementRef;
 
-  constructor() { }
+  constructor() {
+    // Retrieve the API key from local storage, if it exists
+    const savedApiKey = localStorage.getItem('apiKey');
+    if (savedApiKey) {
+      this.apikey = savedApiKey;
+    }
+  }
 
   async sendMessage() {
     this.chatHistory.push(this.messageInput);
@@ -25,6 +31,8 @@ export class AppComponent {
       apiKey: this.apikey,
     });
     const openai = new OpenAIApi(configuration);
+    // Store the API key in local storage
+    localStorage.setItem('apiKey', this.apikey);
 
     // Add the user's message to the chat
     this.messages.push({
