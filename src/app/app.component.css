@@ -37,16 +37,69 @@
   padding: 10px 20px;
 }
 
+/* chat message speech bubbles */
 .chat-message {
   display: flex;
   margin-bottom: 10px;
 }
 
 .message-content {
-  background-color: #fff;
-  border-radius: 5px;
+  position: relative;
+  display: inline-block;
   padding: 10px;
   max-width: 70%;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+.message-content-left::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: -10px;
+  width: 0;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-right: 10px solid #fff;
+  transform: translateY(-50%);
+}
+
+.message-content-right::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: -10px;
+  width: 0;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-left: 10px solid #fff;
+  transform: translateY(-50%);
+}
+
+.chat-message.user .message-content::before {
+  display: none;
+}
+
+.chat-message.user .message-content::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: -10px;
+  width: 0;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-right: 10px solid #007bff;
+  transform: translateY(-50%);
+}
+
+.chat-message.user .message-content::after {
+  right: auto;
+  left: -10px;
+  border-right: none;
+  border-left: 10px solid #007bff;
 }
 
 .message-timestamp {
@@ -57,6 +110,7 @@
 
 .message-avatar {
   margin-left: 10px;
+  margin-right: 10px;
   align-self: center;
 }
 
