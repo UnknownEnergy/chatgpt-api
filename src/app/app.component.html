@@ -4,7 +4,7 @@
     <h2>Chat with ChatGPT API</h2>
   </div>
   <div class="chat-messages" #messageContainer>
-  <div class="chat-message" *ngFor="let message of messages">
+    <div class="chat-message" *ngFor="let message of messages">
       <div class="message-content">
         {{ message.content }}
         <div class="message-timestamp">{{ message.timestamp | date:'shortTime' }}</div>
@@ -25,7 +25,14 @@
     </div>
   </div>
   <div class="chat-input">
-    <input type="text" [(ngModel)]="apikey" placeholder="Enter API Key...">
+    <div class="row">
+      <div class="col-md-8">
+        <input type="text" [(ngModel)]="apikey" placeholder="Enter API Key...">
+      </div>
+      <div class="col-md-4">
+        <a href="https://platform.openai.com/account/api-keys" class="centered-link" target="_blank">Get API Key</a>
+      </div>
+    </div>
     <textarea [(ngModel)]="messageInput" type="text" placeholder="Type a message..."
               (keydown.enter)="sendMessage()"></textarea>
     <button (click)="sendMessage()">Send</button>
