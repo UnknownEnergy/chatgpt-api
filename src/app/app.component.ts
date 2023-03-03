@@ -14,6 +14,7 @@ export class AppComponent {
   apikey = '';
   chatHistory = [];
   usedTokens: number = 0;
+  darkModeEnabled = false;
 
   @ViewChild('messageContainer', { static: false }) messageContainer: ElementRef;
 
@@ -79,4 +80,15 @@ export class AppComponent {
       this.messageContainer.nativeElement.scrollTop = this.messageContainer.nativeElement.scrollHeight;
     }, 0);
   }
+
+  toggleDarkMode() {
+    this.darkModeEnabled = !this.darkModeEnabled;
+    const container = document.getElementsByClassName('chat-container')[0];
+    if (this.darkModeEnabled) {
+      container.classList.add('dark-mode');
+    } else {
+      container.classList.remove('dark-mode');
+    }
+  }
+
 }
