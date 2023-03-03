@@ -1,15 +1,27 @@
 <div class="chat-container">
   <div class="chat-header">
-    <img src="favicon.ico" class="chat-icon">
-    <h2>Chat with ChatGPT API</h2>
+    <div class="flex">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/ChatGPT_logo.svg/120px-ChatGPT_logo.svg.png" class="chat-icon">
+      <h2>Chat with ChatGPT API</h2>
+    </div>
+    <p>Chat with me even when <a href="https://chat.openai.com/chat" target="_blank">https://chat.openai.com/chat</a> is down.</p>
   </div>
   <div class="chat-messages" #messageContainer>
     <div class="chat-message" *ngFor="let message of messages">
-      <div class="message-content">
-        {{ message.content }}
-        <div class="message-timestamp">{{ message.timestamp | date:'shortTime' }}</div>
-      </div>
-      <div class="message-avatar" [innerHTML]="message.avatar"></div>
+      <ng-container *ngIf="message.isUser; else elseBlock">
+        <div class="message-content">
+          {{ message.content }}
+          <div class="message-timestamp">{{ message.timestamp | date:'shortTime' }}</div>
+        </div>
+        <div class="message-avatar" [innerHTML]="message.avatar"></div>
+      </ng-container>
+      <ng-template #elseBlock>
+        <div class="message-avatar" [innerHTML]="message.avatar"></div>
+        <div class="message-content">
+          {{ message.content }}
+          <div class="message-timestamp">{{ message.timestamp | date:'shortTime' }}</div>
+        </div>
+      </ng-template>
     </div>
     <div class="chat-message chatbot-typing" *ngIf="chatbotTyping">
       <div class="message-avatar">
@@ -26,11 +38,14 @@
   </div>
   <div class="chat-input">
     <div class="row">
-      <div class="col-md-8">
+      <div class="col-md-7">
         <input type="text" [(ngModel)]="apikey" placeholder="Enter API Key...">
       </div>
-      <div class="col-md-4">
+      <div class="col-md-3">
         <a href="https://platform.openai.com/account/api-keys" class="centered-link" target="_blank">Get API Key</a>
+      </div>
+      <div class="col-md-2">
+        <a href="https://platform.openai.com/account/usage" class="centered-link" target="_blank">Usage</a>
       </div>
     </div>
     <textarea [(ngModel)]="messageInput" type="text" placeholder="Type a message..."
