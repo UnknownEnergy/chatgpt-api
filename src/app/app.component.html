@@ -49,7 +49,7 @@
       </div>
     </div>
     <textarea [(ngModel)]="messageInput" type="text" placeholder="Type a message..."
-              (keydown.enter)="sendMessage()"></textarea>
+              (keydown.enter)="$event.preventDefault();sendMessage()"></textarea>
     <button (click)="sendMessage()">Send</button>
   </div>
 </div>
