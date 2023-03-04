@@ -5,29 +5,33 @@
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/ChatGPT_logo.svg/120px-ChatGPT_logo.svg.png" class="chat-icon">
         <h2 class="mb-0 ml-2">Chat with ChatGPT API</h2>
       </div>
-      <button class="btn btn-primary" (click)="showModal = true;">
-        <i class="bi bi-currency-bitcoin"></i>
-      </button>
-      <button class="btn btn-primary" (click)="toggleDarkMode()">
-        <i class="bi bi-moon"></i>
-      </button>
+      <div class="d-flex">
+        <button class="btn btn-primary" (click)="showModal = true;">
+          <i class="bi bi-currency-bitcoin"></i>
+        </button>
+        <button class="btn btn-primary" (click)="toggleDarkMode()">
+          <i class="bi bi-moon"></i>
+        </button>
+      </div>
     </div>
     <app-tip-modal *ngIf="showModal" (close)="showModal = false;"></app-tip-modal>
     <br/>
     <p>Chat with me even when <a href="https://chat.openai.com/chat" target="_blank">https://chat.openai.com/chat</a> is down.<br/>
     Without the usual delays and too many requests in 1h.</p>
     <div class="row">
-      <div class="col-md-7">
-        <div class="d-flex">
-          <input [type]="showPassword ? 'text' : 'password'" [(ngModel)]="apikey" placeholder="Enter API Key..." (input)="refreshModels()">
-          <button (click)="showPassword = !showPassword;"><i class="bi bi-eye"></i></button>
+      <div class="d-flex">
+        <div class="col-md-8">
+          <div class="d-flex">
+            <input [type]="showPassword ? 'text' : 'password'" [(ngModel)]="apikey" placeholder="Enter API Key..." (input)="refreshModels()">
+            <button (click)="showPassword = !showPassword;"><i class="bi bi-eye"></i></button>
+          </div>
         </div>
-      </div>
-      <div class="col-md-3">
-        <a href="https://platform.openai.com/account/api-keys" class="centered-link" target="_blank">Get API Key</a>
-      </div>
-      <div class="col-md-2">
-        <a href="https://platform.openai.com/account/usage" class="centered-link" target="_blank">Usage</a>
+        <div class="col-md-2 px-4">
+          <a href="https://platform.openai.com/account/api-keys" class="centered-link" target="_blank">Get API Key</a>
+        </div>
+        <div class="col-md-2">
+          <a href="https://platform.openai.com/account/usage" class="centered-link" target="_blank">Usage</a>
+        </div>
       </div>
     </div>
     <p>Model to use: <select class="btn btn-primary" [(ngModel)]="selectedModel">
