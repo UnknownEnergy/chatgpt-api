@@ -1,6 +1,7 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import {Configuration, Model, OpenAIApi} from "openai";
 import {TipModalComponent} from "./tip-modal/tip-modal.component";
+import {ChatCompletionRequestMessage} from "openai/dist/api";
 
 
 @Component({
@@ -14,15 +15,15 @@ export class AppComponent {
   messages: { content: string; timestamp: Date; avatar: string; isUser: boolean; }[] = [];
   chatbotTyping = false;
   apikey = '';
-  chatHistory = [];
+  chatHistory: Array<ChatCompletionRequestMessage> = [];
   usedTokens: number = 0;
   darkModeEnabled = false;
   showPassword: boolean = false;
 
-  selectedModel: string = 'text-davinci-003';
+  selectedModel: string = 'gpt-3.5-turbo';
   models: Model[] = [];
 
-  @ViewChild('messageContainer', { static: false }) messageContainer: ElementRef;
+  @ViewChild('messageContainer', {static: false}) messageContainer: ElementRef;
 
   @ViewChild('tipModal') tipModal: TipModalComponent;
   showModal: boolean = false;
@@ -39,7 +40,7 @@ export class AppComponent {
   }
 
   async sendMessage() {
-    this.chatHistory.push(this.messageInput);
+    this.chatHistory.push({content: this.messageInput, role: 'user'});
     const openai = this.getOpenAi();
     // Store the API key in local storage
     localStorage.setItem('apiKey', this.apikey);
@@ -62,34 +63,67 @@ export class AppComponent {
       this.messageContainer.nativeElement.scrollTop = this.messageContainer.nativeElement.scrollHeight;
     }, 0);
 
-    // Generate a response from the chatbot
-    const response = await openai.createCompletion({
+    let promise;
+    promise = openai.createChatCompletion({
       model: this.selectedModel,
-      prompt: this.chatHistory.join('\n') + '\n' + this.messages[this.messages.length - 1].content,
+      messages: this.chatHistory,
       temperature: this.temperature,
       max_tokens: 1000,
+    }).then(response => {
+      return response;
+    })
+      .catch(() => {
+        return openai.createCompletion({
+          model: this.selectedModel,
+          prompt: this.messages[this.messages.length - 1].content,
+          temperature: this.temperature,
+          max_tokens: 1000,
+        })
+          .then(response => {
+            return response;
+          })
+          .catch(error => {
+            throw error;
+          });
+      });
+
+    promise.then(response => {
+      // Add the chatbot's response to the chat
+      if (response && response.data && response.data.choices && response.data.choices.length > 0) {
+        let message = '';
+        if (response.data.choices[0].message) {
+          message = response.data.choices[0].message.content;
+        } else {
+          // @ts-ignore
+          message = response.data.choices[0].text;
+        }
+        this.chatHistory.push({content: message, role: 'system'});
+        message = this.convertToList(message);
+        message = this.asciiToHtmlTable(message);
+        this.messages.push({
+          content: message,
+          timestamp: new Date(),
+          avatar: '<i class="bi bi-laptop"></i>',
+          isUser: false,
+        });
+      }
+
+      // Set the chatbot typing indicator to false
+      this.chatbotTyping = false;
+
+      setTimeout(() => {
+        this.messageContainer.nativeElement.scrollTop = this.messageContainer.nativeElement.scrollHeight;
+      }, 0);
+    }).catch(error => {
+      // Set the chatbot typing indicator to false
+      this.chatbotTyping = false;
+
+      setTimeout(() => {
+        this.messageContainer.nativeElement.scrollTop = this.messageContainer.nativeElement.scrollHeight;
+      }, 0);
+      alert(error.content);
     });
 
-    // Add the chatbot's response to the chat
-    if (response && response.data && response.data.choices && response.data.choices.length > 0) {
-      let message = response.data.choices[0].text;
-      this.chatHistory.push(message);
-      message = this.convertToList(message);
-      message = this.asciiToHtmlTable(message);
-      this.messages.push({
-        content: message,
-        timestamp: new Date(),
-        avatar: '<i class="bi bi-laptop"></i>',
-        isUser: false,
-      });
-    }
-
-    // Set the chatbot typing indicator to false
-    this.chatbotTyping = false;
-
-    setTimeout(() => {
-      this.messageContainer.nativeElement.scrollTop = this.messageContainer.nativeElement.scrollHeight;
-    }, 0);
   }
 
   private getOpenAi() {
@@ -103,7 +137,7 @@ export class AppComponent {
     // Check if there is a message to resend
     if (this.chatHistory.length > 0) {
       // Get the last message from the chat history
-      this.messageInput = this.chatHistory[this.chatHistory.length - 2];
+      this.messageInput = this.chatHistory[this.chatHistory.length - 2].content;
       await this.sendMessage();
     }
   }
@@ -124,7 +158,7 @@ export class AppComponent {
   }
 
   asciiToHtmlTable(str: string) {
-    if(!str.includes('|')) {
+    if (!str.includes('|')) {
       return str;
     }
     const rows = str.split('\n');
