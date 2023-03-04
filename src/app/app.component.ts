@@ -1,6 +1,5 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import {Configuration, OpenAIApi} from "openai";
-import QRCode from 'qrcode'
 import {TipModalComponent} from "./tip-modal/tip-modal.component";
 
 
@@ -88,6 +87,15 @@ export class AppComponent {
     setTimeout(() => {
       this.messageContainer.nativeElement.scrollTop = this.messageContainer.nativeElement.scrollHeight;
     }, 0);
+  }
+
+  async resendLastMessage() {
+    // Check if there is a message to resend
+    if (this.chatHistory.length > 0) {
+      // Get the last message from the chat history
+      this.messageInput = this.chatHistory[this.chatHistory.length - 2];
+      await this.sendMessage();
+    }
   }
 
   convertToList(message) {

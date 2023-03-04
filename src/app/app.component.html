@@ -16,6 +16,20 @@
     <br/>
     <p>Chat with me even when <a href="https://chat.openai.com/chat" target="_blank">https://chat.openai.com/chat</a> is down.<br/>
     Without the usual delays and too many requests in 1h.</p>
+    <div class="row">
+      <div class="col-md-7">
+        <div class="d-flex">
+          <input [type]="showPassword ? 'text' : 'password'" [(ngModel)]="apikey" placeholder="Enter API Key...">
+          <button (click)="showPassword = !showPassword;"><i class="bi bi-eye"></i></button>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <a href="https://platform.openai.com/account/api-keys" class="centered-link" target="_blank">Get API Key</a>
+      </div>
+      <div class="col-md-2">
+        <a href="https://platform.openai.com/account/usage" class="centered-link" target="_blank">Usage</a>
+      </div>
+    </div>
   </div>
   <div class="chat-messages" #messageContainer>
     <div class="chat-message" *ngFor="let message of messages">
@@ -47,21 +61,16 @@
   </div>
   <div class="chat-input">
     <div class="row">
-      <div class="col-md-7">
-        <div class="d-flex">
-        <input [type]="showPassword ? 'text' : 'password'" [(ngModel)]="apikey" placeholder="Enter API Key...">
-        <button (click)="showPassword = !showPassword;"><i class="bi bi-eye"></i></button>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <a href="https://platform.openai.com/account/api-keys" class="centered-link" target="_blank">Get API Key</a>
+      <div class="col-md-9">
+        <textarea [(ngModel)]="messageInput" type="text" placeholder="Type a message..."
+                  (keydown.enter)="$event.preventDefault();sendMessage()"></textarea>
       </div>
       <div class="col-md-2">
-        <a href="https://platform.openai.com/account/usage" class="centered-link" target="_blank">Usage</a>
+        <div class="d-flex">
+          <button (click)="sendMessage()"><i class="bi bi-send"></i></button>
+          <button (click)="resendLastMessage()"><i class="bi bi-arrow-repeat"></i></button>
+        </div>
       </div>
     </div>
-    <textarea [(ngModel)]="messageInput" type="text" placeholder="Type a message..."
-              (keydown.enter)="$event.preventDefault();sendMessage()"></textarea>
-    <button (click)="sendMessage()">Send</button>
   </div>
 </div>
