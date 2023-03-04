@@ -35,15 +35,24 @@ export class AppComponent {
     if (savedApiKey) {
       this.apikey = savedApiKey;
     }
-
+    const savedTemperature = localStorage.getItem('temperature');
+    if (savedTemperature) {
+      this.temperature = parseFloat(savedTemperature);
+    }
+    const savedSelectedModel = localStorage.getItem('selectedModel');
+    if (savedSelectedModel) {
+      this.selectedModel = savedSelectedModel;
+    }
     this.refreshModels();
   }
 
   async sendMessage() {
     this.chatHistory.push({content: this.messageInput, role: 'user'});
     const openai = this.getOpenAi();
-    // Store the API key in local storage
+
     localStorage.setItem('apiKey', this.apikey);
+    localStorage.setItem('temperature', this.temperature.toString());
+    localStorage.setItem('selectedModel', this.selectedModel);
 
     // Add the user's message to the chat
     this.messages.push({
@@ -101,7 +110,7 @@ export class AppComponent {
         message = this.formatListAsHtml(message);
         message = this.formatTableAsHtml(message);
         message = this.formatCodeAsHtml(message);
-        message = this.formatBoldAsHtml(message);
+        message = AppComponent.formatBoldAsHtml(message);
         this.messages.push({
           content: message,
           timestamp: new Date(),
@@ -152,7 +161,7 @@ export class AppComponent {
     })
   }
 
-  private formatBoldAsHtml(message: string) {
+  private static formatBoldAsHtml(message: string) {
     return message.replace(/`([^`]+)`/g, '<b>$1</b>');
   }
 
@@ -186,14 +195,14 @@ export class AppComponent {
   }
 
   formatCodeAsHtml(input) {
-    const regex = /```([\s\S]+?)```/;
-    const match = regex.exec(input);
-    if (!match) {
-      return input; // no code block found
+    const regex = /```([\s\S]+?)```/g;
+    let match;
+    while ((match = regex.exec(input)) !== null) {
+      const codeString = match[1];
+      const formattedCode = `<pre><code>${codeString}</code></pre>`;
+      input = input.replaceAll(match[0], formattedCode);
     }
-    const codeString = match[1];
-    const formattedCode = `<pre><code>${codeString}</code></pre>`;
-    return input.replace(match[0], formattedCode);
+    return input;
   }
 
 
