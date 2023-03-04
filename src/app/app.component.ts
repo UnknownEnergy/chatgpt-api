@@ -2,7 +2,7 @@ import {Component, ElementRef, ViewChild} from '@angular/core';
 import {Configuration, Model, OpenAIApi} from "openai";
 import {TipModalComponent} from "./tip-modal/tip-modal.component";
 import {ChatCompletionRequestMessage} from "openai/dist/api";
-
+import * as hljs from 'highlight.js';
 
 @Component({
   selector: 'app-root',
@@ -98,8 +98,10 @@ export class AppComponent {
           message = response.data.choices[0].text;
         }
         this.chatHistory.push({content: message, role: 'system'});
-        message = this.convertToList(message);
-        message = this.asciiToHtmlTable(message);
+        message = this.formatListAsHtml(message);
+        message = this.formatTableAsHtml(message);
+        message = this.formatCodeAsHtml(message);
+        message = this.formatBoldAsHtml(message);
         this.messages.push({
           content: message,
           timestamp: new Date(),
@@ -107,6 +109,7 @@ export class AppComponent {
           isUser: false,
         });
       }
+      this.highlightCode();
 
       // Set the chatbot typing indicator to false
       this.chatbotTyping = false;
@@ -149,19 +152,30 @@ export class AppComponent {
     })
   }
 
-  convertToList(message) {
+  private formatBoldAsHtml(message: string) {
+    return message.replace(/`([^`]+)`/g, '<b>$1</b>');
+  }
+
+  private highlightCode() {
+    setTimeout(() => {
+      hljs.default.highlightAll();
+    }, 50);
+
+  }
+
+  formatListAsHtml(input) {
     const regex = /(\n([*-]|\d+\.)\s[^\n]+)/g;
-    return message.replace(regex, match => {
+    return input.replace(regex, match => {
       const listItem = match.replace(/^\n/, '').replace(/^([*-]|\d+\.)\s/, '');
       return `<li>${listItem}</li>`;
     });
   }
 
-  asciiToHtmlTable(str: string) {
-    if (!str.includes('|')) {
-      return str;
+  formatTableAsHtml(input) {
+    if (!input.includes('|')) {
+      return input;
     }
-    const rows = str.split('\n');
+    const rows = input.split('\n');
     const headers = rows[0].split('|');
     const tableBody = rows.slice(2).map(row => {
       const cells = row.split('|');
@@ -170,6 +184,18 @@ export class AppComponent {
 
     return `<table><thead><tr>${headers.map(header => `<th>${header.trim()}</th>`).join('')}</tr></thead><tbody>${tableBody}</tbody></table>`;
   }
+
+  formatCodeAsHtml(input) {
+    const regex = /```([\s\S]+?)```/;
+    const match = regex.exec(input);
+    if (!match) {
+      return input; // no code block found
+    }
+    const codeString = match[1];
+    const formattedCode = `<pre><code>${codeString}</code></pre>`;
+    return input.replace(match[0], formattedCode);
+  }
+
 
   toggleDarkMode() {
     this.darkModeEnabled = !this.darkModeEnabled;
