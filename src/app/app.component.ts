@@ -1,5 +1,5 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
-import {Configuration, OpenAIApi} from "openai";
+import {Configuration, Model, OpenAIApi} from "openai";
 import {TipModalComponent} from "./tip-modal/tip-modal.component";
 
 
@@ -20,13 +20,7 @@ export class AppComponent {
   showPassword: boolean = false;
 
   selectedModel: string = 'text-davinci-003';
-  models: any[] = [
-    {value: 'text-davinci-003', viewValue: 'text-davinci-003'},
-    {value: 'gpt-3.5-turbo', viewValue: 'gpt-3.5-turbo'},
-    {value: 'gpt-3.5-turbo-0301', viewValue: 'gpt-3.5-turbo-0301'},
-    {value: 'text-davinci-002', viewValue: 'text-davinci-002'},
-    {value: 'code-davinci-002', viewValue: 'code-davinci-002'},
-  ];
+  models: Model[] = [];
 
   @ViewChild('messageContainer', { static: false }) messageContainer: ElementRef;
 
@@ -39,14 +33,16 @@ export class AppComponent {
     if (savedApiKey) {
       this.apikey = savedApiKey;
     }
+
+    const openai = this.getOpenAi();
+    openai.listModels().then(response => {
+      this.models = response.data.data;
+    })
   }
 
   async sendMessage() {
     this.chatHistory.push(this.messageInput);
-    const configuration = new Configuration({
-      apiKey: this.apikey,
-    });
-    const openai = new OpenAIApi(configuration);
+    const openai = this.getOpenAi();
     // Store the API key in local storage
     localStorage.setItem('apiKey', this.apikey);
 
@@ -96,6 +92,13 @@ export class AppComponent {
     setTimeout(() => {
       this.messageContainer.nativeElement.scrollTop = this.messageContainer.nativeElement.scrollHeight;
     }, 0);
+  }
+
+  private getOpenAi() {
+    const configuration = new Configuration({
+      apiKey: this.apikey,
+    });
+    return new OpenAIApi(configuration);
   }
 
   async resendLastMessage() {

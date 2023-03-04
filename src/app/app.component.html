@@ -31,8 +31,8 @@
       </div>
     </div>
     <p>Model to use: <select class="btn btn-primary" [(ngModel)]="selectedModel">
-      <option *ngFor="let model of models" [value]="model.value">
-        {{model.viewValue}}
+      <option *ngFor="let model of models" [value]="model.id">
+        {{model.id}}
       </option>
     </select>
     </p>
