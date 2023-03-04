@@ -36,6 +36,7 @@
       </option>
     </select>
     </p>
+    <div class="d-flex align-items-center">Randomness: <input type="range" min="0" max="2" step="0.1" [(ngModel)]="temperature"> ({{temperature}})</div>
   </div>
   <div class="chat-messages" #messageContainer>
     <div class="chat-message" *ngFor="let message of messages">

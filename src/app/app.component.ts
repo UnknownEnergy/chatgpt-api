@@ -26,6 +26,7 @@ export class AppComponent {
 
   @ViewChild('tipModal') tipModal: TipModalComponent;
   showModal: boolean = false;
+  temperature: number = 0.8;
 
   constructor() {
     // Retrieve the API key from local storage, if it exists
@@ -65,7 +66,7 @@ export class AppComponent {
     const response = await openai.createCompletion({
       model: this.selectedModel,
       prompt: this.chatHistory.join('\n') + '\n' + this.messages[this.messages.length - 1].content,
-      temperature: 0,
+      temperature: this.temperature,
       max_tokens: 1000,
     });
 
