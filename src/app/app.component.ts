@@ -84,9 +84,9 @@ export class AppComponent {
   }
 
   convertToList(message) {
-    const regex = /(\n\d+\.\s[^\n]+)/g;
+    const regex = /(\n([*-]|\d+\.)\s[^\n]+)/g;
     return message.replace(regex, match => {
-      const listItem = match.replace(/^\n/, '').replace(/^\d+\. /, '');
+      const listItem = match.replace(/^\n/, '').replace(/^([*-]|\d+\.)\s/, '');
       return `<li>${listItem}</li>`;
     });
   }
