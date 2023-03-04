@@ -19,6 +19,15 @@ export class AppComponent {
   darkModeEnabled = false;
   showPassword: boolean = false;
 
+  selectedModel: string = 'text-davinci-003';
+  models: any[] = [
+    {value: 'text-davinci-003', viewValue: 'text-davinci-003'},
+    {value: 'gpt-3.5-turbo', viewValue: 'gpt-3.5-turbo'},
+    {value: 'gpt-3.5-turbo-0301', viewValue: 'gpt-3.5-turbo-0301'},
+    {value: 'text-davinci-002', viewValue: 'text-davinci-002'},
+    {value: 'code-davinci-002', viewValue: 'code-davinci-002'},
+  ];
+
   @ViewChild('messageContainer', { static: false }) messageContainer: ElementRef;
 
   @ViewChild('tipModal') tipModal: TipModalComponent;
@@ -61,7 +70,7 @@ export class AppComponent {
 
     // Generate a response from the chatbot
     const response = await openai.createCompletion({
-      model: "text-davinci-003",
+      model: this.selectedModel,
       prompt: this.chatHistory.join('\n') + '\n' + this.messages[this.messages.length - 1].content,
       temperature: 0,
       max_tokens: 1000,

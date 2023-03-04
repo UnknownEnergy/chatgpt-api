@@ -30,6 +30,12 @@
         <a href="https://platform.openai.com/account/usage" class="centered-link" target="_blank">Usage</a>
       </div>
     </div>
+    <p>Model to use: <select class="btn btn-primary" [(ngModel)]="selectedModel">
+      <option *ngFor="let model of models" [value]="model.value">
+        {{model.viewValue}}
+      </option>
+    </select>
+    </p>
   </div>
   <div class="chat-messages" #messageContainer>
     <div class="chat-message" *ngFor="let message of messages">
@@ -51,6 +57,7 @@
         <div class="message-avatar"><i class="bi bi-laptop"></i></div>
       </div>
       <div class="message-content">
+        <br/>
         <div class="typing-indicator">
           <span></span>
           <span></span>
