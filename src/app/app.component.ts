@@ -92,7 +92,7 @@ export class AppComponent {
   }
 
   asciiToHtmlTable(str: string) {
-    if(!str.includes('----')) {
+    if(!str.includes('|')) {
       return str;
     }
     const rows = str.split('\n');
