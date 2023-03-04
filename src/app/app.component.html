@@ -17,16 +17,14 @@
   <div class="chat-messages" #messageContainer>
     <div class="chat-message" *ngFor="let message of messages">
       <ng-container *ngIf="message.isUser; else elseBlock">
-        <div class="message-content message-content-right">
-          {{ message.content }}
+        <div class="message-content message-content-right" [innerHTML]="message.content">
           <div class="message-timestamp">{{ message.timestamp | date:'shortTime' }}</div>
         </div>
         <div class="message-avatar" [innerHTML]="message.avatar"></div>
       </ng-container>
       <ng-template #elseBlock>
         <div class="message-avatar" [innerHTML]="message.avatar"></div>
-        <div class="message-content message-content-left">
-          {{ message.content }}
+        <div class="message-content message-content-left" [innerHTML]="message.content">
           <div class="message-timestamp">{{ message.timestamp | date:'shortTime' }}</div>
         </div>
       </ng-template>

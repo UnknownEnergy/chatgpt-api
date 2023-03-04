@@ -63,14 +63,16 @@ export class AppComponent {
 
     // Add the chatbot's response to the chat
     if (response && response.data && response.data.choices && response.data.choices.length > 0) {
-      const message = response.data.choices[0].text;
+      let message = response.data.choices[0].text;
+      this.chatHistory.push(message);
+      message = this.convertToList(message);
+      message = this.asciiToHtmlTable(message);
       this.messages.push({
         content: message,
         timestamp: new Date(),
         avatar: '<i class="bi bi-laptop"></i>',
         isUser: false,
       });
-      this.chatHistory.push(message);
     }
 
     // Set the chatbot typing indicator to false
@@ -79,6 +81,28 @@ export class AppComponent {
     setTimeout(() => {
       this.messageContainer.nativeElement.scrollTop = this.messageContainer.nativeElement.scrollHeight;
     }, 0);
+  }
+
+  convertToList(message) {
+    const regex = /(\n\d+\.\s[^\n]+)/g;
+    return message.replace(regex, match => {
+      const listItem = match.replace(/^\n/, '').replace(/^\d+\. /, '');
+      return `<li>${listItem}</li>`;
+    });
+  }
+
+  asciiToHtmlTable(str: string) {
+    if(!str.includes('----')) {
+      return str;
+    }
+    const rows = str.split('\n');
+    const headers = rows[0].split('|');
+    const tableBody = rows.slice(2).map(row => {
+      const cells = row.split('|');
+      return `<tr>${cells.map(cell => `<td>${cell.trim()}</td>`).join('')}</tr>`;
+    }).join('');
+
+    return `<table><thead><tr>${headers.map(header => `<th>${header.trim()}</th>`).join('')}</tr></thead><tbody>${tableBody}</tbody></table>`;
   }
 
   toggleDarkMode() {
