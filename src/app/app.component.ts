@@ -34,10 +34,7 @@ export class AppComponent {
       this.apikey = savedApiKey;
     }
 
-    const openai = this.getOpenAi();
-    openai.listModels().then(response => {
-      this.models = response.data.data;
-    })
+    this.refreshModels();
   }
 
   async sendMessage() {
@@ -110,6 +107,13 @@ export class AppComponent {
     }
   }
 
+  refreshModels() {
+    const openai = this.getOpenAi();
+    openai.listModels().then(response => {
+      this.models = response.data.data;
+    })
+  }
+
   convertToList(message) {
     const regex = /(\n([*-]|\d+\.)\s[^\n]+)/g;
     return message.replace(regex, match => {
@@ -141,5 +145,4 @@ export class AppComponent {
       container.classList.remove('dark-mode');
     }
   }
-
 }
