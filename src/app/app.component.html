@@ -5,11 +5,14 @@
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/ChatGPT_logo.svg/120px-ChatGPT_logo.svg.png" class="chat-icon">
         <h2 class="mb-0 ml-2">Chat with ChatGPT API</h2>
       </div>
-      <div id="tippin-button" data-dest="MrCryptoDan" style="background:#00A67E"></div>
+      <button class="btn btn-primary" (click)="showModal = true;">
+        <i class="bi bi-currency-bitcoin"></i>
+      </button>
       <button class="btn btn-primary" (click)="toggleDarkMode()">
         <i class="bi bi-moon"></i>
       </button>
     </div>
+    <app-tip-modal *ngIf="showModal" (close)="showModal = false;"></app-tip-modal>
     <br/>
     <p>Chat with me even when <a href="https://chat.openai.com/chat" target="_blank">https://chat.openai.com/chat</a> is down.<br/>
     Without the usual delays and too many requests in 1h.</p>

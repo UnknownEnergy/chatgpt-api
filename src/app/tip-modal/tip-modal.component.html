@@ -1,0 +1,14 @@
+<div class="popup-container">
+  <div class="popup-content">
+    <h2>Tip me</h2>
+    <div>
+      <p>Bitcoin Address:</p>
+      {{bitcoinAddress}}
+      <br/>
+      <img [src]="qrCode" alt="QR Code of Bitcoin Address">
+    </div>
+    <button (click)="copyBitcoinAddress()">Copy Address</button>
+    <br/><br/>
+    <button (click)="this.close.emit();">Close</button>
+  </div>
+</div>

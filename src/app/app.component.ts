@@ -1,5 +1,8 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import {Configuration, OpenAIApi} from "openai";
+import QRCode from 'qrcode'
+import {TipModalComponent} from "./tip-modal/tip-modal.component";
+
 
 @Component({
   selector: 'app-root',
@@ -18,6 +21,9 @@ export class AppComponent {
   showPassword: boolean = false;
 
   @ViewChild('messageContainer', { static: false }) messageContainer: ElementRef;
+
+  @ViewChild('tipModal') tipModal: TipModalComponent;
+  showModal: boolean = false;
 
   constructor() {
     // Retrieve the API key from local storage, if it exists
