@@ -58,7 +58,7 @@ export class AppComponent {
       model: "text-davinci-003",
       prompt: this.chatHistory.join('\n') + '\n' + this.messages[this.messages.length - 1].content,
       temperature: 0,
-      max_tokens: 100,
+      max_tokens: 1000,
     });
 
     // Add the chatbot's response to the chat
