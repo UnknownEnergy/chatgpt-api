@@ -191,10 +191,11 @@
   font-size: 16px;
   font-family: Arial, sans-serif;
   outline: none;
+  margin-bottom: 10px;
 }
 
 .chat-input button {
-  margin-top: 10px;
+  margin-bottom: 10px;
   padding: 10px 20px;
   background-color: #00A67E;
   color: #fff;

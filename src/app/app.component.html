@@ -45,7 +45,10 @@
   <div class="chat-input">
     <div class="row">
       <div class="col-md-7">
-        <input type="text" [(ngModel)]="apikey" placeholder="Enter API Key...">
+        <div class="d-flex">
+        <input [type]="showPassword ? 'text' : 'password'" [(ngModel)]="apikey" placeholder="Enter API Key...">
+        <button (click)="showPassword = !showPassword;"><i class="bi bi-eye"></i></button>
+        </div>
       </div>
       <div class="col-md-3">
         <a href="https://platform.openai.com/account/api-keys" class="centered-link" target="_blank">Get API Key</a>

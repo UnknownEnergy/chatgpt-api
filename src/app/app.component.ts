@@ -15,6 +15,7 @@ export class AppComponent {
   chatHistory = [];
   usedTokens: number = 0;
   darkModeEnabled = false;
+  showPassword: boolean = false;
 
   @ViewChild('messageContainer', { static: false }) messageContainer: ElementRef;
 
