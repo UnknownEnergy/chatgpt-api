@@ -116,6 +116,13 @@
   border-radius: 50%;
 }
 
+.raw {
+  background-color: unset;
+  color: black;
+  padding: 0;
+  margin-left: 5px;
+}
+
 .chatbot-typing {
   display: flex;
 }

@@ -12,7 +12,7 @@ import * as hljs from 'highlight.js';
 export class AppComponent {
 
   messageInput = '';
-  messages: { content: string; timestamp: Date; avatar: string; isUser: boolean; }[] = [];
+  messages: { content: string; contentRaw: string; isRaw?: boolean; timestamp: Date; avatar: string; isUser: boolean;}[] = [];
   chatbotTyping = false;
   apikey = '';
   chatHistory: Array<ChatCompletionRequestMessage> = [];
@@ -57,6 +57,7 @@ export class AppComponent {
     // Add the user's message to the chat
     this.messages.push({
       content: this.messageInput,
+      contentRaw: this.messageInput,
       timestamp: new Date(),
       avatar: '<i class="bi bi-person-circle"></i>',
       isUser: true
@@ -110,13 +111,15 @@ export class AppComponent {
           // @ts-ignore
           message = response.data.choices[0].text;
         }
-        this.chatHistory.push({content: message, role: 'system'});
+        let messageRaw = message;
+        this.chatHistory.push({content: messageRaw, role: 'system'});
         message = this.formatListAsHtml(message);
         message = this.formatTableAsHtml(message);
         message = this.formatCodeAsHtml(message);
         message = AppComponent.formatBoldAsHtml(message);
         this.messages.push({
           content: message,
+          contentRaw: messageRaw,
           timestamp: new Date(),
           avatar: '<i class="bi bi-laptop"></i>',
           isUser: false,

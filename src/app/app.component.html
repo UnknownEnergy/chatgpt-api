@@ -44,17 +44,29 @@
   </div>
   <div class="chat-messages" #messageContainer>
     <div class="chat-message" *ngFor="let message of messages">
-      <ng-container *ngIf="message.isUser; else elseBlock">
+      <ng-container *ngIf="message.isUser; else systemMessage">
         <div class="message-content message-content-right">
           {{message.content}}
           <div class="message-timestamp">{{ message.timestamp | date:'shortTime' }}</div>
         </div>
         <div class="message-avatar" [innerHTML]="message.avatar"></div>
       </ng-container>
-      <ng-template #elseBlock>
+      <ng-template #systemMessage>
         <div class="message-avatar" [innerHTML]="message.avatar"></div>
-        <div class="message-content message-content-left" [innerHTML]="message.content">
-          <div class="message-timestamp">{{ message.timestamp | date:'shortTime' }}</div>
+        <div class="message-content message-content-left">
+          <ng-container *ngIf="!message.isRaw; else rawMessage">
+            <div [innerHTML]="message.content">
+            </div>
+          </ng-container>
+          <ng-template #rawMessage>
+            <div>
+              {{message.contentRaw |json}}
+            </div>
+          </ng-template>
+          <div class="d-flex justify-content-end">
+            <div class="message-timestamp">{{ message.timestamp | date:'shortTime' }}</div>
+            <button class="raw" (click)="message.isRaw = !message.isRaw"><i class="bi bi-braces"></i></button>
+          </div>
         </div>
       </ng-template>
     </div>
