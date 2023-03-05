@@ -81,7 +81,7 @@ export class AppComponent {
     }).then(response => {
       return response;
     })
-      .catch(() => {
+      .catch((firstError) => {
         return openai.createCompletion({
           model: this.selectedModel,
           prompt: this.messages[this.messages.length - 1].content,
@@ -92,7 +92,11 @@ export class AppComponent {
             return response;
           })
           .catch(error => {
-            throw error;
+            if (firstError.response && firstError.response.status !== 404) {
+              throw firstError;
+            } else {
+              throw error;
+            }
           });
       });
 
@@ -133,7 +137,12 @@ export class AppComponent {
       setTimeout(() => {
         this.messageContainer.nativeElement.scrollTop = this.messageContainer.nativeElement.scrollHeight;
       }, 0);
-      alert(error.content);
+
+      if (error.response && error.response.data && error.response.data.error) {
+        alert(error.response.data.error.message);
+      } else {
+        alert(error.message);
+      }
     });
 
   }
