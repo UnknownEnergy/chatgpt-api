@@ -4,11 +4,15 @@
     <div>
       <p>Bitcoin Address:</p>
       {{bitcoinAddress}}
-      <br/>
-      <img [src]="qrCode" alt="QR Code of Bitcoin Address">
+      <br />
+      <img [src]="qrCode" alt="QR Code of Bitcoin Address" />
     </div>
     <button (click)="copyBitcoinAddress()">Copy Address</button>
-    <br/><br/>
+    <br /><br />
+    <a href="https://paypal.me/danschweiger" target="_blank">Tip with PayPal</a>
+    <br /><br />
+    <a href="https://ko-fi.com/schweiger" target="_blank">Tip with Ko-fi</a>
+    <br /><br />
     <button (click)="this.close.emit();">Close</button>
   </div>
 </div>
