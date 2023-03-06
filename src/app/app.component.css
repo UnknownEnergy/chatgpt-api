@@ -308,23 +308,23 @@ input[type="range"]::-ms-fill-upper {
 }
 
 .dark-mode {
-  background-color: #222;
+  background-color: rgba(68, 70, 84, 0.74);
   color: #fff;
 }
 
 .dark-mode .chat-container {
-  background-color: #333;
+  background-color: rgba(68, 70, 84, 0.74);
   border-color: #555;
 }
 
 .dark-mode .chat-header {
-  background-color: #212529;
+  background-color: rgba(52,53,65);
   border-bottom-color: #666;
   color: #fff;
 }
 
 .dark-mode .chat-messages {
-  background-color: #212529;
+  background-color: rgba(68, 70, 84, 0.74);
   color: #fff;
 }
 
@@ -350,7 +350,7 @@ input[type="range"]::-ms-fill-upper {
 }
 
 .dark-mode .chat-input {
-  background-color: #212529;
+  background-color: #353740;
 }
 
 .btn-primary {
