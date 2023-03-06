@@ -1,3 +1,28 @@
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+.chat-container {
+  height: 100%;
+  max-height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  max-height: calc(50vh - 50px);
+}
+
+@media (max-width: 767.98px) {
+  .chat-container {
+    max-width: 100%;
+  }
+}
+
 .chat-container {
   max-width: 95%;
   margin: 50px auto;
@@ -234,7 +259,7 @@ input {
 }
 
 /*Chrome*/
-@media screen and (-webkit-min-device-pixel-ratio:0) {
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
   input[type='range'] {
     overflow: hidden;
     -webkit-appearance: none;
@@ -256,17 +281,21 @@ input {
   }
 
 }
+
 /** FF*/
 input[type="range"]::-moz-range-progress {
   background-color: #00A67E;
 }
+
 input[type="range"]::-moz-range-track {
   background-color: #00A67E;
 }
+
 /* IE*/
 input[type="range"]::-ms-fill-lower {
   background-color: #00A67E;
 }
+
 input[type="range"]::-ms-fill-upper {
   background-color: #00A67E;
 }
