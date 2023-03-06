@@ -1,4 +1,4 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ChatCompletionRequestMessageRoleEnum, Configuration, Model, OpenAIApi} from "openai";
 import {TipModalComponent} from "./tip-modal/tip-modal.component";
 import {ChatCompletionRequestMessage} from "openai/dist/api";
@@ -10,10 +10,10 @@ import showdown from 'showdown';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
   messageInput = '';
-  messages: { content: string; contentRaw: string; isRaw?: boolean; timestamp: Date; avatar: string; isUser: boolean;}[] = [];
+  messages: { content: string; contentRaw: string; isRaw?: boolean; timestamp: Date; avatar: string; isUser: boolean; }[] = [];
   chatbotTyping = false;
   apikey = '';
   chatHistory: Array<ChatCompletionRequestMessage> = [];
@@ -32,9 +32,11 @@ export class AppComponent {
   temperature: number = 0.8;
 
   converter = new showdown.Converter({
-    tables: true, emoji: true, underline: true,  openLinksInNewWindow: true, tasklists: true,
+    tables: true, emoji: true, underline: true, openLinksInNewWindow: true, tasklists: true,
     strikethrough: true, simplifiedAutoLink: true
   });
+
+  isChatHeaderCollapsed = false;
 
   constructor() {
     // Retrieve the API key from local storage, if it exists
@@ -50,7 +52,23 @@ export class AppComponent {
     if (savedSelectedModel) {
       this.selectedModel = savedSelectedModel;
     }
+    const savedIsChatHeaderCollapsed = localStorage.getItem('isChatHeaderCollapsed');
+    if (savedIsChatHeaderCollapsed) {
+      this.isChatHeaderCollapsed = JSON.parse(savedIsChatHeaderCollapsed);
+    }
+
+    window.addEventListener('beforeunload', () => {
+      localStorage.setItem('isChatHeaderCollapsed', JSON.stringify(this.isChatHeaderCollapsed));
+    });
+
     this.refreshModels();
+  }
+
+  ngOnInit(): void {
+    if (this.isChatHeaderCollapsed) {
+      const chatHeader = document.getElementsByClassName('chat-header')[0];
+      chatHeader.classList.toggle('collapsed');
+    }
   }
 
   async sendMessage() {
@@ -181,6 +199,13 @@ export class AppComponent {
       hljs.default.highlightAll();
     }, 50);
 
+  }
+
+  toggleChatHeader() {
+    const chatHeader = document.getElementsByClassName('chat-header')[0];
+    chatHeader.classList.toggle('collapsed');
+    this.isChatHeaderCollapsed = !this.isChatHeaderCollapsed;
+    localStorage.setItem('isChatHeaderCollapsed', JSON.stringify(this.isChatHeaderCollapsed));
   }
 
   toggleDarkMode() {

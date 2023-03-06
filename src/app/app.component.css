@@ -356,3 +356,7 @@ input[type="range"]::-ms-fill-upper {
 .btn-primary {
   background-color: #00A67E;
 }
+
+.chat-header.collapsed {
+  display: none;
+}
