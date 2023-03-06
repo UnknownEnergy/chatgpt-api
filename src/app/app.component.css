@@ -1,15 +1,13 @@
-
 .chat-container {
-  margin-top: 50px;
-  max-width: 900px;
-  margin-left: auto;
-  margin-right: auto;
+  max-width: 95%;
+  margin: 50px auto;
   border: 1px solid #ccc;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   background-color: #f9f9f9;
   font-family: Arial, sans-serif;
   font-size: 16px;
+  position: relative;
 }
 
 .chat-header {
@@ -28,7 +26,7 @@
 }
 
 .chat-messages {
-  max-height: 400px;
+  height: 50vh;
   overflow-y: scroll;
   padding: 10px 20px;
 }
