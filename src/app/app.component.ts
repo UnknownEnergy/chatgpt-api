@@ -27,7 +27,8 @@ export class AppComponent {
   @ViewChild('messageContainer', {static: false}) messageContainer: ElementRef;
 
   @ViewChild('tipModal') tipModal: TipModalComponent;
-  showModal: boolean = false;
+  showTipModal: boolean = false;
+  showInfoModal: boolean = false;
   temperature: number = 0.8;
 
   converter = new showdown.Converter({

@@ -3,10 +3,13 @@
     <div class="d-flex justify-content-between align-items-center">
       <div class="d-flex align-items-center">
         <i class="bi bi-chat-heart-fill mb-0 ml-2 fs-2 me-3"></i>
-        <h2 class="mb-0 ml-2">Chat with ChatGPT API</h2>
+        <h2 class="mb-0 ml-2">Chat with ChatGPT via API</h2>
+        <button class="btn btn-primary" (click)="showInfoModal = true;">
+          <i class="bi bi-info-circle"></i>
+        </button>
       </div>
       <div class="d-flex">
-        <button class="btn btn-primary" (click)="showModal = true;">
+        <button class="btn btn-primary" (click)="showTipModal = true;">
           <i class="bi bi-currency-bitcoin"></i>
         </button>
         <button class="btn btn-primary" (click)="toggleDarkMode()">
@@ -14,7 +17,8 @@
         </button>
       </div>
     </div>
-    <app-tip-modal *ngIf="showModal" (close)="showModal = false;"></app-tip-modal>
+    <app-tip-modal *ngIf="showTipModal" (close)="showTipModal = false;"></app-tip-modal>
+    <app-info-modal *ngIf="showInfoModal" (close)="showInfoModal = false;"></app-info-modal>
     <br/>
     <p>Chat with me even when <a href="https://chat.openai.com/chat" target="_blank">https://chat.openai.com/chat</a> is down.<br/>
     Without the usual delays and too many requests in 1h.</p>

@@ -5,11 +5,13 @@ import { AppComponent } from './app.component';
 import {HttpClientModule} from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
 import { TipModalComponent } from './tip-modal/tip-modal.component';
+import {InfoModalComponent} from "./info-modal/info-modal.component";
 
 @NgModule({
   declarations: [
     AppComponent,
-    TipModalComponent
+    TipModalComponent,
+    InfoModalComponent
   ],
   imports: [
     HttpClientModule,
