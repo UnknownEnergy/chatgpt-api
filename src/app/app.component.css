@@ -219,6 +219,10 @@ button:hover {
   background-color: #005a44;
 }
 
+.bi-chat-heart-fill {
+  color: #00A67E;
+}
+
 input {
   width: 100%;
 }

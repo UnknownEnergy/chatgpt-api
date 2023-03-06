@@ -1,5 +1,5 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
-import {Configuration, Model, OpenAIApi} from "openai";
+import {ChatCompletionRequestMessageRoleEnum, Configuration, Model, OpenAIApi} from "openai";
 import {TipModalComponent} from "./tip-modal/tip-modal.component";
 import {ChatCompletionRequestMessage} from "openai/dist/api";
 import * as hljs from 'highlight.js';
@@ -47,7 +47,7 @@ export class AppComponent {
   }
 
   async sendMessage() {
-    this.chatHistory.push({content: this.messageInput, role: 'user'});
+    this.chatHistory.push({content: this.messageInput, role: ChatCompletionRequestMessageRoleEnum.User});
     const openai = this.getOpenAi();
 
     localStorage.setItem('apiKey', this.apikey);
@@ -112,7 +112,7 @@ export class AppComponent {
           message = response.data.choices[0].text;
         }
         let messageRaw = message;
-        this.chatHistory.push({content: messageRaw, role: 'system'});
+        this.chatHistory.push({content: messageRaw, role: ChatCompletionRequestMessageRoleEnum.Assistant});
         message = this.formatListAsHtml(message);
         message = this.formatTableAsHtml(message);
         message = this.formatCodeAsHtml(message);
