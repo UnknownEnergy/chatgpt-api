@@ -360,3 +360,7 @@ input[type="range"]::-ms-fill-upper {
 .chat-header.collapsed {
   display: none;
 }
+
+.chat-header.collapsed ~ .chat-messages {
+  max-height: calc(82vh - 100px);
+}
