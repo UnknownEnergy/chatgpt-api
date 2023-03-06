@@ -3,6 +3,7 @@ import {ChatCompletionRequestMessageRoleEnum, Configuration, Model, OpenAIApi} f
 import {TipModalComponent} from "./tip-modal/tip-modal.component";
 import {ChatCompletionRequestMessage} from "openai/dist/api";
 import * as hljs from 'highlight.js';
+import showdown from 'showdown';
 
 @Component({
   selector: 'app-root',
@@ -28,6 +29,11 @@ export class AppComponent {
   @ViewChild('tipModal') tipModal: TipModalComponent;
   showModal: boolean = false;
   temperature: number = 0.8;
+
+  converter = new showdown.Converter({
+    tables: true, emoji: true, underline: true,  openLinksInNewWindow: true, tasklists: true,
+    strikethrough: true, simplifiedAutoLink: true
+  });
 
   constructor() {
     // Retrieve the API key from local storage, if it exists
@@ -113,12 +119,8 @@ export class AppComponent {
         }
         let messageRaw = message;
         this.chatHistory.push({content: messageRaw, role: ChatCompletionRequestMessageRoleEnum.Assistant});
-        message = this.formatListAsHtml(message);
-        message = this.formatTableAsHtml(message);
-        message = this.formatCodeAsHtml(message);
-        message = AppComponent.formatBoldAsHtml(message);
         this.messages.push({
-          content: message,
+          content: this.converter.makeHtml(message),
           contentRaw: messageRaw,
           timestamp: new Date(),
           avatar: '<i class="bi bi-laptop"></i>',
@@ -173,50 +175,12 @@ export class AppComponent {
     })
   }
 
-  private static formatBoldAsHtml(message: string) {
-    return message.replace(/`([^`]+)`/g, '<b>$1</b>');
-  }
-
   private highlightCode() {
     setTimeout(() => {
       hljs.default.highlightAll();
     }, 50);
 
   }
-
-  formatListAsHtml(input) {
-    const regex = /(\n([*-]|\d+\.)\s[^\n]+)/g;
-    return input.replace(regex, match => {
-      const listItem = match.replace(/^\n/, '').replace(/^([*-]|\d+\.)\s/, '');
-      return `<li>${listItem}</li>`;
-    });
-  }
-
-  formatTableAsHtml(input) {
-    if (!input.includes('|')) {
-      return input;
-    }
-    const rows = input.split('\n');
-    const headers = rows[0].split('|');
-    const tableBody = rows.slice(2).map(row => {
-      const cells = row.split('|');
-      return `<tr>${cells.map(cell => `<td>${cell.trim()}</td>`).join('')}</tr>`;
-    }).join('');
-
-    return `<table><thead><tr>${headers.map(header => `<th>${header.trim()}</th>`).join('')}</tr></thead><tbody>${tableBody}</tbody></table>`;
-  }
-
-  formatCodeAsHtml(input) {
-    const regex = /```([\s\S]+?)```/g;
-    let match;
-    while ((match = regex.exec(input)) !== null) {
-      const codeString = match[1];
-      const formattedCode = `<pre><code>${codeString}</code></pre>`;
-      input = input.replaceAll(match[0], formattedCode);
-    }
-    return input;
-  }
-
 
   toggleDarkMode() {
     this.darkModeEnabled = !this.darkModeEnabled;
