@@ -9,6 +9,7 @@
   height: 100%;
   background-color: rgba(0, 0, 0, 0.4);
   z-index: 9999;
+  overflow-y: auto; /* add this line to make the content scrollable */
 }
 
 .popup-content {
