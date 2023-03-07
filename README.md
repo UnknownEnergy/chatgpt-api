@@ -1,9 +1,12 @@
-# ChatGPT Client via API
+# Chat Worm 
+# A ChatGPT Client to access the API
+
+<img src="src/assets/chatworm.png" alt="Chatworm" width="250"/>
 
 Live demo: https://chatworm.com/
 
 Example screenshot:  
-![alt text](src/assets/demo_screenshot.png "Example Screenshot")
+![demo](src/assets/demo_screenshot.png "Example Screenshot")
 
 # Setting Up Local Development
 1. First, open a terminal and navigate to the project directory.
