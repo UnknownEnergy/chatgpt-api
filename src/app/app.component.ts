@@ -99,7 +99,7 @@ export class AppComponent implements OnInit {
       content: this.messageInput,
       contentRaw: this.messageInput,
       timestamp: new Date(),
-      avatar: '<i class="bi bi-person-circle"></i>',
+      avatar: '<img src="/assets/person.png" alt="Chatworm" width="50px"/>',
       isUser: true
     });
 
@@ -157,7 +157,7 @@ export class AppComponent implements OnInit {
           content: this.converter.makeHtml(message),
           contentRaw: messageRaw,
           timestamp: new Date(),
-          avatar: '<i class="bi bi-laptop"></i>',
+          avatar: '<img src="/assets/chatworm_simple.png" alt="Chatworm" width="50px"/>',
           isUser: false,
         });
       }
