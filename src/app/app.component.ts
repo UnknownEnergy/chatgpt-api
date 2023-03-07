@@ -201,7 +201,7 @@ export class AppComponent implements OnInit {
     })
   }
 
-  private highlightCode() {
+  public highlightCode() {
     setTimeout(() => {
       hljs.default.highlightAll();
     }, 50);

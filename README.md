@@ -16,5 +16,10 @@ Example screenshot:
 2. Once the improvements have been made, run `npm build`. This will generate new files in the `dist` folder which are hosted on our demo page.
 3. Create a pull request which includes the updated `dist` folder.
 
+# Deploy to production
+1. Make sure everything is pushed to master.
+2. Run `npm deploy` to deploy it to production server.
+3. Check out https://chatworm.com/
+
 # License
 This project is licensed under the [MIT License](./LICENSE).
