@@ -221,7 +221,7 @@ export class AppComponent implements OnInit {
 
     const options = {
       headers: {
-        "authorization": "Bearer sess-QqQWbsaS0tJS1irdRMC63lJMVVE0nbWsz9JSWZbH",
+        "authorization": "Bearer "+ this.apikey,
       },
     };
 
