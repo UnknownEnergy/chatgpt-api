@@ -41,7 +41,7 @@
         <div class="col-md-8">
           <div class="d-flex">
             <input [type]="showPassword ? 'text' : 'password'" [(ngModel)]="apikey" placeholder="Enter API Key..."
-                   (input)="refreshModels()">
+                   (input)="onTypeApiKey()">
             <button (click)="showPassword = !showPassword;"><i class="bi bi-eye"></i></button>
           </div>
         </div>
