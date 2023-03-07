@@ -10,8 +10,7 @@
       </ng-template>
     </button>
     <button (click)="openUsageWebsite()" class="progress-bar" role="progressbar" [attr.aria-valuenow]="total_used"
-         [attr.aria-valuemin]="0" [attr.aria-valuemax]="total_granted">Usage: {{total_used|currency}}
-      / {{total_granted|currency}}</button>
+         [attr.aria-valuemin]="0" [attr.aria-valuemax]="total_granted">{{total_used|currency}} / {{total_granted|currency}}</button>
     <div class="d-flex">
       <button class="btn btn-primary" (click)="showTipModal = true;">
         <i class="bi bi-currency-bitcoin"></i>
