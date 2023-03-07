@@ -1,6 +1,6 @@
 # ChatGPT Client via API
 
-Live demo: https://unknownenergy.github.io/chatgpt-api/dist/chatgpt-api/index.html
+Live demo: https://chatworm.com/
 
 Example screenshot:  
 ![alt text](src/assets/demo_screenshot.png "Example Screenshot")
