@@ -4,7 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --base-href /chatgpt-api/dist/chatgpt-api/",
+    "build": "ng build --output-path dist/ --base-href .",
+    "deploy": "git subtree push --prefix dist origin gh-pages",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
