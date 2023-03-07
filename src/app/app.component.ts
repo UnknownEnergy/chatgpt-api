@@ -60,6 +60,10 @@ export class AppComponent implements OnInit {
     if (savedIsChatHeaderCollapsed) {
       this.isChatHeaderCollapsed = JSON.parse(savedIsChatHeaderCollapsed);
     }
+    const savedIsDarkModeEnabled = localStorage.getItem('darkModeEnabled');
+    if (savedIsDarkModeEnabled) {
+      this.darkModeEnabled = JSON.parse(savedIsDarkModeEnabled);
+    }
 
     window.addEventListener('beforeunload', () => {
       localStorage.setItem('isChatHeaderCollapsed', JSON.stringify(this.isChatHeaderCollapsed));
@@ -72,6 +76,10 @@ export class AppComponent implements OnInit {
     if (this.isChatHeaderCollapsed) {
       const chatHeader = document.getElementsByClassName('chat-header')[0];
       chatHeader.classList.toggle('collapsed');
+    }
+    if(this.darkModeEnabled) {
+      const container = document.getElementsByClassName('chat-container')[0];
+      container.classList.add('dark-mode');
     }
     this.refreshCredits();
     // Call refreshCredits function every 5 minutes
@@ -246,5 +254,11 @@ export class AppComponent implements OnInit {
     } else {
       container.classList.remove('dark-mode');
     }
+    localStorage.setItem('darkModeEnabled', JSON.stringify(this.darkModeEnabled));
+  }
+
+  onTypeApiKey() {
+    this.refreshModels();
+    localStorage.setItem('apiKey', this.apikey);
   }
 }
