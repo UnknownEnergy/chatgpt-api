@@ -14,7 +14,8 @@ html, body {
 .chat-messages {
   flex: 1;
   overflow-y: auto;
-  max-height: calc(50vh - 50px);
+  max-height: calc(50vh - 110px);
+  min-height: calc(50vh - 110px);
 }
 
 @media (max-width: 767.98px) {
@@ -363,4 +364,23 @@ input[type="range"]::-ms-fill-upper {
 
 .chat-header.collapsed ~ .chat-messages {
   max-height: calc(82vh - 100px);
+}
+
+.progress {
+  width: 100%;
+  height: 10px;
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,.1);
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  border-radius: 5px;
+  box-shadow: inset 0 -1px 0 rgba(0,0,0,.15);
+  transition: width .6s ease;
+  background-color: #00A67E;
+  color: white;
+  padding: 5px;
 }

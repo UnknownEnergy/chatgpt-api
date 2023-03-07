@@ -4,6 +4,7 @@ import {TipModalComponent} from "./tip-modal/tip-modal.component";
 import {ChatCompletionRequestMessage} from "openai/dist/api";
 import * as hljs from 'highlight.js';
 import showdown from 'showdown';
+import { HttpClient, HttpHeaders, HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -38,7 +39,10 @@ export class AppComponent implements OnInit {
 
   isChatHeaderCollapsed = false;
 
-  constructor() {
+  total_granted: number = 0;
+  total_used: number = 0;
+
+  constructor(private http: HttpClient) {
     // Retrieve the API key from local storage, if it exists
     const savedApiKey = localStorage.getItem('apiKey');
     if (savedApiKey) {
@@ -69,6 +73,9 @@ export class AppComponent implements OnInit {
       const chatHeader = document.getElementsByClassName('chat-header')[0];
       chatHeader.classList.toggle('collapsed');
     }
+    this.refreshCredits();
+    // Call refreshCredits function every 5 minutes
+    setInterval(this.refreshCredits, 300000);
   }
 
   async sendMessage() {
@@ -199,6 +206,29 @@ export class AppComponent implements OnInit {
       hljs.default.highlightAll();
     }, 50);
 
+  }
+
+  refreshCredits() {
+    const url = 'https://api.openai.com/dashboard/billing/credit_grants';
+
+    const options = {
+      headers: {
+        "authorization": "Bearer sess-QqQWbsaS0tJS1irdRMC63lJMVVE0nbWsz9JSWZbH",
+      },
+    };
+
+    this.http.get(url, options).subscribe((data: any) => {
+      this.total_granted = data.total_granted;
+      this.total_used = data.total_used;
+    });
+  }
+
+  openUsageWebsite() {
+    window.open("https://platform.openai.com/account/usage", "_blank");
+  }
+
+  openApiKeyWebsite() {
+    window.open("https://platform.openai.com/account/api-keys", "_blank");
   }
 
   toggleChatHeader() {
