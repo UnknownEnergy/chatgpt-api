@@ -25,7 +25,7 @@ html, body {
 }
 
 .header-info {
-  margin: 25px 25px 25px;
+  margin: 10px 10px 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -36,7 +36,7 @@ html, body {
 }
 
 .chat-container {
-  margin: 0 25px;
+  margin: 0 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -242,10 +242,10 @@ input {
 }
 
 button {
-  margin-bottom: 10px;
-  margin-left: 5px;
-  margin-right: 5px;
-  padding: 10px 20px;
+  margin-bottom: 5px;
+  margin-left: 2px;
+  margin-right: 2px;
+  padding: 5px 10px;
   background-color: #00A67E;
   color: #fff;
   border: none;
@@ -259,6 +259,10 @@ button {
 
 button:hover {
   background-color: #005a44;
+}
+
+.send-buttons {
+  height: 40px;
 }
 
 .bi-chat-heart-fill {
@@ -314,6 +318,10 @@ input[type="range"]::-ms-fill-lower {
 
 input[type="range"]::-ms-fill-upper {
   background-color: #00A67E;
+}
+
+input[type="range"] {
+  max-width: 300px;
 }
 
 .centered-link {

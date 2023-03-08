@@ -103,15 +103,11 @@
   </div>
   <div class="chat-input">
     <div class="d-flex">
-      <div class="col-md-10">
-        <textarea [(ngModel)]="messageInput" type="text" placeholder="Type a message..."
-                  (keydown.enter)="$event.preventDefault();sendMessage()"></textarea>
-      </div>
-      <div class="col-md-2">
-        <div class="d-flex">
-          <button (click)="sendMessage()"><i class="bi bi-send"></i></button>
-          <button (click)="resendLastMessage()"><i class="bi bi-arrow-repeat"></i></button>
-        </div>
+      <textarea [(ngModel)]="messageInput" type="text" placeholder="Type a message..."
+                (keydown.enter)="$event.preventDefault();sendMessage()"></textarea>
+      <div class="d-flex send-buttons">
+        <button (click)="sendMessage()"><i class="bi bi-send"></i></button>
+        <button (click)="resendLastMessage()"><i class="bi bi-arrow-repeat"></i></button>
       </div>
     </div>
   </div>
