@@ -8,7 +8,17 @@ import QRCode from 'qrcode';
   styleUrls: ['./info-modal.component.css']
 })
 export class InfoModalComponent {
+  @Input() darkModeEnabled: boolean;
+
   @Output() close = new EventEmitter<void>();
 
   constructor() {}
+
+
+  ngOnInit(): void {
+    if(this.darkModeEnabled) {
+      const container = document.getElementsByClassName('popup-container')[0];
+      container.classList.add('dark-mode');
+    }
+  }
 }

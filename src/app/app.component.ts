@@ -11,7 +11,7 @@ import {MatDialog} from "@angular/material/dialog";
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css', './app.component-dark.css']
 })
 export class AppComponent implements OnInit {
 
@@ -86,7 +86,9 @@ export class AppComponent implements OnInit {
     }
     if(this.darkModeEnabled) {
       const container = document.getElementsByClassName('chat-container')[0];
+      const titleCard = document.getElementsByClassName('title-card')[0];
       container.classList.add('dark-mode');
+      titleCard.classList.add('dark-mode');
     }
     // Call refreshCredits function every 5 minutes
     setInterval(this.refreshCredits, 300000);
@@ -267,10 +269,13 @@ export class AppComponent implements OnInit {
   toggleDarkMode() {
     this.darkModeEnabled = !this.darkModeEnabled;
     const container = document.getElementsByClassName('chat-container')[0];
+    const titleCard = document.getElementsByClassName('title-card')[0];
     if (this.darkModeEnabled) {
       container.classList.add('dark-mode');
+      titleCard.classList.add('dark-mode');
     } else {
       container.classList.remove('dark-mode');
+      titleCard.classList.remove('dark-mode');
     }
     localStorage.setItem('darkModeEnabled', JSON.stringify(this.darkModeEnabled));
   }

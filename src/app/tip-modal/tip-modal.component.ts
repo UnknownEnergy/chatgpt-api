@@ -8,8 +8,11 @@ import QRCode from 'qrcode';
   styleUrls: ['./tip-modal.component.css']
 })
 export class TipModalComponent {
+  @Input() darkModeEnabled: boolean;
+
   bitcoinAddress: string = '1Beer4MeHd1ybUeWWKxA6ieYV7xiufQxUE';
   qrCode: string;
+
   @Output() close = new EventEmitter<void>();
 
   constructor(private clipboard: Clipboard) {}
@@ -20,6 +23,11 @@ export class TipModalComponent {
 
   async ngOnInit() {
     this.qrCode = await QRCode.toDataURL(this.bitcoinAddress)
+
+    if(this.darkModeEnabled) {
+      const container = document.getElementsByClassName('popup-container')[0];
+      container.classList.add('dark-mode');
+    }
   }
 
 }
