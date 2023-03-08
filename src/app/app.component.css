@@ -259,6 +259,11 @@ input {
   width: 100%;
 }
 
+pre {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+}
+
 /*Chrome*/
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
   input[type='range'] {

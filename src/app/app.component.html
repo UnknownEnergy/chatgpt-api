@@ -65,7 +65,7 @@
     <div class="chat-message" *ngFor="let message of messages">
       <ng-container *ngIf="message.isUser; else systemMessage">
         <div class="message-content message-content-right">
-          {{message.content}}
+          <pre>{{message.content}}</pre>
           <div class="message-timestamp">{{ message.timestamp | date:'shortTime' }}</div>
         </div>
         <div class="message-avatar" [innerHTML]="message.avatar"></div>
@@ -79,7 +79,7 @@
           </ng-container>
           <ng-template #rawMessage>
             <div>
-              {{message.contentRaw |json}}
+              <pre>{{message.contentRaw}}</pre>
             </div>
           </ng-template>
           <div class="d-flex justify-content-end">

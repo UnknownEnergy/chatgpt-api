@@ -2,9 +2,9 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ChatCompletionRequestMessageRoleEnum, Configuration, Model, OpenAIApi} from "openai";
 import {TipModalComponent} from "./tip-modal/tip-modal.component";
 import {ChatCompletionRequestMessage} from "openai/dist/api";
-import * as hljs from 'highlight.js';
+import hljs from 'highlight.js';
 import showdown from 'showdown';
-import { HttpClient, HttpHeaders, HttpClientModule } from '@angular/common/http';
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-root',
@@ -81,7 +81,6 @@ export class AppComponent implements OnInit {
       const container = document.getElementsByClassName('chat-container')[0];
       container.classList.add('dark-mode');
     }
-    this.refreshCredits();
     // Call refreshCredits function every 5 minutes
     setInterval(this.refreshCredits, 300000);
   }
@@ -206,12 +205,13 @@ export class AppComponent implements OnInit {
     const openai = this.getOpenAi();
     openai.listModels().then(response => {
       this.models = response.data.data;
+      this.refreshCredits();
     })
   }
 
   public highlightCode() {
     setTimeout(() => {
-      hljs.default.highlightAll();
+      hljs.highlightAll();
     }, 50);
 
   }
