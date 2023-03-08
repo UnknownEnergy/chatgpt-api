@@ -25,7 +25,6 @@ html, body {
 }
 
 .header-info {
-  max-width: 95%;
   margin: 25px 25px 25px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -37,7 +36,6 @@ html, body {
 }
 
 .chat-container {
-  max-width: 95%;
   margin: 0 25px;
   border: 1px solid #ccc;
   border-radius: 5px;
