@@ -3,3 +3,7 @@
 @import "~bootstrap-icons";
 @import "~highlight.js/styles/default.css";
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
+
+body {
+    background-color: #00644b;
+}

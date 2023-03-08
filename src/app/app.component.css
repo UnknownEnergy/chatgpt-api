@@ -1,5 +1,5 @@
 html, body {
-  height: 100%;
+  height: 98%;
   overflow: hidden;
 }
 
@@ -14,8 +14,8 @@ html, body {
 .chat-messages {
   flex: 1;
   overflow-y: auto;
-  max-height: calc(50vh - 110px);
-  min-height: calc(50vh - 110px);
+  max-height: calc(90vh - 100px);
+  min-height: 56.6vh;
 }
 
 @media (max-width: 767.98px) {
@@ -24,7 +24,7 @@ html, body {
   }
 }
 
-.header-info {
+.title-card {
   margin: 10px 10px 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -62,7 +62,6 @@ html, body {
 }
 
 .chat-messages {
-  height: 50vh;
   overflow-y: scroll;
   padding: 10px 20px;
   background-color: rgba(0, 0, 0, 0.04);
@@ -237,7 +236,6 @@ input {
   font-size: 16px;
   font-family: Arial, sans-serif;
   outline: none;
-  margin-bottom: 10px;
   width: 100%;
 }
 
@@ -331,52 +329,6 @@ input[type="range"] {
   margin-bottom: 10px;
 }
 
-.dark-mode {
-  background-color: rgba(68, 70, 84, 0.74);
-  color: #fff;
-}
-
-.dark-mode .chat-container {
-  background-color: rgba(68, 70, 84, 0.74);
-  border-color: #555;
-}
-
-.dark-mode .chat-header {
-  background-color: rgba(52,53,65);
-  border-bottom-color: #666;
-  color: #fff;
-}
-
-.dark-mode .chat-messages {
-  background-color: rgba(68, 70, 84, 0.74);
-  color: #fff;
-}
-
-.dark-mode .chat-message.user .message-content::after {
-  border-left-color: #007fff;
-}
-
-.dark-mode .message-content {
-  background-color: #fff;
-  color: #222;
-}
-
-.dark-mode .message-content-right::after {
-  border-left-color: #fff;
-}
-
-.dark-mode .message-content-left::before {
-  border-right-color: #fff;
-}
-
-.dark-mode .message-timestamp {
-  color: #bbb;
-}
-
-.dark-mode .chat-input {
-  background-color: #353740;
-}
-
 .btn-primary {
   background-color: #00A67E;
 }
@@ -386,7 +338,8 @@ input[type="range"] {
 }
 
 .chat-header.collapsed ~ .chat-messages {
-  max-height: calc(82vh - 100px);
+  max-height: calc(90vh - 100px);
+  min-height: 76.8vh;
 }
 
 .progress {
@@ -399,11 +352,25 @@ input[type="range"] {
 }
 
 .progress-bar {
-  height: 100%;
+  align-self: center;
+  height: 40px;
   border-radius: 5px;
   box-shadow: inset 0 -1px 0 rgba(0,0,0,.15);
   transition: width .6s ease;
   background-color: #00A67E;
   color: white;
   padding: 5px;
+}
+
+.chatworm-image {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.chatworm-image img {
+  margin-left: 10px;
+  max-width: 100%;
+  width: 40px;
+  height: auto;
 }

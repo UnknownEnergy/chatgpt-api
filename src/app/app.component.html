@@ -1,8 +1,10 @@
-<div class="header-info d-flex justify-content-center align-items-center">
-  <img src="/assets/chatworm.png" alt="Chatworm" width="50px"/>
-  <div>
-    <h3 class="mb-0 ml-2">Chat Worm</h3>
-    <h6 class="mb-0 ml-2">Chat with ChatGPT via API</h6>
+<div class="title-card">
+  <div class="d-flex justify-content-center align-items-center">
+    <img src="/assets/chatworm.png" alt="Chatworm" width="50px"/>
+    <div>
+      <h3 class="mb-0 ml-2">Chat Worm</h3>
+      <h6 class="mb-0 ml-2">Chat with ChatGPT via API</h6>
+    </div>
   </div>
 </div>
 <div class="chat-container">
@@ -21,10 +23,9 @@
         <i class="bi bi-info-circle"></i>
       </button>
     </div>
-    <button (click)="openUsageWebsite()" class="progress-bar" role="progressbar" [attr.aria-valuenow]="total_used"
-            [attr.aria-valuemin]="0" [attr.aria-valuemax]="total_granted">{{total_used|currency}}
-      / {{total_granted|currency}}</button>
     <div class="d-flex">
+      <button (click)="openUsageWebsite()" class="progress-bar" role="progressbar" [attr.aria-valuenow]="total_used"
+           [attr.aria-valuemin]="0" [attr.aria-valuemax]="total_granted">{{total_used|currency}} / {{total_granted|currency}}</button>
       <button class="btn btn-primary" (click)="showTipModal = true;">
         <i class="bi bi-currency-bitcoin"></i>
       </button>
@@ -33,14 +34,14 @@
       </button>
     </div>
   </div>
-  <app-tip-modal *ngIf="showTipModal" (close)="showTipModal = false;"></app-tip-modal>
-  <app-info-modal *ngIf="showInfoModal" (close)="showInfoModal = false;"></app-info-modal>
+  <app-tip-modal *ngIf="showTipModal" [darkModeEnabled]="this.darkModeEnabled" (close)="showTipModal = false;"></app-tip-modal>
+  <app-info-modal *ngIf="showInfoModal" [darkModeEnabled]="this.darkModeEnabled" (close)="showInfoModal = false;"></app-info-modal>
   <div class="chat-header">
     <div class="row">
       <div class="d-flex">
         <div class="col-md-8">
           <div class="d-flex">
-            <input [type]="showPassword ? 'text' : 'password'" [(ngModel)]="apikey" placeholder="Enter API Key..."
+            <input class="input-api" [type]="showPassword ? 'text' : 'password'" [(ngModel)]="apikey" placeholder="Enter API Key..."
                    (input)="onTypeApiKey()">
             <button (click)="showPassword = !showPassword;"><i class="bi bi-eye"></i></button>
           </div>
@@ -48,14 +49,23 @@
         <button (click)="openApiKeyWebsite()">Get API Key</button>
       </div>
     </div>
-    <p>Model to use: <select class="btn btn-primary" [(ngModel)]="selectedModel">
-      <option *ngFor="let model of models" [value]="model.id">
-        {{model.id}}
-      </option>
-    </select>
+    <p>Model to use:
+      <select class="btn btn-primary" [(ngModel)]="selectedModel">
+        <option *ngFor="let model of models" [value]="model.id">
+          {{model.id}}
+          <p *ngIf="model.id === 'gpt-3.5-turbo'">(default)</p>
+         </option>
+      </select>
     </p>
-    <div class="d-flex align-items-center">Randomness: <input type="range" min="0" max="2" step="0.1"
-                                                              [(ngModel)]="temperature"> ({{temperature}})
+    <div class="d-flex align-items-center">
+      <div style="min-width: 200px">
+        <p>Randomness: {{temperature}}
+          <br>
+          <span *ngIf="temperature === 0.8">(default)</span>
+          <span *ngIf="temperature !== 0.8">(The default value is 0.8)</span>
+        </p>
+      </div>
+      <input class="input-randomness" type="range" min="0" max="2" step="0.1" [(ngModel)]="temperature">
     </div>
   </div>
   <div class="chat-messages" #messageContainer>
@@ -103,7 +113,7 @@
   </div>
   <div class="chat-input">
     <div class="d-flex">
-      <textarea [(ngModel)]="messageInput" type="text" placeholder="Type a message..."
+      <textarea class="textarea-message" [(ngModel)]="messageInput" type="text" placeholder="Type a message..."
                 (keydown.enter)="$event.preventDefault();sendMessage()"></textarea>
       <div class="d-flex send-buttons">
         <button (click)="sendMessage()"><i class="bi bi-send"></i></button>
