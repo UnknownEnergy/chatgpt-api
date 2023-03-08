@@ -1,0 +1,28 @@
+<mat-dialog-content>
+<div class="d-flex justify-content-between align-items-center">
+  <div class="d-flex align-items-center">
+    <img src="/assets/chatworm.png" alt="Chatworm" width="100px"/>
+    <div class="m-4">
+      <h2 class="mb-0 ml-2">Chat Worm</h2>
+      <h5 class="mb-0 ml-2">Chat with ChatGPT via API</h5>
+    </div>
+  </div>
+</div>
+<br/>
+<p>Chat with me even when ChatGPT is down.<br/>
+  Without the usual delays and too many requests in 1 hour.</p>
+  <mat-form-field>
+      <div class="d-flex">
+        <div class="col-md-8">
+          <input [(ngModel)]="apiKey" placeholder="Enter API Key...">
+        </div>
+        <div class="col-md-4">
+        <button (click)="openApiKeyWebsite()">Get Key</button>
+        </div>
+      </div>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onSave()">Save</button>
+  <button mat-button (click)="onCancel()">Cancel</button>
+</mat-dialog-actions>

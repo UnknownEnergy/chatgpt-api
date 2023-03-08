@@ -2,3 +2,4 @@
 @import "~bootstrap/dist/css/bootstrap.min.css";
 @import "~bootstrap-icons";
 @import "~highlight.js/styles/default.css";
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';

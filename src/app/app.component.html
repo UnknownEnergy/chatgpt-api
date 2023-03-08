@@ -1,16 +1,29 @@
+<div class="header-info d-flex justify-content-center align-items-center">
+  <img src="/assets/chatworm.png" alt="Chatworm" width="50px"/>
+  <div>
+    <h3 class="mb-0 ml-2">Chat Worm</h3>
+    <h6 class="mb-0 ml-2">Chat with ChatGPT via API</h6>
+  </div>
+</div>
 <div class="chat-container">
   <div class="d-flex justify-content-between align-items-center">
-    <button class="btn btn-primary toggle-button" (click)="toggleChatHeader()"
-            [ngClass]="{'collapsed': isChatHeaderCollapsed}">
-      <ng-container *ngIf="!isChatHeaderCollapsed; else isCollapsed">
-        <i class="bi bi-chevron-up"></i>
-      </ng-container>
-      <ng-template #isCollapsed>
-        <i class="bi bi-chevron-down"></i>
-      </ng-template>
-    </button>
+    <div class="d-flex align-items-center">
+      <button class="btn btn-primary toggle-button" (click)="toggleChatHeader()"
+              [ngClass]="{'collapsed': isChatHeaderCollapsed}">
+        <ng-container *ngIf="!isChatHeaderCollapsed; else isCollapsed">
+          <i class="bi bi-chevron-up"></i>
+        </ng-container>
+        <ng-template #isCollapsed>
+          <i class="bi bi-chevron-down"></i>
+        </ng-template>
+      </button>
+      <button class="btn btn-primary" (click)="showInfoModal = true;">
+        <i class="bi bi-info-circle"></i>
+      </button>
+    </div>
     <button (click)="openUsageWebsite()" class="progress-bar" role="progressbar" [attr.aria-valuenow]="total_used"
-         [attr.aria-valuemin]="0" [attr.aria-valuemax]="total_granted">{{total_used|currency}} / {{total_granted|currency}}</button>
+            [attr.aria-valuemin]="0" [attr.aria-valuemax]="total_granted">{{total_used|currency}}
+      / {{total_granted|currency}}</button>
     <div class="d-flex">
       <button class="btn btn-primary" (click)="showTipModal = true;">
         <i class="bi bi-currency-bitcoin"></i>
@@ -23,22 +36,6 @@
   <app-tip-modal *ngIf="showTipModal" (close)="showTipModal = false;"></app-tip-modal>
   <app-info-modal *ngIf="showInfoModal" (close)="showInfoModal = false;"></app-info-modal>
   <div class="chat-header">
-    <div class="d-flex justify-content-between align-items-center">
-      <div class="d-flex align-items-center">
-        <img src="/assets/chatworm.png" alt="Chatworm" width="100px"/>
-        <div class="m-4">
-          <h2 class="mb-0 ml-2">Chat Worm</h2>
-          <h5 class="mb-0 ml-2">Chat with ChatGPT via API</h5>
-        </div>
-        <button class="btn btn-primary" (click)="showInfoModal = true;">
-          <i class="bi bi-info-circle"></i>
-        </button>
-      </div>
-    </div>
-    <br/>
-    <p>Chat with me even when <a href="https://chat.openai.com/chat" target="_blank">https://chat.openai.com/chat</a> is
-      down.<br/>
-      Without the usual delays and too many requests in 1h.</p>
     <div class="row">
       <div class="d-flex">
         <div class="col-md-8">
@@ -84,7 +81,8 @@
           </ng-template>
           <div class="d-flex justify-content-end">
             <div class="message-timestamp">{{ message.timestamp | date:'shortTime' }}</div>
-            <button class="raw" (click)="message.isRaw = !message.isRaw; highlightCode()"><i class="bi bi-braces"></i></button>
+            <button class="raw" (click)="message.isRaw = !message.isRaw; highlightCode()"><i class="bi bi-braces"></i>
+            </button>
           </div>
         </div>
       </ng-template>

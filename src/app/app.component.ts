@@ -5,6 +5,8 @@ import {ChatCompletionRequestMessage} from "openai/dist/api";
 import hljs from 'highlight.js';
 import showdown from 'showdown';
 import {HttpClient} from "@angular/common/http";
+import {IntroModalComponent} from "./intro-modal/intro-modal.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-root',
@@ -37,12 +39,13 @@ export class AppComponent implements OnInit {
     strikethrough: true, simplifiedAutoLink: true
   });
 
-  isChatHeaderCollapsed = false;
+  isChatHeaderCollapsed = true;
 
   total_granted: number = 0;
   total_used: number = 0;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private dialog: MatDialog) {
     // Retrieve the API key from local storage, if it exists
     const savedApiKey = localStorage.getItem('apiKey');
     if (savedApiKey) {
@@ -73,6 +76,10 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if(!this.apikey) {
+      this.openApiKeyDialog();
+    }
+
     if (this.isChatHeaderCollapsed) {
       const chatHeader = document.getElementsByClassName('chat-header')[0];
       chatHeader.classList.toggle('collapsed');
@@ -83,6 +90,17 @@ export class AppComponent implements OnInit {
     }
     // Call refreshCredits function every 5 minutes
     setInterval(this.refreshCredits, 300000);
+  }
+
+  openApiKeyDialog() {
+    const dialogRef = this.dialog.open(IntroModalComponent);
+    dialogRef.afterClosed().subscribe((res) => {
+      if (res.apiKey) {
+        this.apikey = res.apiKey;
+        localStorage.setItem('apiKey', this.apikey);
+        this.refreshModels();
+      }
+    });
   }
 
   async sendMessage() {
