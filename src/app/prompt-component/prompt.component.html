@@ -1,4 +1,4 @@
-<div *ngIf="data.mobileType === 'android'">
+<div *ngIf="data.mobileType === 'android'" class="justify-content-center">
   <button (click)="installPwa()">
     Install App
   </button>
@@ -7,7 +7,7 @@
   </button>
 </div>
 
-<div *ngIf="data.mobileType === 'ios'" class="ios-prompt">
+<div *ngIf="data.mobileType === 'ios'" class="justify-content-center">
   <button (click)="close()">close</button>
   <div>To install this app on your device tap the Menu button and then 'Add to Home screen' button</div>
 </div>

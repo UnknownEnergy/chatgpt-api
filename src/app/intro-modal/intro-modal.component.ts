@@ -10,8 +10,7 @@ import {PwaService} from "../services/pwa.service";
 export class IntroModalComponent {
   apiKey: string;
 
-  constructor(public dialogRef: MatDialogRef<IntroModalComponent>, pwaService: PwaService) {
-    pwaService.initPwaPrompt();
+  constructor(public dialogRef: MatDialogRef<IntroModalComponent>) {
   }
 
   onContinue() {
