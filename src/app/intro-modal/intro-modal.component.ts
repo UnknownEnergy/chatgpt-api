@@ -1,5 +1,7 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component} from '@angular/core';
 import {MatDialogRef} from '@angular/material/dialog';
+import {SwUpdate} from "@angular/service-worker";
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-intro-dialog',
@@ -8,8 +10,20 @@ import {MatDialogRef} from '@angular/material/dialog';
 })
 export class IntroModalComponent {
   apiKey: string;
+  showAddToHomeScreenButton = false;
 
-  constructor(public dialogRef: MatDialogRef<IntroModalComponent>) {
+  constructor(public dialogRef: MatDialogRef<IntroModalComponent>,
+              private swUpdate: SwUpdate,
+              private breakpointObserver: BreakpointObserver) {
+  }
+
+  ngOnInit() {
+    this.breakpointObserver.observe([
+      Breakpoints.HandsetPortrait,
+      Breakpoints.HandsetLandscape
+    ]).subscribe(result => {
+      this.showAddToHomeScreenButton = result.matches;
+    });
   }
 
   onContinue() {
@@ -18,5 +32,21 @@ export class IntroModalComponent {
 
   openApiKeyWebsite() {
     window.open("https://platform.openai.com/account/api-keys", "_blank");
+  }
+
+  promptAddToHomeScreen() {
+    const promptEvent = this.swUpdate.versionUpdates.subscribe(event => {
+      const prompt = (event as any).prompt();
+      if (prompt) {
+        prompt.userChoice.then(choiceResult => {
+          if (choiceResult.outcome === 'accepted') {
+            console.log('User accepted the A2HS prompt');
+          } else {
+            console.log('User dismissed the A2HS prompt');
+          }
+        });
+      }
+      promptEvent.unsubscribe();
+    });
   }
 }
