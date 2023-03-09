@@ -7,6 +7,7 @@ import showdown from 'showdown';
 import {HttpClient} from "@angular/common/http";
 import {IntroModalComponent} from "./intro-modal/intro-modal.component";
 import {MatDialog} from "@angular/material/dialog";
+import {InfoModalComponent} from "./info-modal/info-modal.component";
 
 @Component({
   selector: 'app-root',
@@ -29,9 +30,6 @@ export class AppComponent implements OnInit {
 
   @ViewChild('messageContainer', {static: false}) messageContainer: ElementRef;
 
-  @ViewChild('tipModal') tipModal: TipModalComponent;
-  showTipModal: boolean = false;
-  showInfoModal: boolean = false;
   temperature: number = 0.8;
 
   converter = new showdown.Converter({
@@ -77,7 +75,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     if(!this.apikey) {
-      this.openApiKeyDialog();
+      this.openIntroDialog();
     }
 
     if (this.isChatHeaderCollapsed) {
@@ -94,7 +92,7 @@ export class AppComponent implements OnInit {
     setInterval(this.refreshCredits, 300000);
   }
 
-  openApiKeyDialog() {
+  openIntroDialog() {
     const dialogRef = this.dialog.open(IntroModalComponent);
     dialogRef.afterClosed().subscribe((res) => {
       if (res.apiKey) {
@@ -103,6 +101,14 @@ export class AppComponent implements OnInit {
         this.refreshModels();
       }
     });
+  }
+
+  openTipDialog() {
+    this.dialog.open(TipModalComponent);
+  }
+
+  openInfoDialog() {
+    this.dialog.open(InfoModalComponent);
   }
 
   async sendMessage() {
