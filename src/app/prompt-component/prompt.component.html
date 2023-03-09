@@ -1,13 +1,13 @@
-<mat-toolbar *ngIf="data.mobileType === 'android'" color="primary" class="android-prompt">
+<div *ngIf="data.mobileType === 'android'">
   <button (click)="installPwa()">
-    Add to Home screen
+    Install App
   </button>
   <button (click)="close()">
     close
   </button>
-</mat-toolbar>
+</div>
 
 <div *ngIf="data.mobileType === 'ios'" class="ios-prompt">
   <button (click)="close()">close</button>
-  <div>To install this web app on your device tap the Menu button and then 'Add to Home screen' button</div>
+  <div>To install this app on your device tap the Menu button and then 'Add to Home screen' button</div>
 </div>
