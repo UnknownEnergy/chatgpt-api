@@ -1,4 +1,4 @@
-import {NgModule, isDevMode, APP_INITIALIZER} from '@angular/core';
+import {NgModule, isDevMode} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
@@ -16,10 +16,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { PromptComponent } from './prompt-component/prompt.component';
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatIconModule} from "@angular/material/icon";
-import {PwaService} from "./services/pwa.service";
 import {MatBottomSheet} from "@angular/material/bottom-sheet";
-
-const initializer = (pwaService: PwaService) => () => pwaService.initPwaPrompt();
 
 @NgModule({
   declarations: [
@@ -47,8 +44,7 @@ const initializer = (pwaService: PwaService) => () => pwaService.initPwaPrompt()
     MatToolbarModule,
     MatIconModule,
   ],
-  providers: [MatBottomSheet,
-    {provide: APP_INITIALIZER, useFactory: initializer, deps: [PwaService], multi: true},],
+  providers: [MatBottomSheet],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

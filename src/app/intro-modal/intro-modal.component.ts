@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {MatDialogRef} from '@angular/material/dialog';
+import {PwaService} from "../services/pwa.service";
 
 @Component({
   selector: 'app-intro-dialog',
@@ -9,7 +10,8 @@ import {MatDialogRef} from '@angular/material/dialog';
 export class IntroModalComponent {
   apiKey: string;
 
-  constructor(public dialogRef: MatDialogRef<IntroModalComponent>) {
+  constructor(public dialogRef: MatDialogRef<IntroModalComponent>, pwaService: PwaService) {
+    pwaService.initPwaPrompt();
   }
 
   onContinue() {
