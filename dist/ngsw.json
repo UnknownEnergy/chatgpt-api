@@ -1,0 +1,93 @@
+{
+  "configVersion": 1,
+  "timestamp": 1678395480844,
+  "index": "./index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "./favicon.ico",
+        "./index.html",
+        "./main.76f13422758506c5.js",
+        "./manifest.webmanifest",
+        "./polyfills.a5d16fe673985cfd.js",
+        "./runtime.555116b5a0de2ff7.js",
+        "./styles.e2185b47dcb49e94.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "./assets/chatworm.png",
+        "./assets/chatworm_simple.png",
+        "./assets/demo_screenshot.png",
+        "./assets/icons/icon-128x128.png",
+        "./assets/icons/icon-144x144.png",
+        "./assets/icons/icon-152x152.png",
+        "./assets/icons/icon-192x192.png",
+        "./assets/icons/icon-384x384.png",
+        "./assets/icons/icon-512x512.png",
+        "./assets/icons/icon-72x72.png",
+        "./assets/icons/icon-96x96.png",
+        "./assets/person.png",
+        "./bootstrap-icons.35e09da2aecdd969.woff2",
+        "./bootstrap-icons.cb4c7c05f3292543.woff"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "./assets/chatworm.png": "6dc11906419b0f44abb433a5cd947dad28fade00",
+    "./assets/chatworm_simple.png": "7208550c6b370c812bfe0882672d793aa2616010",
+    "./assets/demo_screenshot.png": "a9b83c61c3ad1439cf7d17bd5b8eec90c3e88cf8",
+    "./assets/icons/icon-128x128.png": "fcbce93c4dc62a03298326a21805068abf222b83",
+    "./assets/icons/icon-144x144.png": "1ecd99726c84410dcc173cd4e8dfa62fc898f83c",
+    "./assets/icons/icon-152x152.png": "b9a9bd3a092d3e464d121a3c824bc840c3568f9c",
+    "./assets/icons/icon-192x192.png": "7fe91b270331db06d0ea6a303ae383009d3d4e63",
+    "./assets/icons/icon-384x384.png": "dae3d40c539333b0c2ac75df6c2a32f60c8880f5",
+    "./assets/icons/icon-512x512.png": "a0abc2552210ba5542e49f1d3e1f99bed0635ded",
+    "./assets/icons/icon-72x72.png": "ba4fc3446e09d2ab9a1dc7b2df686d73d471f478",
+    "./assets/icons/icon-96x96.png": "82aafd13d1ce01cca57c87148817a7884f2ba44f",
+    "./assets/person.png": "261f70ecf3a7abbfcaa12368ba1c1e4fe9187aea",
+    "./bootstrap-icons.35e09da2aecdd969.woff2": "17dad0776899ad1beadabd061c34e2a22b2cde74",
+    "./bootstrap-icons.cb4c7c05f3292543.woff": "75919c717ce5c5bc716bc51705c0cd0b60f4bffc",
+    "./favicon.ico": "b5465289afe19a0926b5268008830b6824c290f9",
+    "./index.html": "da50584fbe4094562ed010cbebcb7fd962c33eea",
+    "./main.76f13422758506c5.js": "3af10898c75e50d6269307e2061b57c9d89b8f25",
+    "./manifest.webmanifest": "9a2206720dcb7359e6b172b325bc5790a2dc35bb",
+    "./polyfills.a5d16fe673985cfd.js": "3d73675b423393412882d77ab88346376b1f47dc",
+    "./runtime.555116b5a0de2ff7.js": "3c8a1a0a789aa5954a0bcd5bf8fac9e5ab641d2b",
+    "./styles.e2185b47dcb49e94.css": "5898edebea6136e47883882ed3dca817858574af"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ],
+  "navigationRequestStrategy": "performance"
+}
