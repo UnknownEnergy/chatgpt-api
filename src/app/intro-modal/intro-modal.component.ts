@@ -35,7 +35,7 @@ export class IntroModalComponent {
   }
 
   promptAddToHomeScreen() {
-    const promptEvent = this.swUpdate.versionUpdates.subscribe(event => {
+    const promptEvent = this.swUpdate.available.subscribe(event => {
       const prompt = (event as any).prompt();
       if (prompt) {
         prompt.userChoice.then(choiceResult => {
