@@ -111,7 +111,7 @@
   </div>
   <div class="chat-input">
     <div class="d-flex">
-      <textarea class="textarea-message" [(ngModel)]="messageInput" type="text" placeholder="Type a message..."
+      <textarea #messageInputArea class="textarea-message" [(ngModel)]="messageInput" type="text" placeholder="Type a message..."
                 (keydown.enter)="$event.preventDefault();sendMessage()"></textarea>
       <div class="d-flex send-buttons">
         <button (click)="sendMessage()"><i class="bi bi-send"></i></button>

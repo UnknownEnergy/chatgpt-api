@@ -29,6 +29,7 @@ export class AppComponent implements OnInit {
   models: Model[] = [];
 
   @ViewChild('messageContainer', {static: false}) messageContainer: ElementRef;
+  @ViewChild('messageInputArea') messageInputRef;
 
   temperature: number = 0.8;
 
@@ -91,6 +92,8 @@ export class AppComponent implements OnInit {
     // Call refreshCredits function every 5 minutes
     setInterval(this.refreshCredits, 300000);
   }
+
+  ngAfterViewInit() { this.messageInputRef.nativeElement.focus(); }
 
   openIntroDialog() {
     const dialogRef = this.dialog.open(IntroModalComponent);
