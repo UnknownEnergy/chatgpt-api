@@ -3,8 +3,11 @@ mat-form-field {
   height: fit-content;
 }
 mat-dialog-actions {
-  padding-left: 30px;
   color: white;
+}
+
+mat-dialog-content {
+  height: fit-content;
 }
 
 input {
@@ -33,6 +36,7 @@ button {
   font-family: Arial, sans-serif;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
+  white-space: nowrap;
 }
 
 button:hover {

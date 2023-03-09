@@ -12,12 +12,8 @@ export class IntroModalComponent {
   constructor(public dialogRef: MatDialogRef<IntroModalComponent>) {
   }
 
-  onSave() {
+  onContinue() {
     this.dialogRef.close({apiKey: this.apiKey});
-  }
-
-  onCancel() {
-    this.dialogRef.close();
   }
 
   openApiKeyWebsite() {

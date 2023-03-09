@@ -11,18 +11,15 @@
 <br/>
 <p>Chat with me even when ChatGPT is down.<br/>
   Without the usual delays and too many requests in 1 hour.</p>
-  <mat-form-field>
-      <div class="d-flex">
-        <div class="col-md-8">
-          <input [(ngModel)]="apiKey" placeholder="Enter API Key...">
-        </div>
-        <div class="col-md-4">
-        <button (click)="openApiKeyWebsite()">Get Key</button>
-        </div>
-      </div>
-  </mat-form-field>
+  <div class="d-flex">
+  <div class="col-md-8">
+    <input [(ngModel)]="apiKey" placeholder="Enter API Key...">
+  </div>
+  <div class="col-md-4">
+    <button (click)="openApiKeyWebsite()">Get Key</button>
+  </div>
+  </div>
 </mat-dialog-content>
-<mat-dialog-actions>
-  <button mat-button (click)="onSave()">Save</button>
-  <button mat-button (click)="onCancel()">Cancel</button>
+<mat-dialog-actions class="justify-content-center">
+  <button (click)="onContinue()">Continue</button>
 </mat-dialog-actions>
