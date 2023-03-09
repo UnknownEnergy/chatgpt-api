@@ -19,6 +19,7 @@
     <button (click)="openApiKeyWebsite()">Get Key</button>
   </div>
   </div>
+  <button *ngIf="showAddToHomeScreenButton" (click)="promptAddToHomeScreen()">Add App to Home Screen</button>
 </mat-dialog-content>
 <mat-dialog-actions class="justify-content-center">
   <button (click)="onContinue()">Continue</button>

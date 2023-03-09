@@ -1,4 +1,4 @@
-import {NgModule, isDevMode, APP_INITIALIZER} from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
@@ -13,21 +13,13 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatButtonModule} from "@angular/material/button";
 import {MatInputModule} from "@angular/material/input";
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { PromptComponent } from './prompt-component/prompt.component';
-import {MatToolbarModule} from "@angular/material/toolbar";
-import {MatIconModule} from "@angular/material/icon";
-import {PwaService} from "./services/pwa.service";
-import {MatBottomSheet} from "@angular/material/bottom-sheet";
-
-const initializer = (pwaService: PwaService) => () => pwaService.initPwaPrompt();
 
 @NgModule({
   declarations: [
     AppComponent,
     TipModalComponent,
     InfoModalComponent,
-    IntroModalComponent,
-    PromptComponent
+    IntroModalComponent
   ],
   imports: [
     HttpClientModule,
@@ -43,12 +35,9 @@ const initializer = (pwaService: PwaService) => () => pwaService.initPwaPrompt()
       // Register the ServiceWorker as soon as the application is stable
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
-    }),
-    MatToolbarModule,
-    MatIconModule,
+    })
   ],
-  providers: [MatBottomSheet,
-    {provide: APP_INITIALIZER, useFactory: initializer, deps: [PwaService], multi: true},],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
