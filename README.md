@@ -24,5 +24,9 @@ Example screenshot:
 2. Run `npm deploy` to deploy it to production server.
 3. Check out https://chatworm.com/
 
+## Release on different App Stores
+1. Open https://www.pwabuilder.com/reportcard?site=https://chatworm.com
+2. Release on the stores
+
 ## License
 This project is licensed under the [MIT License](./LICENSE).
