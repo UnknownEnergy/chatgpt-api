@@ -18,6 +18,7 @@ import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatIconModule} from "@angular/material/icon";
 import {MatBottomSheet} from "@angular/material/bottom-sheet";
 import {PwaService} from "./services/pwa.service";
+import {InfoComponent} from "./info/info.component";
 
 const initializer = (pwaService: PwaService) => () => pwaService.initPwaPrompt();
 
@@ -25,6 +26,7 @@ const initializer = (pwaService: PwaService) => () => pwaService.initPwaPrompt()
   declarations: [
     AppComponent,
     TipModalComponent,
+    InfoComponent,
     InfoModalComponent,
     IntroModalComponent,
     PromptComponent

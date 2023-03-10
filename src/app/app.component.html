@@ -67,6 +67,7 @@
     </div>
   </div>
   <div class="chat-messages" #messageContainer>
+    <app-info *ngIf="messages.length === 0"></app-info>
     <div class="chat-message" *ngFor="let message of messages">
       <ng-container *ngIf="message.isUser; else systemMessage">
         <div class="message-content message-content-right">
