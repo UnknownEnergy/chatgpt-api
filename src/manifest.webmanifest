@@ -56,7 +56,7 @@
       "purpose": "maskable any"
     }
   ],
-  "description": "Chatworm is Chat Cliet interacting with the ChatGPT API directly, which is faster, cheaper and open source.",
+  "description": "Chatworm is a chat client interacting with the ChatGPT API directly, which is faster, cheaper and is more customizable.",
   "lang": "en",
   "orientation": "any",
   "screenshots": [
