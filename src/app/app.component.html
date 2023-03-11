@@ -68,8 +68,8 @@
     <div class="d-flex align-items-center">
       <p>Max Tokens: {{maxTokens}}
         <br>
-        <span *ngIf="maxTokens === 4000">(default)</span>
-        <span *ngIf="maxTokens !== 4000">(The default value is 4000)</span>
+        <span *ngIf="maxTokens === 2000">(default)</span>
+        <span *ngIf="maxTokens !== 2000">(The default value is 2000)</span>
       </p>
       <input class="input-max-tokens" type="number" [(ngModel)]="maxTokens">
     </div>
