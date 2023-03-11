@@ -1,7 +1,14 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {ChatCompletionRequestMessageRoleEnum, Configuration, Model, OpenAIApi} from "openai";
+import {
+  ChatCompletionRequestMessageRoleEnum,
+  Configuration,
+  CreateChatCompletionRequest,
+  CreateCompletionRequest,
+  Model,
+  OpenAIApi
+} from "openai";
 import {TipModalComponent} from "./tip-modal/tip-modal.component";
-import {ChatCompletionRequestMessage} from "openai/dist/api";
+import {ChatCompletionRequestMessage, CreateImageRequest} from "openai/dist/api";
 import hljs from 'highlight.js';
 import showdown from 'showdown';
 import {HttpClient} from "@angular/common/http";
@@ -80,7 +87,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if(!this.apikey) {
+    if (!this.apikey) {
       this.openIntroDialog();
     }
 
@@ -88,7 +95,7 @@ export class AppComponent implements OnInit {
       const chatHeader = document.getElementsByClassName('chat-header')[0];
       chatHeader.classList.toggle('collapsed');
     }
-    if(this.darkModeEnabled) {
+    if (this.darkModeEnabled) {
       const container = document.getElementsByClassName('chat-container')[0];
       const titleCard = document.getElementsByClassName('title-card')[0];
       container.classList.add('dark-mode');
@@ -98,7 +105,9 @@ export class AppComponent implements OnInit {
     setInterval(this.refreshCredits, 300000);
   }
 
-  ngAfterViewInit() { this.messageInputRef.nativeElement.focus(); }
+  ngAfterViewInit() {
+    this.messageInputRef.nativeElement.focus();
+  }
 
   openIntroDialog() {
     const dialogRef = this.dialog.open(IntroModalComponent);
@@ -121,7 +130,6 @@ export class AppComponent implements OnInit {
 
   async sendMessage() {
     this.chatHistory.push({content: this.messageInput, role: ChatCompletionRequestMessageRoleEnum.User});
-    const openai = this.getOpenAi();
 
     localStorage.setItem('apiKey', this.apikey);
     localStorage.setItem('temperature', this.temperature.toString());
@@ -147,77 +155,105 @@ export class AppComponent implements OnInit {
       this.messageContainer.nativeElement.scrollTop = this.messageContainer.nativeElement.scrollHeight;
     }, 0);
 
-    let promise;
-    promise = openai.createChatCompletion({
-      model: this.selectedModel,
-      messages: this.chatHistory,
-      temperature: this.temperature,
-      max_tokens: this.maxTokens,
-    }).then(response => {
-      return response;
-    })
-      .catch((firstError) => {
-        return openai.createCompletion({
+    const endpoints = [
+      {
+        endpoint: 'createChatCompletion',
+        payload: {
+          model: this.selectedModel,
+          messages: this.chatHistory,
+          temperature: this.temperature,
+          max_tokens: this.maxTokens,
+        } as CreateChatCompletionRequest
+      },
+      {
+        endpoint: 'createCompletion',
+        payload: {
           model: this.selectedModel,
           prompt: this.messages[this.messages.length - 1].content,
           temperature: this.temperature,
           max_tokens: this.maxTokens,
-        })
-          .then(response => {
-            return response;
-          })
-          .catch(error => {
-            if (firstError.response && firstError.response.status !== 404) {
-              throw firstError;
-            } else {
-              throw error;
-            }
-          });
-      });
+        } as CreateCompletionRequest
+      },
+      {
+        endpoint: 'createImage',
+        payload: {
+          prompt: this.messages[this.messages.length - 1].content,
+        } as CreateImageRequest
+      }
+    ];
 
-    promise.then(response => {
-      // Add the chatbot's response to the chat
-      if (response && response.data && response.data.choices && response.data.choices.length > 0) {
-        let message = '';
-        if (response.data.choices[0].message) {
-          message = response.data.choices[0].message.content;
-        } else {
-          // @ts-ignore
-          message = response.data.choices[0].text;
+    const openai = this.getOpenAi()
+    this.callEndpoints(0, openai, endpoints);
+  }
+
+  callEndpoints(index, openai, endpoints) {
+    if (index >= endpoints.length) {
+      return;
+    }
+
+    const {endpoint, payload} = endpoints[index];
+    openai[endpoint](payload)
+      .then(response => {
+        this.handleSuccessResponse(response);
+      })
+      .catch(error => {
+        if (error.response && error.response.status === 404) {
+          this.callEndpoints(index + 1, openai, endpoints);
+          return;
         }
-        let messageRaw = message;
-        this.chatHistory.push({content: messageRaw, role: ChatCompletionRequestMessageRoleEnum.Assistant});
-        this.messages.push({
-          content: this.converter.makeHtml(message),
-          contentRaw: messageRaw,
-          timestamp: new Date(),
-          avatar: '<img src="/assets/chatworm_simple.png" alt="Chatworm" width="50px"/>',
-          isUser: false,
-        });
+        this.handleFinalErrorResponse(error);
+      });
+  }
+
+  private handleSuccessResponse(response) {
+    // Add the chatbot's response to the chat
+    console.log(JSON.stringify(response));
+    if (response && response.data) {
+      let message = '';
+      if (response.data.choices && response.data.choices[0].message) {
+        message = response.data.choices[0].message.content;
       }
-      this.highlightCode();
-
-      // Set the chatbot typing indicator to false
-      this.chatbotTyping = false;
-
-      setTimeout(() => {
-        this.messageContainer.nativeElement.scrollTop = this.messageContainer.nativeElement.scrollHeight;
-      }, 0);
-    }).catch(error => {
-      // Set the chatbot typing indicator to false
-      this.chatbotTyping = false;
-
-      setTimeout(() => {
-        this.messageContainer.nativeElement.scrollTop = this.messageContainer.nativeElement.scrollHeight;
-      }, 0);
-
-      if (error.response && error.response.data && error.response.data.error) {
-        alert(error.response.data.error.message);
-      } else {
-        alert(error.message);
+      else if (response.data.data && response.data.data[0].url) {
+        message = '<img src="'+response.data.data[0].url+'" height="500px"/>';
       }
-    });
+      else {
+        // @ts-ignore
+        message = response.data.choices[0].text;
+      }
+      let messageRaw = message;
+      this.chatHistory.push({content: messageRaw, role: ChatCompletionRequestMessageRoleEnum.Assistant});
+      this.messages.push({
+        content: this.converter.makeHtml(message),
+        contentRaw: messageRaw,
+        timestamp: new Date(),
+        avatar: '<img src="/assets/chatworm_simple.png" alt="Chatworm" width="50px"/>',
+        isUser: false,
+      });
+    }
+    this.highlightCode();
 
+    // Set the chatbot typing indicator to false
+    this.chatbotTyping = false;
+
+    setTimeout(() => {
+      this.messageContainer.nativeElement.scrollTop = this.messageContainer.nativeElement.scrollHeight;
+    }, 0);
+  }
+
+  private handleFinalErrorResponse(error) {
+    // Set the chatbot typing indicator to false
+    this.chatbotTyping = false;
+
+    setTimeout(() => {
+      this.messageContainer.nativeElement.scrollTop = this.messageContainer.nativeElement.scrollHeight;
+    }, 0);
+
+    if (error.response && error.response.data && error.response.data.error) {
+      alert(error.response.data.error.message);
+    } else {
+      alert(error.message);
+      throw error;
+    }
   }
 
   private getOpenAi() {
@@ -241,7 +277,13 @@ export class AppComponent implements OnInit {
   refreshModels() {
     const openai = this.getOpenAi();
     openai.listModels().then(response => {
-      this.models = response.data.data;
+      this.models.push({
+        created: 0,
+        id: ' DALL·E',
+        object: '',
+        owned_by: ''
+      } as Model);
+      this.models = [...this.models, ...response.data.data];
       this.refreshCredits();
     })
   }
@@ -258,7 +300,7 @@ export class AppComponent implements OnInit {
 
     const options = {
       headers: {
-        "authorization": "Bearer "+ this.apikey,
+        "authorization": "Bearer " + this.apikey,
       },
     };
 
