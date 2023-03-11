@@ -133,7 +133,7 @@ export class AppComponent implements OnInit {
       content: this.messageInput,
       contentRaw: this.messageInput,
       timestamp: new Date(),
-      avatar: '<img src="/assets/person-72x72.png" alt="Chatworm"/>',
+      avatar: '<img src="/assets/person.png" alt="Chatworm" width="50px"/>',
       isUser: true
     });
 
@@ -191,7 +191,7 @@ export class AppComponent implements OnInit {
           content: this.converter.makeHtml(message),
           contentRaw: messageRaw,
           timestamp: new Date(),
-          avatar: '<img src="/assets/icons/icon-72x72.png" alt="Chatworm"/>',
+          avatar: '<img src="/assets/chatworm_simple.png" alt="Chatworm" width="50px"/>',
           isUser: false,
         });
       }
@@ -231,7 +231,9 @@ export class AppComponent implements OnInit {
     // Check if there is a message to resend
     if (this.chatHistory.length > 0) {
       // Get the last message from the chat history
-      this.messageInput = this.chatHistory[this.chatHistory.length - 2].content;
+      this.messageInput = this.chatHistory
+        .filter(message => message.role === ChatCompletionRequestMessageRoleEnum.User)
+        .pop().content;
       await this.sendMessage();
     }
   }
