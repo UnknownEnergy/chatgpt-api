@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1678473058356,
+  "timestamp": 1678536931434,
   "index": "./index.html",
   "assetGroups": [
     {
@@ -13,7 +13,7 @@
       "urls": [
         "./favicon.ico",
         "./index.html",
-        "./main.cad181cceedb6dca.js",
+        "./main.288c9c7331df9201.js",
         "./manifest.webmanifest",
         "./polyfills.a5d16fe673985cfd.js",
         "./runtime.555116b5a0de2ff7.js",
@@ -29,6 +29,7 @@
         "ignoreVary": true
       },
       "urls": [
+        "./assets/chatworm-72x72.png",
         "./assets/chatworm.png",
         "./assets/chatworm_simple.png",
         "./assets/demo_screenshot.png",
@@ -40,6 +41,7 @@
         "./assets/icons/icon-512x512.png",
         "./assets/icons/icon-72x72.png",
         "./assets/icons/icon-96x96.png",
+        "./assets/person-72x72.png",
         "./assets/person.png",
         "./bootstrap-icons.35e09da2aecdd969.woff2",
         "./bootstrap-icons.cb4c7c05f3292543.woff"
@@ -49,6 +51,7 @@
   ],
   "dataGroups": [],
   "hashTable": {
+    "./assets/chatworm-72x72.png": "f34993d14d89b3b9c1cfed3b38449c18d18aaa57",
     "./assets/chatworm.png": "6dc11906419b0f44abb433a5cd947dad28fade00",
     "./assets/chatworm_simple.png": "7208550c6b370c812bfe0882672d793aa2616010",
     "./assets/demo_screenshot.png": "a9b83c61c3ad1439cf7d17bd5b8eec90c3e88cf8",
@@ -60,12 +63,13 @@
     "./assets/icons/icon-512x512.png": "2756dc4289ff4d581d69b01358004aac907f1317",
     "./assets/icons/icon-72x72.png": "d7f4e6aaab88c50be49d69e1e465506a6627c2e6",
     "./assets/icons/icon-96x96.png": "a8192b86826e62800db13c56b63bac48509f85d7",
+    "./assets/person-72x72.png": "9f3730bb8902de45ca2b3c8a9256ad3c7153df60",
     "./assets/person.png": "261f70ecf3a7abbfcaa12368ba1c1e4fe9187aea",
     "./bootstrap-icons.35e09da2aecdd969.woff2": "17dad0776899ad1beadabd061c34e2a22b2cde74",
     "./bootstrap-icons.cb4c7c05f3292543.woff": "75919c717ce5c5bc716bc51705c0cd0b60f4bffc",
     "./favicon.ico": "b5465289afe19a0926b5268008830b6824c290f9",
-    "./index.html": "463cad479e008ae5de7533f7ac4fade1a49646cb",
-    "./main.cad181cceedb6dca.js": "032073204a5b30c23f7ec0f1b5aa28acac602b0c",
+    "./index.html": "01011c9cdbfdecbf6f1c87298e55b17aa5061cd0",
+    "./main.288c9c7331df9201.js": "588cb924723657bfb6939eb1bd7b3da85f9fdc69",
     "./manifest.webmanifest": "ca23509800a8adaa04863a4b85d4904133830e70",
     "./polyfills.a5d16fe673985cfd.js": "3d73675b423393412882d77ab88346376b1f47dc",
     "./runtime.555116b5a0de2ff7.js": "3c8a1a0a789aa5954a0bcd5bf8fac9e5ab641d2b",
