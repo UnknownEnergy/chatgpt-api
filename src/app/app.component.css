@@ -413,3 +413,8 @@ input[type="range"] {
 .textarea-message:not(:required):invalid {
   overflow-y: scroll; /* Show scrollbar when input is invalid */
 }
+
+.input-max-tokens {
+  max-width: 200px;
+  margin-left: 20px;
+}

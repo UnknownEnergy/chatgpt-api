@@ -81,6 +81,11 @@
   background-color: rgba(68, 70, 84, 0.74);
 }
 
+.dark-mode .input-max-tokens {
+  background-color: rgba(68, 70, 84, 0.74);
+  color: #fff;
+}
+
 .dark-mode .textarea-message {
   background-color: rgba(68, 70, 84, 0.74);
   color: #fff;

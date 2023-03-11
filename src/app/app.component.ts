@@ -32,6 +32,7 @@ export class AppComponent implements OnInit {
   @ViewChild('messageInputArea') messageInputRef;
 
   temperature: number = 0.8;
+  maxTokens: number = 4000;
 
   converter = new showdown.Converter({
     tables: true, emoji: true, underline: true, openLinksInNewWindow: true, tasklists: true,
@@ -53,6 +54,10 @@ export class AppComponent implements OnInit {
     const savedTemperature = localStorage.getItem('temperature');
     if (savedTemperature) {
       this.temperature = parseFloat(savedTemperature);
+    }
+    const saveMaxTokens = localStorage.getItem('maxTokens');
+    if (saveMaxTokens) {
+      this.maxTokens = parseInt(saveMaxTokens);
     }
     const savedSelectedModel = localStorage.getItem('selectedModel');
     if (savedSelectedModel) {
@@ -120,6 +125,7 @@ export class AppComponent implements OnInit {
 
     localStorage.setItem('apiKey', this.apikey);
     localStorage.setItem('temperature', this.temperature.toString());
+    localStorage.setItem('maxTokens', this.maxTokens.toString());
     localStorage.setItem('selectedModel', this.selectedModel);
 
     // Add the user's message to the chat
@@ -127,7 +133,7 @@ export class AppComponent implements OnInit {
       content: this.messageInput,
       contentRaw: this.messageInput,
       timestamp: new Date(),
-      avatar: '<img src="/assets/person.png" alt="Chatworm" width="50px"/>',
+      avatar: '<img src="/assets/person-72x72.png" alt="Chatworm"/>',
       isUser: true
     });
 
@@ -146,7 +152,7 @@ export class AppComponent implements OnInit {
       model: this.selectedModel,
       messages: this.chatHistory,
       temperature: this.temperature,
-      max_tokens: 1000,
+      max_tokens: this.maxTokens,
     }).then(response => {
       return response;
     })
@@ -155,7 +161,7 @@ export class AppComponent implements OnInit {
           model: this.selectedModel,
           prompt: this.messages[this.messages.length - 1].content,
           temperature: this.temperature,
-          max_tokens: 1000,
+          max_tokens: this.maxTokens,
         })
           .then(response => {
             return response;
@@ -185,7 +191,7 @@ export class AppComponent implements OnInit {
           content: this.converter.makeHtml(message),
           contentRaw: messageRaw,
           timestamp: new Date(),
-          avatar: '<img src="/assets/chatworm_simple.png" alt="Chatworm" width="50px"/>',
+          avatar: '<img src="/assets/icons/icon-72x72.png" alt="Chatworm"/>',
           isUser: false,
         });
       }
