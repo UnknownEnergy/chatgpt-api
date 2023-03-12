@@ -79,7 +79,7 @@
     <div class="chat-message" *ngFor="let message of messages">
       <ng-container *ngIf="message.isUser; else systemMessage">
         <div class="message-content message-content-right">
-          <pre>{{message.content}}</pre>
+          {{message.content}}
           <div class="message-timestamp">{{ message.timestamp | date:'shortTime' }}</div>
         </div>
         <div class="message-avatar" [innerHTML]="message.avatar"></div>
