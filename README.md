@@ -3,7 +3,7 @@
 
 <img src="src/assets/chatworm.png" alt="Chatworm" width="250"/>
 
-Live demo: https://chatworm.com/  
+Web app: https://chatworm.com/  
 Android app: https://play.google.com/store/apps/details?id=com.chatworm.twa
 
 Example screenshot:  
