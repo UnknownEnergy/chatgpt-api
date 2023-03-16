@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {
   ChatCompletionRequestMessageRoleEnum,
   Configuration,
@@ -51,8 +51,11 @@ export class AppComponent implements OnInit {
   total_granted: number = 0;
   total_used: number = 0;
 
+  isLoading = false;
+
   constructor(private http: HttpClient,
-              private dialog: MatDialog) {
+              private dialog: MatDialog,
+              private cdr: ChangeDetectorRef) {
     // Retrieve the API key from local storage, if it exists
     const savedApiKey = localStorage.getItem('apiKey');
     if (savedApiKey) {
@@ -342,5 +345,15 @@ export class AppComponent implements OnInit {
   onTypeApiKey() {
     this.refreshModels();
     localStorage.setItem('apiKey', this.apikey);
+  }
+
+  updateMessage(evt) {
+    this.messageInput = evt;
+    this.cdr.detectChanges();
+  }
+
+  changeLoading(evt) {
+    this.isLoading = evt;
+    this.cdr.detectChanges();
   }
 }

@@ -274,6 +274,14 @@ button:hover {
   color: #00A67E;
 }
 
+.loading {
+  height: 50px;
+}
+
+mat-spinner {
+  margin-right: 5px;
+}
+
 input {
   width: 100%;
 }

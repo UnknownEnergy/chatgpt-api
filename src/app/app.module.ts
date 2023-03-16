@@ -19,6 +19,9 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatBottomSheet} from "@angular/material/bottom-sheet";
 import {PwaService} from "./services/pwa.service";
 import {InfoComponent} from "./info/info.component";
+import { AudioComponentComponent } from './audio-component/audio-component.component';
+import {MatMenuModule} from "@angular/material/menu";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 const initializer = (pwaService: PwaService) => () => pwaService.initPwaPrompt();
 
@@ -29,7 +32,8 @@ const initializer = (pwaService: PwaService) => () => pwaService.initPwaPrompt()
     InfoComponent,
     InfoModalComponent,
     IntroModalComponent,
-    PromptComponent
+    PromptComponent,
+    AudioComponentComponent
   ],
   imports: [
     HttpClientModule,
@@ -48,6 +52,8 @@ const initializer = (pwaService: PwaService) => () => pwaService.initPwaPrompt()
     }),
     MatToolbarModule,
     MatIconModule,
+    MatMenuModule,
+    MatProgressSpinnerModule,
   ],
   providers: [
     MatBottomSheet,
