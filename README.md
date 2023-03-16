@@ -4,7 +4,8 @@
 <img src="src/assets/chatworm.png" alt="Chatworm" width="250"/>
 
 Web app: https://chatworm.com/  
-Android app: https://play.google.com/store/apps/details?id=com.chatworm.twa
+Android app: https://play.google.com/store/apps/details?id=com.chatworm.twa  
+Windows app: https://apps.microsoft.com/store/detail/chatworm/9N1RF0VWV3SN  
 
 Example screenshot:  
 ![demo](src/assets/demo_screenshot.png "Example Screenshot")
