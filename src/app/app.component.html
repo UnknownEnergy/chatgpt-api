@@ -120,8 +120,8 @@
   </div>
   <div class="chat-input">
     <div class="loading d-flex">
-      <mat-spinner *ngIf="!isLoading" [diameter]="25"></mat-spinner>
-      <p *ngIf="!isLoading">Loading please wait...</p>
+      <mat-spinner *ngIf="isLoading" [diameter]="25"></mat-spinner>
+      <p *ngIf="isLoading">Loading please wait...</p>
     </div>
     <div class="d-flex">
       <textarea #messageInputArea class="textarea-message" [(ngModel)]="messageInput" type="text" placeholder="Type a message..."
