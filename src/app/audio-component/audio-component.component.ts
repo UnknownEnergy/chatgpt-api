@@ -8,7 +8,7 @@ import {FocusMonitor} from "@angular/cdk/a11y";
   templateUrl: './audio-component.component.html',
   styleUrls: ['./audio-component.component.css']
 })
-export class AudioComponentComponent implements OnInit, AfterViewInit {
+export class AudioComponentComponent implements OnInit {
 
   @Input() apiKey: string;
   @Output() audioTextUpdated = new EventEmitter<string>();
@@ -18,15 +18,11 @@ export class AudioComponentComponent implements OnInit, AfterViewInit {
   private openAi;
   public recording = false;
 
-  constructor(private _focusMonitor: FocusMonitor) {
+  constructor() {
   }
 
   ngOnInit(): void {
     this.openAi = this.getOpenAi();
-  }
-
-  ngAfterViewInit() {
-    this._focusMonitor.stopMonitoring(document.getElementById('recording'));
   }
 
   public getOpenAi() {
