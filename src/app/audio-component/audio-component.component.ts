@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import * as RecordRTC from 'recordrtc';
 import {Configuration, OpenAIApi} from "openai";
-import {AxiosRequestConfig} from "axios";
 
 @Component({
   selector: 'app-audio-component',
