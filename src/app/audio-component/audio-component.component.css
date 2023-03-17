@@ -14,10 +14,6 @@ button {
   transition: background-color 0.2s ease-in-out;
 }
 
-button:hover {
-  background-color: #005a44 !important;
-}
-
 ::ng-deep .mat-mdc-menu-panel {
   overflow-x: hidden !important;
   background: transparent !important;
