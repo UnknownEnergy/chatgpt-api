@@ -1,13 +1,14 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import * as RecordRTC from 'recordrtc';
 import {Configuration, OpenAIApi} from "openai";
+import {FocusMonitor} from "@angular/cdk/a11y";
 
 @Component({
   selector: 'app-audio-component',
   templateUrl: './audio-component.component.html',
   styleUrls: ['./audio-component.component.css']
 })
-export class AudioComponentComponent implements OnInit{
+export class AudioComponentComponent implements OnInit, AfterViewInit {
 
   @Input() apiKey: string;
   @Output() audioTextUpdated = new EventEmitter<string>();
@@ -17,11 +18,15 @@ export class AudioComponentComponent implements OnInit{
   private openAi;
   public recording = false;
 
-  constructor() {
+  constructor(private _focusMonitor: FocusMonitor) {
   }
 
   ngOnInit(): void {
     this.openAi = this.getOpenAi();
+  }
+
+  ngAfterViewInit() {
+    this._focusMonitor.stopMonitoring(document.getElementById('recording'));
   }
 
   public getOpenAi() {

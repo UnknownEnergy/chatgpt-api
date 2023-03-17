@@ -3,7 +3,7 @@
   <button (click)="openFilePicker()">
     <i class="bi bi-file-earmark-arrow-up"></i> Upload Audio File
   </button>
-  <button onclick="this.blur()" (touchstart)="startRecording()" (touchend)="stopRecording()" (mousedown)="startRecording()" (mouseup)="stopRecording()">
+  <button id="recording" (touchstart)="startRecording()" (touchend)="stopRecording()" (mousedown)="startRecording()" (mouseup)="stopRecording()">
     <span *ngIf="!recording" class="prevent-select">
       <i class="bi bi-mic"></i> Start Recording
     </span>
