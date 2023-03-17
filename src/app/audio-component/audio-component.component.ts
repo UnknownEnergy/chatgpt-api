@@ -16,6 +16,7 @@ export class AudioComponentComponent implements OnInit{
   private stream: MediaStream;
   private recordRTC: RecordRTC;
   private openAi;
+  public recording = false;
 
   constructor() {
   }
@@ -32,19 +33,9 @@ export class AudioComponentComponent implements OnInit{
     return new OpenAIApi(configuration);
   }
 
-  recording = false;
-
-  toggleRecording() {
-    if (this.recording) {
-      this.stopRecording();
-    } else {
-      this.startRecording();
-    }
-    this.recording = !this.recording;
-  }
-
 
   startRecording() {
+    this.recording = true;
     navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
       this.stream = stream;
       this.recordRTC = new RecordRTC(stream, {
@@ -55,6 +46,7 @@ export class AudioComponentComponent implements OnInit{
   }
 
   stopRecording() {
+    this.recording = false;
     this.recordRTC.stopRecording(() => {
       const blob = this.recordRTC.getBlob();
       const file = new File([blob], 'recorded-audio.wav');
@@ -63,7 +55,16 @@ export class AudioComponentComponent implements OnInit{
         .then((response) => {
           this.audioTextUpdated.emit(response.data.text);
           this.isLoading.emit(false);
-        });
+        })
+        .catch(error => {
+          this.isLoading.emit(false);
+          if (error.response && error.response.data && error.response.data.error) {
+            alert(error.response.data.error.message);
+          } else {
+            alert(error.message);
+            throw error;
+          }
+      });
     });
     this.stream.getTracks().forEach((track) => track.stop());
   }
@@ -79,7 +80,15 @@ export class AudioComponentComponent implements OnInit{
         .then((response) => {
           this.audioTextUpdated.emit(response.data.text);
           this.isLoading.emit(false);
-        });
+        }).catch(error => {
+        this.isLoading.emit(false);
+        if (error.response && error.response.data && error.response.data.error) {
+          alert(error.response.data.error.message);
+        } else {
+          alert(error.message);
+          throw error;
+        }
+      });
     });
 
     input.click();

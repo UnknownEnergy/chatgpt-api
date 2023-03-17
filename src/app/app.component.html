@@ -79,7 +79,7 @@
     <div class="chat-message" *ngFor="let message of messages">
       <ng-container *ngIf="message.isUser; else systemMessage">
         <div class="message-content message-content-right">
-          {{message.content}}
+          <p style="margin-bottom: 2rem;white-space:pre-wrap;">{{message.content}}</p>
           <div class="message-timestamp">{{ message.timestamp | date:'shortTime' }}</div>
         </div>
         <div class="message-avatar" [innerHTML]="message.avatar"></div>
@@ -124,7 +124,9 @@
       <p>Loading please wait...</p>
     </div>
     <div class="d-flex">
-      <textarea #messageInputArea class="textarea-message" [(ngModel)]="messageInput" type="text" placeholder="Type a message..."
+      <textarea #messageInputArea class="textarea-message" rows="1" [(ngModel)]="messageInput" cdkTextareaAutosize
+                cdkAutosizeMinRows="1"
+                cdkAutosizeMaxRows="3" type="text" placeholder="Type a message..."
                 (keydown.enter)="$event.preventDefault();sendMessage()"></textarea>
       <div class="d-flex send-buttons">
         <button (click)="sendMessage()"><i class="bi bi-send"></i></button>

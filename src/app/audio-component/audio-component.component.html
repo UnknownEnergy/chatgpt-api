@@ -1,14 +1,14 @@
 <button [matMenuTriggerFor]="menu"><i class="bi bi-mic"></i></button>
 <mat-menu #menu="matMenu">
-  <button mat-menu-item (click)="toggleRecording()">
+  <button (click)="openFilePicker()">
+    <i class="bi bi-file-earmark-arrow-up"></i> Upload Audio File
+  </button>
+  <button (mousedown)="startRecording()" (mouseup)="stopRecording()">
     <span *ngIf="!recording">
       <i class="bi bi-mic"></i> Start Recording
     </span>
     <span *ngIf="recording">
-      <i class="bi bi-stop-circle"></i> Stop Recording
+      <i class="bi bi-stop-circle"></i> Release to stop
     </span>
-  </button>
-  <button mat-menu-item (click)="openFilePicker()">
-    <i class="bi bi-file-earmark-arrow-up"></i> Upload Audio File
   </button>
 </mat-menu>
