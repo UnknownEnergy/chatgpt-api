@@ -27,7 +27,7 @@
               "src/policy.html"
             ],
             "styles": [
-              "src/styles.css",
+              "src/styles.scss",
               "node_modules/highlight.js/styles/default.css"
             ],
             "scripts": [],

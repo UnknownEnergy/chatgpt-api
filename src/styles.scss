@@ -1,0 +1,34 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.min.css";
+@import "~bootstrap-icons/font/bootstrap-icons.css";
+@import "~highlight.js/styles/default.css";
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+
+// mixin that enables css variables in light mode
+@mixin lighten() {
+  --bgColor: white;
+  --bgColor2: white;
+  --textColor: black;
+  --message-left: rgba(0, 166, 126, 0.19);
+  --message-right: white;
+  --border: #ccc;
+}
+
+// mixin that enables css variables in dark mode
+@mixin darken() {
+  --bgColor: rgba(52,53,65);
+  --bgColor2: rgba(68, 70, 84, 0.9);
+  --textColor:white;
+  --message-left: #007458;
+  --message-right: #007458;
+  --border: #555;
+}
+
+body {
+  @include lighten();
+  background-color: #00644b;
+}
+
+body.dark {
+  @include darken();
+}
