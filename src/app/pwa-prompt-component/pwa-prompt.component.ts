@@ -2,14 +2,14 @@ import {Component, Inject} from '@angular/core';
 import {MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef} from "@angular/material/bottom-sheet";
 
 @Component({
-  selector: 'app-prompt',
-  templateUrl: './prompt.component.html',
-  styleUrls: ['./prompt.component.css']
+  selector: 'app-pwa-prompt',
+  templateUrl: './pwa-prompt.component.html',
+  styleUrls: ['./pwa-prompt.component.css']
 })
-export class PromptComponent {
+export class PwaPromptComponent {
   constructor(
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: { mobileType: 'ios' | 'android', promptEvent?: any },
-    private bottomSheetRef: MatBottomSheetRef<PromptComponent>
+    private bottomSheetRef: MatBottomSheetRef<PwaPromptComponent>
   ) {}
 
   public installPwa(): void {

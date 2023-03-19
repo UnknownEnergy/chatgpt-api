@@ -5,20 +5,20 @@ import { AppComponent } from './app.component';
 import {HttpClientModule} from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
 import { TipModalComponent } from './tip-modal/tip-modal.component';
-import {InfoModalComponent} from "./info-modal/info-modal.component";
-import {IntroModalComponent} from "./intro-modal/intro-modal.component";
+import {InfoModalComponent} from "./info-modal-component/info-modal.component";
+import {IntroModalComponent} from "./intro-modal-component/intro-modal.component";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatButtonModule} from "@angular/material/button";
 import {MatInputModule} from "@angular/material/input";
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { PromptComponent } from './prompt-component/prompt.component';
+import { PwaPromptComponent } from './pwa-prompt-component/pwa-prompt.component';
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatIconModule} from "@angular/material/icon";
 import {MatBottomSheet} from "@angular/material/bottom-sheet";
 import {PwaService} from "./services/pwa.service";
-import {InfoComponent} from "./info/info.component";
+import {InfoComponent} from "./info-component/info.component";
 import { AudioComponentComponent } from './audio-component/audio-component.component';
 import {MatMenuModule} from "@angular/material/menu";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
@@ -32,7 +32,7 @@ const initializer = (pwaService: PwaService) => () => pwaService.initPwaPrompt()
     InfoComponent,
     InfoModalComponent,
     IntroModalComponent,
-    PromptComponent,
+    PwaPromptComponent,
     AudioComponentComponent
   ],
   imports: [

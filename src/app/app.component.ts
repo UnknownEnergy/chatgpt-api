@@ -12,9 +12,9 @@ import {ChatCompletionRequestMessage, CreateImageRequest} from "openai/dist/api"
 import hljs from 'highlight.js';
 import showdown from 'showdown';
 import {HttpClient} from "@angular/common/http";
-import {IntroModalComponent} from "./intro-modal/intro-modal.component";
+import {IntroModalComponent} from "./intro-modal-component/intro-modal.component";
 import {MatDialog} from "@angular/material/dialog";
-import {InfoModalComponent} from "./info-modal/info-modal.component";
+import {InfoModalComponent} from "./info-modal-component/info-modal.component";
 
 @Component({
   selector: 'app-root',
@@ -56,7 +56,6 @@ export class AppComponent implements OnInit {
   constructor(private http: HttpClient,
               private dialog: MatDialog,
               private cdr: ChangeDetectorRef) {
-    // Retrieve the API key from local storage, if it exists
     const savedApiKey = localStorage.getItem('apiKey');
     if (savedApiKey) {
       this.apikey = savedApiKey;
@@ -104,7 +103,7 @@ export class AppComponent implements OnInit {
       container.classList.add('dark-mode');
       titleCard.classList.add('dark-mode');
     }
-    // Call refreshCredits function every 5 minutes
+
     setInterval(this.refreshCredits, 300000);
   }
 
@@ -209,8 +208,6 @@ export class AppComponent implements OnInit {
   }
 
   private handleSuccessResponse(response) {
-    // Add the chatbot's response to the chat
-    console.log(JSON.stringify(response));
     if (response && response.data) {
       let message = '';
       if (response.data.choices && response.data.choices[0].message) {
@@ -220,7 +217,6 @@ export class AppComponent implements OnInit {
         message = '<img src="'+response.data.data[0].url+'" height="500px"/>';
       }
       else {
-        // @ts-ignore
         message = response.data.choices[0].text;
       }
       let messageRaw = message;
@@ -234,8 +230,6 @@ export class AppComponent implements OnInit {
       });
     }
     this.highlightCode();
-
-    // Set the chatbot typing indicator to false
     this.chatbotTyping = false;
 
     setTimeout(() => {
@@ -244,7 +238,6 @@ export class AppComponent implements OnInit {
   }
 
   private handleFinalErrorResponse(error) {
-    // Set the chatbot typing indicator to false
     this.chatbotTyping = false;
 
     setTimeout(() => {
@@ -267,9 +260,7 @@ export class AppComponent implements OnInit {
   }
 
   async resendLastMessage() {
-    // Check if there is a message to resend
     if (this.chatHistory.length > 0) {
-      // Get the last message from the chat history
       this.messageInput = this.chatHistory
         .filter(message => message.role === ChatCompletionRequestMessageRoleEnum.User)
         .pop().content;
