@@ -3,9 +3,14 @@
 
 <img src="src/assets/chatworm.png" alt="Chatworm" width="250"/>
 
-Web app: https://chatworm.com/  
-Android app: https://play.google.com/store/apps/details?id=com.chatworm.twa  
-Windows app: https://apps.microsoft.com/store/detail/chatworm/9N1RF0VWV3SN  
+**Web app**: https://chatworm.com/  
+**Android app**: https://play.google.com/store/apps/details?id=com.chatworm.twa  
+**Windows app**: https://apps.microsoft.com/store/detail/chatworm/9N1RF0VWV3SN  
+  
+Works also with the newest **GTP-4** Version if you got access from OpenAI to the new GTP4 model via API.  
+Otherwise you have to wait and can use the older models instead.  
+  
+This is a single page application there is no server between your browser and Open AI. The app is just downloaded and cached by your browser and you communicate directly with the API.  
 
 Example screenshot:  
 ![demo](src/assets/demo_screenshot.png "Example Screenshot")
