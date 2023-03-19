@@ -38,8 +38,8 @@ export class AppComponent implements OnInit {
   @ViewChild('messageContainer', {static: false}) messageContainer: ElementRef;
   @ViewChild('messageInputArea') messageInputRef;
 
-  temperature: number = 0.8;
-  maxTokens: number = 2000;
+  temperature: number = 0.7;
+  maxTokens: number = 256;
 
   converter = new showdown.Converter({
     tables: true, emoji: true, underline: true, openLinksInNewWindow: true, tasklists: true,
