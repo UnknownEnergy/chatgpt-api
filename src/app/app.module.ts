@@ -23,6 +23,7 @@ import { AudioComponentComponent } from './audio-component/audio-component.compo
 import {MatMenuModule} from "@angular/material/menu";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import { ChatPromptComponentComponent } from './chat-prompt-component/chat-prompt-component.component';
+import { HeaderComponent } from './header-component/header.component';
 
 const initializer = (pwaService: PwaService) => () => pwaService.initPwaPrompt();
 
@@ -35,7 +36,8 @@ const initializer = (pwaService: PwaService) => () => pwaService.initPwaPrompt()
     IntroModalComponent,
     PwaPromptComponent,
     AudioComponentComponent,
-    ChatPromptComponentComponent
+    ChatPromptComponentComponent,
+    HeaderComponent
   ],
   imports: [
     HttpClientModule,
