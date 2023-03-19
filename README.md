@@ -21,10 +21,14 @@ Example screenshot:
 3. Once the installation is complete, run `npm start`. 
 4. This will start a web service accessible via http://localhost:4200/.
 
-## Preparing a Pull Request for Improvements
+## Pull Request for Improvements?
 1. Start coding changes to the project using your local setup.
 2. Once the improvements have been made, run `npm build`. This will generate new files in the `dist` folder which are hosted on our demo page.
 3. Create a pull request which includes the updated `dist` folder.
+
+## Feature Requests or Bugs?
+1. Open following: https://github.com/UnknownEnergy/chatgpt-api/issues
+2. Create a new issue and decribe it as clear as possible. Screenshots can also help a lot. Thanks
 
 ## Deploy to production
 1. Make sure everything is pushed to master.
