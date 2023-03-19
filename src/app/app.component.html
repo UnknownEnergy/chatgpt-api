@@ -17,9 +17,7 @@
         </button>
       </div>
       <div class="d-flex">
-        <button (click)="openUsageWebsite()" class="progress-bar" role="progressbar" [attr.aria-valuenow]="total_used"
-                [attr.aria-valuemin]="0" [attr.aria-valuemax]="total_granted">{{total_used|currency}}
-          / {{total_granted|currency}}</button>
+        <app-usage [apiKey]="apiKey" #usageComponent></app-usage>
         <button class="btn btn-primary" (click)="openTipDialog()">
           <i class="bi bi-currency-bitcoin"></i>
         </button>

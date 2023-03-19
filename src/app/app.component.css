@@ -324,17 +324,6 @@ input[type="range"] {
   overflow: hidden;
 }
 
-.progress-bar {
-  align-self: center;
-  height: 40px;
-  border-radius: 5px;
-  box-shadow: inset 0 -1px 0 rgba(0,0,0,.15);
-  transition: width .6s ease;
-  background-color: #00A67E;
-  color: white;
-  padding: 5px;
-}
-
 .chatworm-image {
   display: flex;
   flex-direction: row;

@@ -15,6 +15,7 @@ import {HttpClient} from "@angular/common/http";
 import {IntroModalComponent} from "./intro-modal-component/intro-modal.component";
 import {MatDialog} from "@angular/material/dialog";
 import {InfoModalComponent} from "./info-modal-component/info-modal.component";
+import {UsageComponent} from "./usage/usage.component";
 
 @Component({
   selector: 'app-root',
@@ -46,12 +47,10 @@ export class AppComponent implements OnInit {
 
   isChatHeaderCollapsed = true;
 
-  total_granted: number = 0;
-  total_used: number = 0;
+  @ViewChild('usageComponent') usageComponent: UsageComponent;
 
   constructor(private http: HttpClient,
-              private dialog: MatDialog,
-              private cdr: ChangeDetectorRef) {
+              private dialog: MatDialog) {
     const savedApiKey = localStorage.getItem('apiKey');
     if (savedApiKey) {
       this.apiKey = savedApiKey;
@@ -97,8 +96,6 @@ export class AppComponent implements OnInit {
       const body = document.getElementsByTagName('body')[0];
       body.classList.add('dark');
     }
-
-    setInterval(this.refreshCredits, 300000);
   }
 
   openIntroDialog() {
@@ -260,7 +257,7 @@ export class AppComponent implements OnInit {
         owned_by: ''
       } as Model);
       this.models = [...this.models, ...response.data.data];
-      this.refreshCredits();
+      this.usageComponent.refreshCredits();
     })
   }
 
@@ -269,23 +266,6 @@ export class AppComponent implements OnInit {
       hljs.highlightAll();
     }, 50);
 
-  }
-
-  refreshCredits() {
-    const url = 'https://api.openai.com/dashboard/billing/credit_grants';
-    const options = {
-      headers: {
-        "authorization": "Bearer " + this.apiKey,
-      },
-    };
-    this.http.get(url, options).subscribe((data: any) => {
-      this.total_granted = data.total_granted;
-      this.total_used = data.total_used;
-    });
-  }
-
-  openUsageWebsite() {
-    window.open("https://platform.openai.com/account/usage", "_blank");
   }
 
   openApiKeyWebsite() {
