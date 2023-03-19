@@ -15,7 +15,7 @@ import {HttpClient} from "@angular/common/http";
 import {IntroModalComponent} from "./intro-modal-component/intro-modal.component";
 import {MatDialog} from "@angular/material/dialog";
 import {InfoModalComponent} from "./info-modal-component/info-modal.component";
-import {UsageComponent} from "./usage/usage.component";
+import {UsageComponent} from "./usage-component/usage.component";
 
 @Component({
   selector: 'app-root',

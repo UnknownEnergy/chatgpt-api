@@ -24,7 +24,7 @@ import {MatMenuModule} from "@angular/material/menu";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import { ChatPromptComponentComponent } from './chat-prompt-component/chat-prompt-component.component';
 import { HeaderComponent } from './header-component/header.component';
-import { UsageComponent } from './usage/usage.component';
+import { UsageComponent } from './usage-component/usage.component';
 
 const initializer = (pwaService: PwaService) => () => pwaService.initPwaPrompt();
 
