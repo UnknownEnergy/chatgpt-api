@@ -138,7 +138,6 @@ export class AppComponent implements OnInit {
     localStorage.setItem('maxTokens', this.maxTokens.toString());
     localStorage.setItem('selectedModel', this.selectedModel);
 
-    // Add the user's message to the chat
     this.messages.push({
       content: this.messageInput,
       contentRaw: this.messageInput,
@@ -147,12 +146,8 @@ export class AppComponent implements OnInit {
       isUser: true
     });
 
-    // Clear the message input field
     this.messageInput = '';
-
-    // Set the chatbot typing indicator to true
     this.chatbotTyping = true;
-
     setTimeout(() => {
       this.messageContainer.nativeElement.scrollTop = this.messageContainer.nativeElement.scrollHeight;
     }, 0);
@@ -291,13 +286,11 @@ export class AppComponent implements OnInit {
 
   refreshCredits() {
     const url = 'https://api.openai.com/dashboard/billing/credit_grants';
-
     const options = {
       headers: {
         "authorization": "Bearer " + this.apikey,
       },
     };
-
     this.http.get(url, options).subscribe((data: any) => {
       this.total_granted = data.total_granted;
       this.total_used = data.total_used;
