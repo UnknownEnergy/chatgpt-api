@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import {HttpClientModule} from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
-import { TipModalComponent } from './tip-modal/tip-modal.component';
+import { TipModalComponent } from './tip-modal-component/tip-modal.component';
 import {InfoModalComponent} from "./info-modal-component/info-modal.component";
 import {IntroModalComponent} from "./intro-modal-component/intro-modal.component";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";

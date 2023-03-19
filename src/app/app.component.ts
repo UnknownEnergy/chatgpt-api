@@ -7,7 +7,7 @@ import {
   Model,
   OpenAIApi
 } from "openai";
-import {TipModalComponent} from "./tip-modal/tip-modal.component";
+import {TipModalComponent} from "./tip-modal-component/tip-modal.component";
 import {ChatCompletionRequestMessage, CreateImageRequest} from "openai/dist/api";
 import hljs from 'highlight.js';
 import showdown from 'showdown';
