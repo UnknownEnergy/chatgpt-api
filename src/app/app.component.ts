@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {
   ChatCompletionRequestMessageRoleEnum,
   Configuration,
@@ -7,15 +7,13 @@ import {
   Model,
   OpenAIApi
 } from "openai";
-import {TipModalComponent} from "./tip-modal-component/tip-modal.component";
 import {ChatCompletionRequestMessage, CreateImageRequest} from "openai/dist/api";
 import hljs from 'highlight.js';
 import showdown from 'showdown';
 import {HttpClient} from "@angular/common/http";
-import {IntroModalComponent} from "./intro-modal-component/intro-modal.component";
+import {IntroModalComponent} from "./intro-modal/intro-modal.component";
 import {MatDialog} from "@angular/material/dialog";
-import {InfoModalComponent} from "./info-modal-component/info-modal.component";
-import {UsageComponent} from "./usage-component/usage.component";
+import {ToolbarComponent} from "./toolbar/toolbar.component";
 
 @Component({
   selector: 'app-root',
@@ -29,7 +27,6 @@ export class AppComponent implements OnInit {
   apiKey = '';
   chatHistory: Array<ChatCompletionRequestMessage> = [];
   usedTokens: number = 0;
-  darkModeEnabled = false;
   showPassword: boolean = false;
 
   selectedModel: string = 'gpt-3.5-turbo';
@@ -45,9 +42,7 @@ export class AppComponent implements OnInit {
     strikethrough: true, simplifiedAutoLink: true
   });
 
-  isChatHeaderCollapsed = true;
-
-  @ViewChild('usageComponent') usageComponent: UsageComponent;
+  @ViewChild('toolbarComponent') toolbarComponent: ToolbarComponent;
 
   constructor(private http: HttpClient,
               private dialog: MatDialog) {
@@ -67,18 +62,6 @@ export class AppComponent implements OnInit {
     if (savedSelectedModel) {
       this.selectedModel = savedSelectedModel;
     }
-    const savedIsChatHeaderCollapsed = localStorage.getItem('isChatHeaderCollapsed');
-    if (savedIsChatHeaderCollapsed) {
-      this.isChatHeaderCollapsed = JSON.parse(savedIsChatHeaderCollapsed);
-    }
-    const savedIsDarkModeEnabled = localStorage.getItem('darkModeEnabled');
-    if (savedIsDarkModeEnabled) {
-      this.darkModeEnabled = JSON.parse(savedIsDarkModeEnabled);
-    }
-
-    window.addEventListener('beforeunload', () => {
-      localStorage.setItem('isChatHeaderCollapsed', JSON.stringify(this.isChatHeaderCollapsed));
-    });
 
     this.refreshModels();
   }
@@ -86,15 +69,6 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     if (!this.apiKey) {
       this.openIntroDialog();
-    }
-
-    if (this.isChatHeaderCollapsed) {
-      const chatHeader = document.getElementsByClassName('chat-settings')[0];
-      chatHeader.classList.toggle('collapsed');
-    }
-    if (this.darkModeEnabled) {
-      const body = document.getElementsByTagName('body')[0];
-      body.classList.add('dark');
     }
   }
 
@@ -107,14 +81,6 @@ export class AppComponent implements OnInit {
         this.refreshModels();
       }
     });
-  }
-
-  openTipDialog() {
-    this.dialog.open(TipModalComponent);
-  }
-
-  openInfoDialog() {
-    this.dialog.open(InfoModalComponent);
   }
 
   async sendMessage(message: string) {
@@ -261,7 +227,7 @@ export class AppComponent implements OnInit {
         owned_by: ''
       } as Model);
       this.models = [...this.models, ...response.data.data];
-      this.usageComponent.refreshCredits();
+      this.toolbarComponent.refreshUsage.emit();
     })
   }
 
@@ -274,24 +240,6 @@ export class AppComponent implements OnInit {
 
   openApiKeyWebsite() {
     window.open("https://platform.openai.com/account/api-keys", "_blank");
-  }
-
-  toggleChatHeader() {
-    const chatHeader = document.getElementsByClassName('chat-settings')[0];
-    chatHeader.classList.toggle('collapsed');
-    this.isChatHeaderCollapsed = !this.isChatHeaderCollapsed;
-    localStorage.setItem('isChatHeaderCollapsed', JSON.stringify(this.isChatHeaderCollapsed));
-  }
-
-  toggleDarkMode() {
-    this.darkModeEnabled = !this.darkModeEnabled;
-    const body = document.getElementsByTagName('body')[0];
-    if (this.darkModeEnabled) {
-      body.classList.add('dark');
-    } else {
-      body.classList.remove('dark');
-    }
-    localStorage.setItem('darkModeEnabled', JSON.stringify(this.darkModeEnabled));
   }
 
   onTypeApiKey() {

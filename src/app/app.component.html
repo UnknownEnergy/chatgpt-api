@@ -1,31 +1,7 @@
 <div class="chat">
   <app-header-component></app-header-component>
   <div class="chat-container">
-    <div class="chat-header d-flex justify-content-between">
-      <div class="d-flex">
-        <button class="btn btn-primary toggle-button" (click)="toggleChatHeader()"
-                [ngClass]="{'collapsed': isChatHeaderCollapsed}">
-          <ng-container *ngIf="!isChatHeaderCollapsed; else isCollapsed">
-            <i class="bi bi-chevron-up"></i>
-          </ng-container>
-          <ng-template #isCollapsed>
-            <i class="bi bi-chevron-down"></i>
-          </ng-template>
-        </button>
-        <button class="btn btn-primary" (click)="openInfoDialog()">
-          <i class="bi bi-info-circle"></i>
-        </button>
-      </div>
-      <div class="d-flex">
-        <app-usage [apiKey]="apiKey" #usageComponent></app-usage>
-        <button class="btn btn-primary" (click)="openTipDialog()">
-          <i class="bi bi-currency-bitcoin"></i>
-        </button>
-        <button class="btn btn-primary" (click)="toggleDarkMode()">
-          <i class="bi" [ngClass]="{'bi-moon': !darkModeEnabled, 'bi-sun': darkModeEnabled}"></i>
-        </button>
-      </div>
-    </div>
+    <app-toolbar [apiKey]="apiKey" #toolbarComponent></app-toolbar>
     <div class="chat-settings">
       <div class="row">
         <div class="col-md-8 d-flex">

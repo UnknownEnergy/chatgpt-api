@@ -8,6 +8,7 @@ import {HttpClient} from "@angular/common/http";
 })
 export class UsageComponent implements AfterViewInit{
   @Input() apiKey: string;
+  @Input() refreshUsage = new EventEmitter<string>();
   total_granted: number = 0;
   total_used: number = 0;
 
@@ -15,6 +16,9 @@ export class UsageComponent implements AfterViewInit{
   }
 
   ngAfterViewInit(): void {
+    this.refreshUsage.subscribe(() => {
+      this.refreshCredits();
+    });
     setInterval(this.refreshCredits, 300000);
   }
 

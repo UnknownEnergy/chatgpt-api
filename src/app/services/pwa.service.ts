@@ -2,7 +2,7 @@ import { Platform } from '@angular/cdk/platform';
 import {Injectable} from "@angular/core";
 import {MatBottomSheet} from "@angular/material/bottom-sheet";
 import {take, timer} from "rxjs";
-import {PwaPromptComponent} from "../pwa-prompt-component/pwa-prompt.component";
+import {PwaPromptComponent} from "../pwa-prompt/pwa-prompt.component";
 
 @Injectable({
   providedIn: 'root'

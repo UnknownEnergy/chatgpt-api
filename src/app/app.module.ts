@@ -4,27 +4,28 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import {HttpClientModule} from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
-import { TipModalComponent } from './tip-modal-component/tip-modal.component';
-import {InfoModalComponent} from "./info-modal-component/info-modal.component";
-import {IntroModalComponent} from "./intro-modal-component/intro-modal.component";
+import { TipModalComponent } from './toolbar/tip-modal/tip-modal.component';
+import {InfoModalComponent} from "./toolbar/info-modal/info-modal.component";
+import {IntroModalComponent} from "./intro-modal/intro-modal.component";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatButtonModule} from "@angular/material/button";
 import {MatInputModule} from "@angular/material/input";
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { PwaPromptComponent } from './pwa-prompt-component/pwa-prompt.component';
+import { PwaPromptComponent } from './pwa-prompt/pwa-prompt.component';
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatIconModule} from "@angular/material/icon";
 import {MatBottomSheet} from "@angular/material/bottom-sheet";
 import {PwaService} from "./services/pwa.service";
-import {InfoComponent} from "./info-component/info.component";
-import { AudioComponentComponent } from './audio-component/audio-component.component';
+import {InfoComponent} from "./info-text/info.component";
+import { AudioComponentComponent } from './audio/audio-component.component';
 import {MatMenuModule} from "@angular/material/menu";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import { ChatPromptComponentComponent } from './chat-prompt-component/chat-prompt-component.component';
-import { HeaderComponent } from './header-component/header.component';
-import { UsageComponent } from './usage-component/usage.component';
+import { ChatPromptComponentComponent } from './chat-prompt/chat-prompt-component.component';
+import { HeaderComponent } from './header/header.component';
+import { UsageComponent } from './toolbar/usage/usage.component';
+import { ToolbarComponent } from './toolbar/toolbar.component';
 
 const initializer = (pwaService: PwaService) => () => pwaService.initPwaPrompt();
 
@@ -39,7 +40,8 @@ const initializer = (pwaService: PwaService) => () => pwaService.initPwaPrompt()
     AudioComponentComponent,
     ChatPromptComponentComponent,
     HeaderComponent,
-    UsageComponent
+    UsageComponent,
+    ToolbarComponent
   ],
   imports: [
     HttpClientModule,
