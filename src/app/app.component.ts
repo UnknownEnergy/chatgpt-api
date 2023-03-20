@@ -119,6 +119,10 @@ export class AppComponent implements OnInit {
   }
 
   async sendMessage(message: string) {
+    if (!message) {
+      return;
+    }
+
     this.chatHistory.push({content: message, role: ChatCompletionRequestMessageRoleEnum.User});
 
     localStorage.setItem('apiKey', this.apiKey);
@@ -296,15 +300,10 @@ export class AppComponent implements OnInit {
     localStorage.setItem('apiKey', this.apiKey);
   }
 
-  onMaxTokensChanged() {
-    if (!this.maxTokens || this.maxTokens === 0) {
-      this.maxTokens = 1;
-    }
-    const width = this.maxTokensInputRef.nativeElement.scrollWidth;
-    if (this.maxTokens <= 1000) {
-      this.maxTokensInputRef.nativeElement.style.width = '75px';
-    } else {
-      this.maxTokensInputRef.nativeElement.style.width = `${width}px`;
+  onInputOnlyAllowPositiveIntegers($event: KeyboardEvent) {
+    const charCode = $event.charCode;
+    if (charCode < 48 || charCode > 57) {
+      $event.preventDefault();
     }
   }
 }

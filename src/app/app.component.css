@@ -12,6 +12,17 @@ html, body {
 }
 
 .chat-header {
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
+.p-left-column {
+  min-width: 200px;
+}
+
+.api-button {
+  margin-top: 2px;
+  margin-bottom: 14px;
 }
 
 .chat-messages {
@@ -137,6 +148,11 @@ html, body {
   left: -10px;
   border-right: none;
   border-left: 10px solid #007bff;
+}
+
+.p-message-content {
+  margin-bottom: 2rem;
+  white-space: pre-wrap;
 }
 
 .message-timestamp {
@@ -352,8 +368,8 @@ input[type="range"] {
   color: var(--textColor);
   background-color: var(--bgColor2);
   text-align: left;
-  width: 75px;
-  max-width: 300px;
+  width: 150px;
+  max-width: 150px;
 }
 
 
