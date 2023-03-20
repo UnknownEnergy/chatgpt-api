@@ -35,7 +35,6 @@ export class AppComponent implements OnInit {
   selectedModel: string = 'gpt-3.5-turbo';
   models: Model[] = [];
 
-  @ViewChild('maxTokensInputRef', {static: false}) maxTokensInputRef: ElementRef;
   @ViewChild('messageContainer', {static: false}) messageContainer: ElementRef;
 
   temperature: number = 0.7;
