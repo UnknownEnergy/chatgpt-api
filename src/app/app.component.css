@@ -12,6 +12,17 @@ html, body {
 }
 
 .chat-header {
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
+.p-left-column {
+  min-width: 200px;
+}
+
+.api-button {
+  margin-top: 2px;
+  margin-bottom: 14px;
 }
 
 .chat-messages {
@@ -19,6 +30,15 @@ html, body {
   overflow-y: auto;
   max-height: calc(90vh - 100px);
   min-height: 56.6vh;
+}
+
+.chat-settings.collapsed {
+  display: none;
+}
+
+.chat-settings.collapsed ~ .chat-messages {
+  max-height: calc(90vh - 100px);
+  min-height: 80vh;
 }
 
 @media (max-width: 767.98px) {
@@ -128,6 +148,11 @@ html, body {
   left: -10px;
   border-right: none;
   border-left: 10px solid #007bff;
+}
+
+.p-message-content {
+  margin-bottom: 2rem;
+  white-space: pre-wrap;
 }
 
 .message-timestamp {
@@ -306,15 +331,6 @@ input[type="range"] {
   background-color: #00A67E;
 }
 
-.chat-settings.collapsed {
-  display: none;
-}
-
-.chat-settings.collapsed ~ .chat-messages {
-  max-height: calc(90vh - 100px);
-  min-height: 80vh;
-}
-
 .progress {
   width: 100%;
   height: 10px;
@@ -338,6 +354,7 @@ input[type="range"] {
 }
 
 .input-api {
+  max-width: 50%;
   color: var(--textColor);
   background-color: var(--bgColor2);
 }
@@ -350,12 +367,11 @@ input[type="range"] {
 .input-max-tokens {
   color: var(--textColor);
   background-color: var(--bgColor2);
+  text-align: left;
+  width: 150px;
+  max-width: 150px;
 }
 
-.input-max-tokens {
-  max-width: 200px;
-  margin-left: 20px;
-}
 
 ::-webkit-scrollbar {
   background-color: var(--bgColor);

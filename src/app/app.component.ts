@@ -118,6 +118,10 @@ export class AppComponent implements OnInit {
   }
 
   async sendMessage(message: string) {
+    if (!message) {
+      return;
+    }
+
     this.chatHistory.push({content: message, role: ChatCompletionRequestMessageRoleEnum.User});
 
     localStorage.setItem('apiKey', this.apiKey);
@@ -136,7 +140,7 @@ export class AppComponent implements OnInit {
     this.chatbotTyping = true;
     setTimeout(() => {
       this.messageContainer.nativeElement.scrollTop = this.messageContainer.nativeElement.scrollHeight;
-    }, 0);
+      }, 0);
 
     const endpoints = [
       {
@@ -293,5 +297,12 @@ export class AppComponent implements OnInit {
   onTypeApiKey() {
     this.refreshModels();
     localStorage.setItem('apiKey', this.apiKey);
+  }
+
+  onInputOnlyAllowPositiveIntegers($event: KeyboardEvent) {
+    const charCode = $event.charCode;
+    if (charCode < 48 || charCode > 57) {
+      $event.preventDefault();
+    }
   }
 }
