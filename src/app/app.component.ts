@@ -35,6 +35,7 @@ export class AppComponent implements OnInit {
   selectedModel: string = 'gpt-3.5-turbo';
   models: Model[] = [];
 
+  @ViewChild('maxTokensInputRef', {static: false}) maxTokensInputRef: ElementRef;
   @ViewChild('messageContainer', {static: false}) messageContainer: ElementRef;
 
   temperature: number = 0.7;
@@ -136,7 +137,7 @@ export class AppComponent implements OnInit {
     this.chatbotTyping = true;
     setTimeout(() => {
       this.messageContainer.nativeElement.scrollTop = this.messageContainer.nativeElement.scrollHeight;
-    }, 0);
+      }, 0);
 
     const endpoints = [
       {
@@ -293,5 +294,17 @@ export class AppComponent implements OnInit {
   onTypeApiKey() {
     this.refreshModels();
     localStorage.setItem('apiKey', this.apiKey);
+  }
+
+  onMaxTokensChanged() {
+    if (!this.maxTokens || this.maxTokens === 0) {
+      this.maxTokens = 1;
+    }
+    const width = this.maxTokensInputRef.nativeElement.scrollWidth;
+    if (this.maxTokens <= 1000) {
+      this.maxTokensInputRef.nativeElement.style.width = '75px';
+    } else {
+      this.maxTokensInputRef.nativeElement.style.width = `${width}px`;
+    }
   }
 }
