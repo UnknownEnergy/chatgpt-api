@@ -28,6 +28,7 @@ import { UsageComponent } from './toolbar/usage/usage.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { SettingsComponent } from './toolbar/settings/settings.component';
 import { ChatContainerComponent } from './chat-container/chat-container.component';
+import { ApiStatusComponent } from './toolbar/api-status/api-status.component';
 
 const initializer = (pwaService: PwaService) => () => pwaService.initPwaPrompt();
 
@@ -45,7 +46,8 @@ const initializer = (pwaService: PwaService) => () => pwaService.initPwaPrompt()
     UsageComponent,
     ToolbarComponent,
     SettingsComponent,
-    ChatContainerComponent
+    ChatContainerComponent,
+    ApiStatusComponent
   ],
   imports: [
     HttpClientModule,

@@ -1,0 +1,23 @@
+.status-circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.dark-green {
+  background-color: #006400;
+}
+
+.green {
+  background-color: #2E8B57;
+}
+
+.yellow {
+  background-color: #FFD700;
+}
+
+.red {
+  background-color: #DC143C;
+}

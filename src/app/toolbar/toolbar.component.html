@@ -21,6 +21,7 @@
     <button class="btn btn-primary" (click)="toggleDarkMode()">
       <i class="bi" [ngClass]="{'bi-moon': !darkModeEnabled, 'bi-sun': darkModeEnabled}"></i>
     </button>
+    <app-api-status></app-api-status>
   </div>
 </div>
 <app-settings></app-settings>

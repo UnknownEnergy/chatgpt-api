@@ -1,0 +1,7 @@
+<div [ngClass]="{
+      'status-circle': true,
+      'dark-green': statusCode === 3,
+      'green': statusCode === 2,
+      'yellow': statusCode === 1,
+      'red': statusCode === 0
+    }" (click)="openStatusPage()"></div>
