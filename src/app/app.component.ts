@@ -28,7 +28,6 @@ export class AppComponent implements OnInit {
     strikethrough: true, simplifiedAutoLink: true
   });
 
-  @ViewChild('messageContainer', {static: false}) messageContainer: ElementRef;
   @ViewChild('toolbarComponent') toolbarComponent: ToolbarComponent;
   @ViewChild('chatContainerComponent') chatContainer: ChatContainerComponent;
 
@@ -75,9 +74,7 @@ export class AppComponent implements OnInit {
     });
 
     this.chatContainer.chatbotTyping = true;
-    setTimeout(() => {
-      this.messageContainer.nativeElement.scrollTop = this.messageContainer.nativeElement.scrollHeight;
-      }, 0);
+    this.chatContainer.scrollToBottom();
 
     const endpoints = [
       {
@@ -151,18 +148,12 @@ export class AppComponent implements OnInit {
     }
     this.chatContainer.highlightCode();
     this.chatContainer.chatbotTyping = false;
-
-    setTimeout(() => {
-      this.messageContainer.nativeElement.scrollTop = this.messageContainer.nativeElement.scrollHeight;
-    }, 0);
+    this.chatContainer.scrollToBottom();
   }
 
   private handleFinalErrorResponse(error) {
     this.chatContainer.chatbotTyping = false;
-
-    setTimeout(() => {
-      this.messageContainer.nativeElement.scrollTop = this.messageContainer.nativeElement.scrollHeight;
-    }, 0);
+    this.chatContainer.scrollToBottom();
 
     if (error.response && error.response.data && error.response.data.error) {
       alert(error.response.data.error.message);

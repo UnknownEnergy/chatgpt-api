@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, ElementRef, ViewChild} from '@angular/core';
 import hljs from 'highlight.js';
 
 @Component({
@@ -10,9 +10,17 @@ export class ChatContainerComponent {
   messages: { content: string; contentRaw: string; isRaw?: boolean; timestamp: Date; avatar: string; isUser: boolean; }[] = [];
   chatbotTyping = false;
 
+  @ViewChild('messageContainer') private messageContainer: ElementRef;
+
   public highlightCode() {
     setTimeout(() => {
       hljs.highlightAll();
     }, 50);
+  }
+
+  scrollToBottom(): void {
+    setTimeout(() => {
+      this.messageContainer.nativeElement.scrollTop = this.messageContainer.nativeElement.scrollHeight;
+    }, 0);
   }
 }
