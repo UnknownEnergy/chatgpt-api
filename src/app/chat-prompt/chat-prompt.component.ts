@@ -3,21 +3,19 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
-  Input,
   Output,
   ViewChild
 } from '@angular/core';
 
 @Component({
   selector: 'app-chat-prompt-component',
-  templateUrl: './chat-prompt-component.component.html',
-  styleUrls: ['./chat-prompt-component.component.css']
+  templateUrl: './chat-prompt.component.html',
+  styleUrls: ['./chat-prompt.component.css']
 })
-export class ChatPromptComponentComponent implements AfterViewInit{
+export class ChatPromptComponent implements AfterViewInit{
   isLoading: boolean;
   messageInput: string = '';
   @ViewChild('messageInputArea') messageInputRef;
-  @Input() apiKey: string;
   @Output() sendMessage = new EventEmitter<string>();
   @Output() resendMessage = new EventEmitter<any>();
 

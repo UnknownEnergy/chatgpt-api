@@ -89,3 +89,12 @@ button:hover {
   justify-content: space-between;
   align-items: flex-end;
 }
+
+.loading {
+  height: 50px;
+  display: flex;
+}
+
+mat-spinner {
+  margin-right: 5px;
+}

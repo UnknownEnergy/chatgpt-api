@@ -19,13 +19,15 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatBottomSheet} from "@angular/material/bottom-sheet";
 import {PwaService} from "./services/pwa.service";
 import {InfoComponent} from "./info-text/info.component";
-import { AudioComponentComponent } from './audio/audio-component.component';
+import { AudioComponent } from './chat-prompt/audio/audio.component';
 import {MatMenuModule} from "@angular/material/menu";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import { ChatPromptComponentComponent } from './chat-prompt/chat-prompt-component.component';
+import { ChatPromptComponent } from './chat-prompt/chat-prompt.component';
 import { HeaderComponent } from './header/header.component';
 import { UsageComponent } from './toolbar/usage/usage.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
+import { SettingsComponent } from './toolbar/settings/settings.component';
+import { ChatContainerComponent } from './chat-container/chat-container.component';
 
 const initializer = (pwaService: PwaService) => () => pwaService.initPwaPrompt();
 
@@ -37,11 +39,13 @@ const initializer = (pwaService: PwaService) => () => pwaService.initPwaPrompt()
     InfoModalComponent,
     IntroModalComponent,
     PwaPromptComponent,
-    AudioComponentComponent,
-    ChatPromptComponentComponent,
+    AudioComponent,
+    ChatPromptComponent,
     HeaderComponent,
     UsageComponent,
-    ToolbarComponent
+    ToolbarComponent,
+    SettingsComponent,
+    ChatContainerComponent
   ],
   imports: [
     HttpClientModule,

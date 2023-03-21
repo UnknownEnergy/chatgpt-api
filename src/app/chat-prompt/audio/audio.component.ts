@@ -1,16 +1,15 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import * as RecordRTC from 'recordrtc';
 import {Configuration, OpenAIApi} from "openai";
-import {FocusMonitor} from "@angular/cdk/a11y";
+import {SettingsService} from "../../services/settings.service";
 
 @Component({
   selector: 'app-audio-component',
-  templateUrl: './audio-component.component.html',
-  styleUrls: ['./audio-component.component.css']
+  templateUrl: './audio.component.html',
+  styleUrls: ['./audio.component.css']
 })
-export class AudioComponentComponent implements OnInit {
+export class AudioComponent implements OnInit {
 
-  @Input() apiKey: string;
   @Output() audioTextUpdated = new EventEmitter<string>();
   @Output() isLoading = new EventEmitter<boolean>();
   private stream: MediaStream;
@@ -18,16 +17,19 @@ export class AudioComponentComponent implements OnInit {
   private openAi;
   public recording = false;
 
-  constructor() {
+  constructor(private settings: SettingsService) {
   }
 
   ngOnInit(): void {
     this.openAi = this.getOpenAi();
+    this.settings.refreshApiKey.subscribe(() => {
+      this.openAi = this.getOpenAi();
+    });
   }
 
   public getOpenAi() {
     const configuration = new Configuration({
-      apiKey: this.apiKey,
+      apiKey: this.settings.apiKey,
       formDataCtor: CustomFormData
     });
     return new OpenAIApi(configuration);
@@ -36,7 +38,7 @@ export class AudioComponentComponent implements OnInit {
 
   startRecording() {
     this.recording = true;
-    navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
+    navigator.mediaDevices.getUserMedia({audio: true}).then((stream) => {
       this.stream = stream;
       this.recordRTC = new RecordRTC(stream, {
         type: 'audio',
@@ -64,10 +66,11 @@ export class AudioComponentComponent implements OnInit {
             alert(error.message);
             throw error;
           }
-      });
+        });
     });
     this.stream.getTracks().forEach((track) => track.stop());
   }
+
   openFilePicker() {
     const input = document.createElement('input');
     input.type = 'file';
@@ -76,7 +79,7 @@ export class AudioComponentComponent implements OnInit {
     input.addEventListener('change', () => {
       const file = input.files[0];
       this.isLoading.emit(true);
-      this.openAi.createTranscription(file, 'whisper-1', )
+      this.openAi.createTranscription(file, 'whisper-1',)
         .then((response) => {
           this.audioTextUpdated.emit(response.data.text);
           this.isLoading.emit(false);

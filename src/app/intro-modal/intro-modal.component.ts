@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {MatDialogRef} from '@angular/material/dialog';
-import {PwaService} from "../services/pwa.service";
+import {SettingsService} from "../services/settings.service";
 
 @Component({
   selector: 'app-intro-dialog',
@@ -10,10 +10,12 @@ import {PwaService} from "../services/pwa.service";
 export class IntroModalComponent {
   apiKey: string;
 
-  constructor(public dialogRef: MatDialogRef<IntroModalComponent>) {
+  constructor(public dialogRef: MatDialogRef<IntroModalComponent>,
+              private settings: SettingsService) {
   }
 
   onContinue() {
+    this.settings.refreshApiKey.emit();
     this.dialogRef.close({apiKey: this.apiKey});
   }
 

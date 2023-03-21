@@ -27,8 +27,15 @@
 body {
   @include lighten();
   background-color: #00644b;
+  height: 100vh;
+  margin: 0;
 }
 
 body.dark {
   @include darken();
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
 }

@@ -9,10 +9,8 @@ import {MatDialog} from "@angular/material/dialog";
   styleUrls: ['./toolbar.component.css']
 })
 export class ToolbarComponent implements OnInit{
-  @Input() apiKey: string;
   isChatHeaderCollapsed: any;
   darkModeEnabled: boolean;
-  refreshUsage = new EventEmitter<string>();
 
   constructor(private dialog: MatDialog) {
     const savedIsChatHeaderCollapsed = localStorage.getItem('isChatHeaderCollapsed');
@@ -40,7 +38,7 @@ export class ToolbarComponent implements OnInit{
     }
   }
 
-  toggleChatHeader() {
+  toggleSettings() {
     const chatHeader = document.getElementsByClassName('chat-settings')[0];
     chatHeader.classList.toggle('collapsed');
     this.isChatHeaderCollapsed = !this.isChatHeaderCollapsed;

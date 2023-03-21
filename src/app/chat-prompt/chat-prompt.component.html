@@ -1,5 +1,5 @@
 <div class="chat-prompt">
-  <div *ngIf="isLoading" class="loading d-flex">
+  <div *ngIf="isLoading" class="loading">
     <mat-spinner [diameter]="25"></mat-spinner>
     <p>Loading please wait...</p>
   </div>
@@ -11,7 +11,7 @@
     <div class="d-flex send-buttons">
       <button (click)="sendMessage.emit(messageInput); messageInput = '';"><i class="bi bi-send"></i></button>
       <button (click)="resendMessage.emit()"><i class="bi bi-arrow-repeat"></i></button>
-      <app-audio-component [apiKey]="apiKey" (audioTextUpdated)="updateMessage($event)" (isLoading)="changeLoading($event)"></app-audio-component>
+      <app-audio-component (audioTextUpdated)="updateMessage($event)" (isLoading)="changeLoading($event)"></app-audio-component>
     </div>
   </div>
 </div>

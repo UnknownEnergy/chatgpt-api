@@ -1,6 +1,6 @@
 <div class="chat-header d-flex justify-content-between">
   <div class="d-flex">
-    <button class="btn btn-primary toggle-button" (click)="toggleChatHeader()"
+    <button class="btn btn-primary toggle-button" (click)="toggleSettings()"
             [ngClass]="{'collapsed': isChatHeaderCollapsed}">
       <ng-container *ngIf="!isChatHeaderCollapsed; else isCollapsed">
         <i class="bi bi-chevron-up"></i>
@@ -14,7 +14,7 @@
     </button>
   </div>
   <div class="d-flex">
-    <app-usage [apiKey]="apiKey" [refreshUsage]="refreshUsage"></app-usage>
+    <app-usage></app-usage>
     <button class="btn btn-primary" (click)="openTipDialog()">
       <i class="bi bi-currency-bitcoin"></i>
     </button>
@@ -23,3 +23,4 @@
     </button>
   </div>
 </div>
+<app-settings></app-settings>

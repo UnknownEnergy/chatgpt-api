@@ -4,16 +4,16 @@ import {
   Configuration,
   CreateChatCompletionRequest,
   CreateCompletionRequest,
-  Model,
   OpenAIApi
 } from "openai";
 import {ChatCompletionRequestMessage, CreateImageRequest} from "openai/dist/api";
-import hljs from 'highlight.js';
 import showdown from 'showdown';
 import {HttpClient} from "@angular/common/http";
 import {IntroModalComponent} from "./intro-modal/intro-modal.component";
 import {MatDialog} from "@angular/material/dialog";
 import {ToolbarComponent} from "./toolbar/toolbar.component";
+import {SettingsService} from "./services/settings.service";
+import {ChatContainerComponent} from "./chat-container/chat-container.component";
 
 @Component({
   selector: 'app-root',
@@ -22,52 +22,23 @@ import {ToolbarComponent} from "./toolbar/toolbar.component";
 })
 export class AppComponent implements OnInit {
 
-  messages: { content: string; contentRaw: string; isRaw?: boolean; timestamp: Date; avatar: string; isUser: boolean; }[] = [];
-  chatbotTyping = false;
-  apiKey = '';
   chatHistory: Array<ChatCompletionRequestMessage> = [];
-  usedTokens: number = 0;
-  showPassword: boolean = false;
-
-  selectedModel: string = 'gpt-3.5-turbo';
-  models: Model[] = [];
-
-  @ViewChild('messageContainer', {static: false}) messageContainer: ElementRef;
-
-  temperature: number = 0.7;
-  maxTokens: number = 256;
-
   converter = new showdown.Converter({
     tables: true, emoji: true, underline: true, openLinksInNewWindow: true, tasklists: true,
     strikethrough: true, simplifiedAutoLink: true
   });
 
+  @ViewChild('messageContainer', {static: false}) messageContainer: ElementRef;
   @ViewChild('toolbarComponent') toolbarComponent: ToolbarComponent;
+  @ViewChild('chatContainerComponent') chatContainer: ChatContainerComponent;
 
   constructor(private http: HttpClient,
-              private dialog: MatDialog) {
-    const savedApiKey = localStorage.getItem('apiKey');
-    if (savedApiKey) {
-      this.apiKey = savedApiKey;
-    }
-    const savedTemperature = localStorage.getItem('temperature');
-    if (savedTemperature) {
-      this.temperature = parseFloat(savedTemperature);
-    }
-    const saveMaxTokens = localStorage.getItem('maxTokens');
-    if (saveMaxTokens) {
-      this.maxTokens = parseInt(saveMaxTokens);
-    }
-    const savedSelectedModel = localStorage.getItem('selectedModel');
-    if (savedSelectedModel) {
-      this.selectedModel = savedSelectedModel;
-    }
-
-    this.refreshModels();
+              private dialog: MatDialog,
+              public settings: SettingsService) {
   }
 
   ngOnInit(): void {
-    if (!this.apiKey) {
+    if (!this.settings.apiKey) {
       this.openIntroDialog();
     }
   }
@@ -76,9 +47,9 @@ export class AppComponent implements OnInit {
     const dialogRef = this.dialog.open(IntroModalComponent);
     dialogRef.afterClosed().subscribe((res) => {
       if (res.apiKey) {
-        this.apiKey = res.apiKey;
-        localStorage.setItem('apiKey', this.apiKey);
-        this.refreshModels();
+        this.settings.apiKey = res.apiKey;
+        localStorage.setItem('apiKey', this.settings.apiKey);
+        this.settings.refreshApiKey.emit();
       }
     });
   }
@@ -90,12 +61,12 @@ export class AppComponent implements OnInit {
 
     this.chatHistory.push({content: message, role: ChatCompletionRequestMessageRoleEnum.User});
 
-    localStorage.setItem('apiKey', this.apiKey);
-    localStorage.setItem('temperature', this.temperature.toString());
-    localStorage.setItem('maxTokens', this.maxTokens.toString());
-    localStorage.setItem('selectedModel', this.selectedModel);
+    localStorage.setItem('apiKey', this.settings.apiKey);
+    localStorage.setItem('temperature', this.settings.temperature.toString());
+    localStorage.setItem('maxTokens', this.settings.maxTokens.toString());
+    localStorage.setItem('selectedModel', this.settings.selectedModel);
 
-    this.messages.push({
+    this.chatContainer.messages.push({
       content: message,
       contentRaw: message,
       timestamp: new Date(),
@@ -103,7 +74,7 @@ export class AppComponent implements OnInit {
       isUser: true
     });
 
-    this.chatbotTyping = true;
+    this.chatContainer.chatbotTyping = true;
     setTimeout(() => {
       this.messageContainer.nativeElement.scrollTop = this.messageContainer.nativeElement.scrollHeight;
       }, 0);
@@ -112,25 +83,25 @@ export class AppComponent implements OnInit {
       {
         endpoint: 'createChatCompletion',
         payload: {
-          model: this.selectedModel,
+          model: this.settings.selectedModel,
           messages: this.chatHistory,
-          temperature: this.temperature,
-          max_tokens: this.maxTokens,
+          temperature: this.settings.temperature,
+          max_tokens: this.settings.maxTokens,
         } as CreateChatCompletionRequest
       },
       {
         endpoint: 'createCompletion',
         payload: {
-          model: this.selectedModel,
-          prompt: this.messages[this.messages.length - 1].content,
-          temperature: this.temperature,
-          max_tokens: this.maxTokens,
+          model: this.settings.selectedModel,
+          prompt: this.chatContainer.messages[this.chatContainer.messages.length - 1].content,
+          temperature: this.settings.temperature,
+          max_tokens: this.settings.maxTokens,
         } as CreateCompletionRequest
       },
       {
         endpoint: 'createImage',
         payload: {
-          prompt: this.messages[this.messages.length - 1].content,
+          prompt: this.chatContainer.messages[this.chatContainer.messages.length - 1].content,
         } as CreateImageRequest
       }
     ];
@@ -170,7 +141,7 @@ export class AppComponent implements OnInit {
       }
       let messageRaw = message;
       this.chatHistory.push({content: messageRaw, role: ChatCompletionRequestMessageRoleEnum.Assistant});
-      this.messages.push({
+      this.chatContainer.messages.push({
         content: this.converter.makeHtml(message),
         contentRaw: messageRaw,
         timestamp: new Date(),
@@ -178,8 +149,8 @@ export class AppComponent implements OnInit {
         isUser: false,
       });
     }
-    this.highlightCode();
-    this.chatbotTyping = false;
+    this.chatContainer.highlightCode();
+    this.chatContainer.chatbotTyping = false;
 
     setTimeout(() => {
       this.messageContainer.nativeElement.scrollTop = this.messageContainer.nativeElement.scrollHeight;
@@ -187,7 +158,7 @@ export class AppComponent implements OnInit {
   }
 
   private handleFinalErrorResponse(error) {
-    this.chatbotTyping = false;
+    this.chatContainer.chatbotTyping = false;
 
     setTimeout(() => {
       this.messageContainer.nativeElement.scrollTop = this.messageContainer.nativeElement.scrollHeight;
@@ -201,13 +172,6 @@ export class AppComponent implements OnInit {
     }
   }
 
-  private getOpenAi() {
-    const configuration = new Configuration({
-      apiKey: this.apiKey,
-    });
-    return new OpenAIApi(configuration);
-  }
-
   async resendLastMessage() {
     if (this.chatHistory.length > 0) {
       let lastMessage = this.chatHistory
@@ -217,40 +181,10 @@ export class AppComponent implements OnInit {
     }
   }
 
-  refreshModels() {
-    const openai = this.getOpenAi();
-    openai.listModels().then(response => {
-      this.models.push({
-        created: 0,
-        id: ' DALL·E',
-        object: '',
-        owned_by: ''
-      } as Model);
-      this.models = [...this.models, ...response.data.data];
-      this.toolbarComponent.refreshUsage.emit();
-    })
-  }
-
-  public highlightCode() {
-    setTimeout(() => {
-      hljs.highlightAll();
-    }, 50);
-
-  }
-
-  openApiKeyWebsite() {
-    window.open("https://platform.openai.com/account/api-keys", "_blank");
-  }
-
-  onTypeApiKey() {
-    this.refreshModels();
-    localStorage.setItem('apiKey', this.apiKey);
-  }
-
-  onInputOnlyAllowPositiveIntegers($event: KeyboardEvent) {
-    const charCode = $event.charCode;
-    if (charCode < 48 || charCode > 57) {
-      $event.preventDefault();
-    }
+  private getOpenAi() {
+    const configuration = new Configuration({
+      apiKey: this.settings.apiKey,
+    });
+    return new OpenAIApi(configuration);
   }
 }

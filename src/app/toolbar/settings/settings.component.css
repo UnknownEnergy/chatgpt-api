@@ -1,0 +1,125 @@
+.chat-settings {
+  flex-direction: column;
+  flex-shrink: 0;
+  align-items: center;
+  padding: 10px 20px;
+  color: var(--textColor);
+  background-color: var(--bgColor);
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom: 1px solid var(--border);
+}
+
+.chat-settings.collapsed {
+  display: none;
+}
+
+.input-api {
+  max-width: 50%;
+  color: var(--textColor);
+  background-color: var(--bgColor2);
+}
+
+.api-button {
+  margin-top: 2px;
+  margin-bottom: 14px;
+}
+
+.p-left-column {
+  min-width: 200px;
+}
+
+.input-randomness {
+  color: var(--textColor);
+  background-color: var(--bgColor2);
+}
+
+.input-max-tokens {
+  color: var(--textColor);
+  background-color: var(--bgColor2);
+  text-align: left;
+  width: 150px;
+  max-width: 150px;
+}
+
+button {
+  margin-bottom: 5px;
+  margin-left: 2px;
+  margin-right: 2px;
+  padding: 5px 10px;
+  background-color: #00A67E;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+button:hover {
+  background-color: #005a44;
+}
+
+.btn-primary {
+  background-color: #00A67E;
+}
+
+input {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+  outline: none;
+}
+
+/*Chrome*/
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  input[type='range'] {
+    overflow: hidden;
+    -webkit-appearance: none;
+  }
+
+  input[type='range']::-webkit-slider-runnable-track {
+    height: 10px;
+    -webkit-appearance: none;
+    background-color: #00A67E;
+    margin-top: -1px;
+  }
+
+  input[type='range']::-webkit-slider-thumb {
+    width: 12px;
+    height: 12px;
+    -webkit-appearance: none;
+    cursor: ew-resize;
+    background-color: #005a44;
+  }
+
+}
+
+/** FF*/
+input[type="range"]::-moz-range-progress {
+  background-color: #00A67E;
+}
+
+input[type="range"]::-moz-range-track {
+  background-color: #00A67E;
+}
+
+/* IE*/
+input[type="range"]::-ms-fill-lower {
+  background-color: #00A67E;
+}
+
+input[type="range"]::-ms-fill-upper {
+  background-color: #00A67E;
+}
+
+input[type="range"] {
+  max-width: 300px;
+}
