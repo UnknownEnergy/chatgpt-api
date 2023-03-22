@@ -8,6 +8,7 @@
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   border-bottom: 1px solid var(--border);
+  margin: 0 10px;
 }
 
 .chat-settings.collapsed {
@@ -26,7 +27,7 @@
 }
 
 .p-left-column {
-  min-width: 200px;
+  min-width: 140px;
 }
 
 .input-randomness {

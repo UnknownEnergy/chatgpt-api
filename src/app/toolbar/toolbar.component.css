@@ -1,6 +1,11 @@
 .chat-header {
-  margin-top: 2px;
-  margin-bottom: 2px;
+  margin: 0 10px;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: var(--bgColor2);
+  font-family: Arial, sans-serif;
+  font-size: 16px;
 }
 
 button {

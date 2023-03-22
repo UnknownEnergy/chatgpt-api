@@ -4,10 +4,16 @@
 @import "~highlight.js/styles/default.css";
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
 
+@mixin all() {
+  --header-size: 90px;
+  --toolbar-size: 50px;
+  --chat-prompt-size: 65px;
+}
+
 // mixin that enables css variables in light mode
 @mixin lighten() {
   --bgColor: white;
-  --bgColor2: white;
+  --bgColor2: #f3f3f3;
   --textColor: black;
   --message-left: rgba(0, 166, 126, 0.19);
   --message-right: white;
@@ -25,17 +31,14 @@
 }
 
 body {
+  @include all();
   @include lighten();
   background-color: #00644b;
-  height: 100vh;
   margin: 0;
+  padding: 0;
+  overflow: hidden;
 }
 
 body.dark {
   @include darken();
-}
-
-html, body {
-  height: 100%;
-  overflow: hidden;
 }

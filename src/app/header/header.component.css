@@ -14,3 +14,15 @@
   margin: 5px;
   width: 65px;
 }
+
+.title-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+app-api-status {
+  position: absolute;
+  top: 0;
+  right: 0;
+}

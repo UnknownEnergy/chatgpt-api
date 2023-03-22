@@ -1,8 +1,6 @@
 <app-header-component></app-header-component>
-<div class="chat-container">
-  <app-toolbar #toolbarComponent></app-toolbar>
-  <app-chat-container #chatContainerComponent></app-chat-container>
-  <app-chat-prompt-component (sendMessage)="sendMessage($event)"
-                             (resendMessage)="resendLastMessage()">
-  </app-chat-prompt-component>
-</div>
+<app-toolbar #toolbarComponent></app-toolbar>
+<app-chat-container #chatContainerComponent></app-chat-container>
+<app-chat-prompt-component (sendMessage)="sendMessage($event)"
+                           (resendMessage)="resendLastMessage()">
+</app-chat-prompt-component>

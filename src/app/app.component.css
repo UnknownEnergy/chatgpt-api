@@ -1,18 +1,36 @@
-
-.chat-container {
-  height: 100%;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
+app-header-component,
+app-toolbar,
+app-chat-prompt-component {
+  position: fixed;
+  width: 100%;
+  z-index: 1;
 }
 
-.chat-container {
-  margin: 0 10px;
-  border: 1px solid var(--border);
+app-header-component {
+  top: 0;
+  min-height: var(--header-size);
+}
+
+app-toolbar {
+  top: var(--header-size);
+  min-height: var(--toolbar-size);
+}
+
+app-chat-prompt-component {
+  bottom: 0;
+  min-height: var(--chat-prompt-size);
+}
+
+::-webkit-scrollbar {
+  background-color: var(--bgColor);
+  color: #aba499;
+}
+
+::-webkit-scrollbar-corner {
+  background-color: #181a1b;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #008d6a;
   border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  background-color: var(--bgColor2);
-  font-family: Arial, sans-serif;
-  font-size: 16px;
-  position: relative;
 }

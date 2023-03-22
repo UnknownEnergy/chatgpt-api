@@ -1,10 +1,7 @@
 
 .chat-prompt {
-  display: flex;
-  flex-direction: column;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
-  position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
