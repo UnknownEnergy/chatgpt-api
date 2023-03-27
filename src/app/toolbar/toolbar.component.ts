@@ -9,8 +9,8 @@ import {MatDialog} from "@angular/material/dialog";
   styleUrls: ['./toolbar.component.css']
 })
 export class ToolbarComponent implements OnInit{
-  isChatHeaderCollapsed: any;
-  darkModeEnabled: boolean;
+  isChatHeaderCollapsed: any = true;
+  darkModeEnabled: boolean = false;
 
   constructor(private dialog: MatDialog) {
     const savedIsChatHeaderCollapsed = localStorage.getItem('isChatHeaderCollapsed');
