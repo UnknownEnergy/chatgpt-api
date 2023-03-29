@@ -8,18 +8,14 @@
     </div>
   </div>
 </div>
-<br/>
-<p>Chat with me even when ChatGPT is down.<br/>
-  Without the usual delays and too many requests in 1 hour.</p>
-  <div class="d-flex">
-  <div class="col-md-8">
-    <input [(ngModel)]="apiKey" placeholder="Enter API Key...">
-  </div>
-  <div class="col-md-4">
-    <button (click)="openApiKeyWebsite()">Get Key</button>
-  </div>
+<p>Better ChatGPT client to access the API directly.<br/>
+  Follow these three simple steps:</p>
+  1️⃣ <button (click)="openApiKeyWebsite()">Get&nbsp;API&nbsp;Key here</button>
+  <br/>
+  <div class="d-flex align-content-center align-items-center">
+    2️⃣&nbsp;<input [(ngModel)]="apiKey" placeholder="Enter API Key here...">
   </div>
 </mat-dialog-content>
 <mat-dialog-actions class="justify-content-center">
-  <button (click)="onContinue()">Continue</button>
+  3️⃣ <button (click)="onContinue()">Continue</button>
 </mat-dialog-actions>

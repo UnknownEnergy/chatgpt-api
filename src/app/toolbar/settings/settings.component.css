@@ -18,7 +18,7 @@
 .input-api {
   max-width: 50%;
   color: var(--textColor);
-  background-color: var(--bgColor2);
+  background-color: var(--bgColorInput);
 }
 
 .api-button {
@@ -32,12 +32,12 @@
 
 .input-randomness {
   color: var(--textColor);
-  background-color: var(--bgColor2);
+  background-color: var(--bgColorInput);
 }
 
 .input-max-tokens {
   color: var(--textColor);
-  background-color: var(--bgColor2);
+  background-color: var(--bgColorInput);
   text-align: left;
   width: 150px;
   max-width: 150px;
@@ -123,4 +123,48 @@ input[type="range"]::-ms-fill-upper {
 
 input[type="range"] {
   max-width: 300px;
+}
+
+@media (max-width: 576px) {
+  select {
+    font-size: 12px;
+    font-weight: bold;
+  }
+
+  .chat-settings {
+    padding: 5px 10px;
+  }
+
+  .input-api {
+    max-width: 100%;
+  }
+
+  .api-button {
+    margin-top: 0;
+    margin-bottom: 5px;
+  }
+
+  .p-left-column {
+    min-width: 120px;
+    font-size: 14px;
+  }
+
+  .input-max-tokens {
+    width: 100px;
+    max-width: 100px;
+  }
+
+  button {
+    font-size: 12px;
+    padding: 3px 8px;
+  }
+
+  input {
+    padding: 5px;
+    font-size: 14px;
+  }
+
+  input[type="range"] {
+    max-width: 200px;
+  }
 }

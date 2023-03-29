@@ -9,9 +9,7 @@
 }
 
 button {
-  margin-bottom: 5px;
-  margin-left: 2px;
-  margin-right: 2px;
+  margin: 2px;
   padding: 5px 10px;
   background-color: #00A67E;
   color: #fff;

@@ -4,7 +4,7 @@ import {EventEmitter, Injectable, Input} from "@angular/core";
   providedIn: 'root'
 })
 export class SettingsService {
-  apiKey: string;
+  apiKey: string = '';
   selectedModel: string = 'gpt-3.5-turbo';
   temperature: number = 0.7;
   maxTokens: number = 256;

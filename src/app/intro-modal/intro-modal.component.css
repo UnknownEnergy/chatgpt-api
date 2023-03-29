@@ -3,7 +3,7 @@ mat-form-field {
   height: fit-content;
 }
 mat-dialog-actions {
-  color: white;
+  color: rgba(68, 70, 84, 0.85);
 }
 
 mat-dialog-content {

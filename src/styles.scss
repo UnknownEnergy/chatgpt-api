@@ -13,10 +13,11 @@
 // mixin that enables css variables in light mode
 @mixin lighten() {
   --bgColor: white;
-  --bgColor2: #f3f3f3;
+  --bgColor2: white;
+  --bgColorInput: white;
   --textColor: black;
   --message-left: rgba(0, 166, 126, 0.19);
-  --message-right: white;
+  --message-right: #ffe1a6;
   --border: #ccc;
 }
 
@@ -24,7 +25,8 @@
 @mixin darken() {
   --bgColor: rgba(52,53,65);
   --bgColor2: rgba(68, 70, 84, 0.9);
-  --textColor:white;
+  --bgColorInput: rgba(68, 70, 84, 0.9);
+  --textColor: white;
   --message-left: #00644b;
   --message-right: #008664;
   --border: #555;
