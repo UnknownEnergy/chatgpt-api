@@ -44,3 +44,30 @@ body {
 body.dark {
   @include darken();
 }
+
+@media print {
+  body {
+    -webkit-print-color-adjust: exact;
+  }
+
+  body * {
+    visibility: hidden;
+  }
+
+  .chat-messages, .chat-messages * {
+    visibility: visible;
+  }
+  .chat-messages {
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    .info-bubble, .info-bubble *{
+      visibility: hidden;
+    }
+
+    .raw, .raw *{
+      visibility: hidden;
+    }
+  }
+}

@@ -1,0 +1,11 @@
+.info-bubble {
+  display: inline-block;
+  font-size: 14px;
+  color: #666;
+  cursor: pointer;
+  margin: 10px 0;
+}
+
+.info-bubble:hover {
+  text-decoration: underline;
+}

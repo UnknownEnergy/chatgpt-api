@@ -29,6 +29,7 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
 import { SettingsComponent } from './toolbar/settings/settings.component';
 import { ChatContainerComponent } from './chat-container/chat-container.component';
 import { ApiStatusComponent } from './header/api-status/api-status.component';
+import { SaveAsPdfComponent } from './chat-container/save-as-pdf/save-as-pdf.component';
 
 const initializer = (pwaService: PwaService) => () => pwaService.initPwaPrompt();
 
@@ -47,7 +48,8 @@ const initializer = (pwaService: PwaService) => () => pwaService.initPwaPrompt()
     ToolbarComponent,
     SettingsComponent,
     ChatContainerComponent,
-    ApiStatusComponent
+    ApiStatusComponent,
+    SaveAsPdfComponent
   ],
   imports: [
     HttpClientModule,
