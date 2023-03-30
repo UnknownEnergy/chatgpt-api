@@ -58,9 +58,10 @@ body.dark {
     visibility: visible;
   }
   .chat-messages {
-    position: absolute;
-    left: 0;
-    top: 0;
+    page-break-inside: avoid;
+    position: unset !important;
+    padding: 0 !important;
+    margin: 0 !important;
 
     .info-bubble, .info-bubble *{
       visibility: hidden;
