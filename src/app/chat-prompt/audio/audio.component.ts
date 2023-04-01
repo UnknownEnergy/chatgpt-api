@@ -15,7 +15,8 @@ export class AudioComponent implements OnInit {
   private stream: MediaStream;
   private recordRTC: RecordRTC;
   private openAi;
-  public recording = false;
+  recordIcon: string = "bi bi-mic";
+  recordText: string = "Hold to record";
 
   constructor(private settings: SettingsService) {
   }
@@ -37,7 +38,8 @@ export class AudioComponent implements OnInit {
 
 
   startRecording() {
-    this.recording = true;
+    this.recordIcon = "bi bi-stop-circle";
+    this.recordText = "Release to stop";
     navigator.mediaDevices.getUserMedia({audio: true}).then((stream) => {
       this.stream = stream;
       this.recordRTC = new RecordRTC(stream, {
@@ -48,7 +50,8 @@ export class AudioComponent implements OnInit {
   }
 
   stopRecording() {
-    this.recording = false;
+    this.recordIcon = "bi bi-mic";
+    this.recordText = "Hold to record";
     this.recordRTC.stopRecording(() => {
       const blob = this.recordRTC.getBlob();
       const file = new File([blob], 'recorded-audio.wav');
