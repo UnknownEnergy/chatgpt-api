@@ -1,5 +1,5 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
-import hljs from 'highlight.js';
+import {HighlightService} from "../services/highlight.service";
 
 @Component({
   selector: 'app-chat-container',
@@ -12,10 +12,13 @@ export class ChatContainerComponent {
 
   @ViewChild('messageContainer') private messageContainer: ElementRef;
 
+  constructor(
+    /* ... */
+    private highlightService: HighlightService
+  ) {}
+
   public highlightCode() {
-    setTimeout(() => {
-      hljs.highlightAll();
-    }, 50);
+    this.highlightService.highlightAll();
   }
 
   scrollToBottom(): void {
