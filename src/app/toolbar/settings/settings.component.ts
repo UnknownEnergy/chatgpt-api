@@ -21,13 +21,38 @@ export class SettingsComponent {
   refreshModels() {
     const openai = this.getOpenAi();
     openai.listModels().then(response => {
-      this.models.push({
-        created: 0,
-        id: ' DALL·E',
-        object: '',
-        owned_by: ''
-      } as Model);
-      this.models = [...this.models, ...response.data.data];
+      const importantModels = [
+        {
+          created: 0,
+          id: 'gpt-4',
+          object: '',
+          owned_by: ''
+        },
+        {
+          created: 0,
+          id: 'gpt-3.5-turbo',
+          object: '',
+          owned_by: ''
+        },
+        {
+          created: 0,
+          id: 'DALL·E',
+          object: '',
+          owned_by: ''
+        },
+        {
+          created: 0,
+          id: 'text-davinci-003',
+          object: '',
+          owned_by: ''
+        }
+      ];
+      const otherModels = response.data.data.filter(model => {
+        return !importantModels.some(importantModel => importantModel.id === model.id);
+      }).sort((a, b) => {
+        return a.id.localeCompare(b.id);
+      });
+      this.models = [...importantModels, ...otherModels];
     })
   }
 

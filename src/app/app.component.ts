@@ -97,6 +97,7 @@ export class AppComponent implements OnInit {
       },
       {
         endpoint: 'createImage',
+        restrictModel: 'DALL·E',
         payload: {
           prompt: this.chatContainer.messages[this.chatContainer.messages.length - 1].content,
         } as CreateImageRequest
@@ -104,11 +105,17 @@ export class AppComponent implements OnInit {
     ];
 
     const openai = this.getOpenAi()
-    this.callEndpoints(0, openai, endpoints);
+    this.callEndpoints(0, openai, endpoints, this.settings.selectedModel, '');
   }
 
-  callEndpoints(index, openai, endpoints) {
+  callEndpoints(index, openai, endpoints, model, error) {
     if (index >= endpoints.length) {
+      this.handleFinalErrorResponse(error);
+      return;
+    }
+
+    if(endpoints[index].restrictModel && model !== endpoints[index].restrictModel) {
+      this.callEndpoints(index + 1, openai, endpoints, model, error);
       return;
     }
 
@@ -119,7 +126,7 @@ export class AppComponent implements OnInit {
       })
       .catch(error => {
         if (error.response && error.response.status === 404) {
-          this.callEndpoints(index + 1, openai, endpoints);
+          this.callEndpoints(index + 1, openai, endpoints, model, error);
           return;
         }
         this.handleFinalErrorResponse(error);
