@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1680369970595,
+  "timestamp": 1680472419216,
   "index": "./index.html",
   "assetGroups": [
     {
@@ -32,6 +32,7 @@
         "./assets/chatworm-72x72.png",
         "./assets/chatworm.png",
         "./assets/chatworm_simple.png",
+        "./assets/cover.png",
         "./assets/demo_screenshot.png",
         "./assets/icons/icon-128x128.png",
         "./assets/icons/icon-144x144.png",
@@ -54,6 +55,7 @@
     "./assets/chatworm-72x72.png": "f34993d14d89b3b9c1cfed3b38449c18d18aaa57",
     "./assets/chatworm.png": "6dc11906419b0f44abb433a5cd947dad28fade00",
     "./assets/chatworm_simple.png": "7208550c6b370c812bfe0882672d793aa2616010",
+    "./assets/cover.png": "3f6255c3f9533622dcdbe6c7c8c397a20a1bd056",
     "./assets/demo_screenshot.png": "d33811dc1868d214954bdcef7544c8bfcf415401",
     "./assets/icons/icon-128x128.png": "77fa98c9bbf2f8aa1aa87728fe33069a6fa6602f",
     "./assets/icons/icon-144x144.png": "65737af0035a76a35d866742e337a4d182541d1e",

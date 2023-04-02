@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.chatworm.twa",
+      "sha256_cert_fingerprints": [
+        "41:F9:D1:30:66:0C:34:8E:55:29:9B:68:C3:73:B4:EC:4D:C0:A0:F0:35:8C:96:4F:EC:B1:F9:95:A0:4F:29:C3"
+      ]
+    }
+  }
+]

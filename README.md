@@ -1,7 +1,7 @@
 # Chat Worm
 ## A ChatGPT Client to access the API
 
-<img src="src/assets/chatworm.png" alt="Chatworm" width="250"/>
+<img src="src/assets/cover.png" alt="Chatworm"/>
 
 **Web app**: https://chatworm.com/  
 **Android app**: https://play.google.com/store/apps/details?id=com.chatworm.twa  

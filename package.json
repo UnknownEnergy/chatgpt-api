@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --host 0.0.0.0",
-    "build": "ng build --output-path dist/ --base-href . && cp CNAME dist/CNAME && cp LICENSE dist/LICENSE",
+    "build": "ng build --output-path dist/ --base-href . && cp CNAME dist/CNAME && cp LICENSE dist/LICENSE && cp .well-known/ dist/.well-known/ -R",
     "deploy": "git push origin `git subtree split --prefix dist master`:gh-pages --force",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
