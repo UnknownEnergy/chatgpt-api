@@ -1,19 +1,7 @@
-app-clear-messages {
-  width: 36px;
-  height: 40px;
-}
-
-.chat-header {
-  margin: 0 10px;
-  border: 1px solid var(--border);
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  background-color: var(--bgColor2);
-  font-family: Arial, sans-serif;
-  font-size: 16px;
-}
 
 button {
+  width: inherit;
+  height: inherit;
   margin: 2px;
   padding: 5px 10px;
   background-color: #00A67E;
@@ -29,4 +17,8 @@ button {
 
 button:hover {
   background-color: #005a44;
+}
+
+.btn-primary {
+  background-color: #00A67E;
 }
