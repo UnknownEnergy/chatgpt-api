@@ -1,4 +1,4 @@
-<button [matMenuTriggerFor]="menu"><i class="bi bi-mic"></i></button>
+<button aria-label="audio menu" [matMenuTriggerFor]="menu"><i class="bi bi-mic"></i></button>
 <mat-menu #menu="matMenu">
   <button (click)="openFilePicker()">
     <i class="bi bi-file-earmark-arrow-up"></i> Upload Audio File

@@ -22,7 +22,7 @@
         </ng-template>
         <div class="d-flex justify-content-end">
           <div class="message-timestamp">{{ message.timestamp | date:'shortTime' }}</div>
-          <button class="raw" (click)="message.isRaw = !message.isRaw; highlightCode()"><i class="bi bi-braces"></i>
+          <button aria-label="raw" class="raw" (click)="message.isRaw = !message.isRaw; highlightCode()"><i class="bi bi-braces"></i>
           </button>
         </div>
       </div>
