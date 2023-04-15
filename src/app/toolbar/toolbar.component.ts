@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Input, OnInit} from '@angular/core';
-import {TipModalComponent} from "./tip-modal/tip-modal.component";
+import {Component, OnInit} from '@angular/core';
+import {TipAndCreditsModalComponent} from "./tip-and-credits-modal/tip-and-credits-modal.component";
 import {InfoModalComponent} from "./info-modal/info-modal.component";
 import {MatDialog} from "@angular/material/dialog";
 
@@ -8,7 +8,7 @@ import {MatDialog} from "@angular/material/dialog";
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.css']
 })
-export class ToolbarComponent implements OnInit{
+export class ToolbarComponent implements OnInit {
   isChatHeaderCollapsed: any = true;
   darkModeEnabled: boolean = false;
 
@@ -46,7 +46,7 @@ export class ToolbarComponent implements OnInit{
   }
 
   openTipDialog() {
-    this.dialog.open(TipModalComponent);
+    this.dialog.open(TipAndCreditsModalComponent);
   }
 
   openInfoDialog() {

@@ -1,0 +1,34 @@
+<div class="popup-container">
+  <div class="popup-content">
+    <h2>Tips <i class="bi bi-coin"></i></h2>
+    <div>
+      Could this app help you save some money <br/>or improve your experience with AI?<br/>
+      Consider supporting this small project <br/>with a coffee/beer donation. thanks 😃<br/>
+    </div>
+    <br/>
+    <a href="https://paypal.me/danschweiger" target="_blank">Tip with PayPal</a>
+    <br/><br/>
+    <a href="https://ko-fi.com/schweiger" target="_blank">Tip with Ko-fi</a>
+    <br/><br/>
+    <img [src]="qrCode" height="90px" alt="QR Code of Bitcoin Address"/>
+    <div class="bitcoin-address">
+      <i class="bi bi-currency-bitcoin"></i> {{bitcoinAddress}}
+      <button aria-label="Copy Bitcoin Address" (click)="copyBitcoinAddress()"><i class="bi bi-clipboard"></i>
+      </button>
+    </div>
+    <br/>
+    <h2>Credits <i class="bi bi-chat-heart"></i></h2>
+    <div>
+      Special credits go to following people <br/>supporting this project:
+    </div>
+    <br/>
+    <div>
+      <a href="https://github.com/deWaardt" target="_blank">@deWaardt</a> for coding features.
+    </div>
+    <div>
+      <a href="https://github.com/marioschweiger" target="_blank">@marioschweiger</a> for coding features.
+    </div>
+    <br/>
+    <button aria-label="Close" (click)="onClose()">Close</button>
+  </div>
+</div>

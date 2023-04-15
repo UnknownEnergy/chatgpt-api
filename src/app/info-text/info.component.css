@@ -1,3 +1,9 @@
 .info {
   color: var(--textColor);
 }
+
+.flex {
+  display: flex;
+  align-content: center;
+  align-items: center;
+}

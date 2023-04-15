@@ -1,10 +1,10 @@
-import {NgModule, isDevMode, APP_INITIALIZER} from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {APP_INITIALIZER, isDevMode, NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
 
-import { AppComponent } from './app.component';
+import {AppComponent} from './app.component';
 import {HttpClientModule} from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
-import { TipModalComponent } from './toolbar/tip-modal/tip-modal.component';
+import {TipAndCreditsModalComponent} from './toolbar/tip-and-credits-modal/tip-and-credits-modal.component';
 import {InfoModalComponent} from "./toolbar/info-modal/info-modal.component";
 import {IntroModalComponent} from "./intro-modal/intro-modal.component";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
@@ -12,32 +12,32 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatButtonModule} from "@angular/material/button";
 import {MatInputModule} from "@angular/material/input";
-import { ServiceWorkerModule } from '@angular/service-worker';
-import { PwaPromptComponent } from './pwa-prompt/pwa-prompt.component';
+import {ServiceWorkerModule} from '@angular/service-worker';
+import {PwaPromptComponent} from './pwa-prompt/pwa-prompt.component';
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatIconModule} from "@angular/material/icon";
 import {MatBottomSheet} from "@angular/material/bottom-sheet";
 import {PwaService} from "./services/pwa.service";
 import {InfoComponent} from "./info-text/info.component";
-import { AudioComponent } from './chat-prompt/audio/audio.component';
+import {AudioComponent} from './chat-prompt/audio/audio.component';
 import {MatMenuModule} from "@angular/material/menu";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import { ChatPromptComponent } from './chat-prompt/chat-prompt.component';
-import { HeaderComponent } from './header/header.component';
-import { UsageComponent } from './toolbar/usage/usage.component';
-import { ToolbarComponent } from './toolbar/toolbar.component';
-import { SettingsComponent } from './toolbar/settings/settings.component';
-import { ChatContainerComponent } from './chat-container/chat-container.component';
-import { ApiStatusComponent } from './header/api-status/api-status.component';
-import { SaveAsPdfComponent } from './chat-container/save-as-pdf/save-as-pdf.component';
-import { ClearMessagesComponent } from './toolbar/clear-messages/clear-messages.component';
+import {ChatPromptComponent} from './chat-prompt/chat-prompt.component';
+import {HeaderComponent} from './header/header.component';
+import {UsageComponent} from './toolbar/usage/usage.component';
+import {ToolbarComponent} from './toolbar/toolbar.component';
+import {SettingsComponent} from './toolbar/settings/settings.component';
+import {ChatContainerComponent} from './chat-container/chat-container.component';
+import {ApiStatusComponent} from './header/api-status/api-status.component';
+import {SaveAsPdfComponent} from './chat-container/save-as-pdf/save-as-pdf.component';
+import {ClearMessagesComponent} from './toolbar/clear-messages/clear-messages.component';
 
 const initializer = (pwaService: PwaService) => () => pwaService.initPwaPrompt();
 
 @NgModule({
   declarations: [
     AppComponent,
-    TipModalComponent,
+    TipAndCreditsModalComponent,
     InfoComponent,
     InfoModalComponent,
     IntroModalComponent,
@@ -79,4 +79,5 @@ const initializer = (pwaService: PwaService) => () => pwaService.initPwaPrompt()
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
