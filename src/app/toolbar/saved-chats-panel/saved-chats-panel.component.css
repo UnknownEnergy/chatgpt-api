@@ -11,6 +11,11 @@
   font-size: 16px;
 }
 
+h1 h2 h3 h4 h5 h6 {
+  font-family: Arial, sans-serif;
+}
+
+
 .header {
   display: flex;
   justify-content: right;
@@ -24,12 +29,129 @@
   flex-direction: column;
 }
 
+.accordion-container {
+  overflow-y: scroll;
+}
+
 .footer {
   position: absolute;
   bottom: 20px;
   left: 0;
   right: 0;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
+}
+
+.chatNameInput {
+  width: 80%;
+  height: 50px;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  background-color: var(--bgColor2);
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+}
+
+.saveChatBtn {
+  height: 50px;
+  margin: 2px;
+  padding: 5px 10px;
+  background-color: #00A67E;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.button {
+  margin: 2px;
+  padding: 5px 10px;
+  background-color: #00A67E;
+  height: 40px;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.button-danger {
+  background-color: #ff0000;
+  margin: 2px;
+  padding: 5px 10px;
+  height: 40px;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.chatbox {
+  overflow-y: scroll;
+  max-height: 200px;
+  display: flex;
+  flex-direction: column
+}
+
+.chat-accordion {
+  overflow-y: scroll;
+  max-height: 80px;
+}
+
+.user-message {
+  padding: 10px;
+  display: inline-block;
+  justify-content: end;
+  margin: 5px;
+  background-color: var(--message-left);
+}
+
+.gpt-message {
+  padding: 10px;
+  display: inline-block;
+  justify-content: start;
+  margin: 5px;
+  background-color: var(--message-right);
+}
+
+.loadChatBtns {
+  margin: 10px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.loadChatButton {
+  width: 85%;
+}
+
+.deleteButton {
+  width: 10%
+}
+
+.deleteConfirmButton {
+  width: 5%;
+}
+
+.confirmLoadChat {
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.confirmLoadButtons {
+  display: flex;
+  justify-content: center;
 }

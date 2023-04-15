@@ -14,6 +14,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {ToolbarComponent} from "./toolbar/toolbar.component";
 import {SettingsService} from "./services/settings.service";
 import {ChatContainerComponent} from "./chat-container/chat-container.component";
+import {MessageService} from "./services/message.service";
 
 @Component({
   selector: 'app-root',
@@ -22,7 +23,6 @@ import {ChatContainerComponent} from "./chat-container/chat-container.component"
 })
 export class AppComponent implements OnInit {
 
-  chatHistory: Array<ChatCompletionRequestMessage> = [];
   converter = new showdown.Converter({
     tables: true, emoji: true, underline: true, openLinksInNewWindow: true, tasklists: true,
     strikethrough: true, simplifiedAutoLink: true
@@ -33,7 +33,8 @@ export class AppComponent implements OnInit {
 
   constructor(private http: HttpClient,
               private dialog: MatDialog,
-              public settings: SettingsService) {
+              public settings: SettingsService,
+              private messageService: MessageService) {
   }
 
   ngOnInit(): void {
@@ -58,14 +59,14 @@ export class AppComponent implements OnInit {
       return;
     }
 
-    this.chatHistory.push({content: message, role: ChatCompletionRequestMessageRoleEnum.User});
+    this.messageService.chatHistory.push({content: message, role: ChatCompletionRequestMessageRoleEnum.User});
 
     localStorage.setItem('apiKey', this.settings.apiKey);
     localStorage.setItem('temperature', this.settings.temperature.toString());
     localStorage.setItem('maxTokens', this.settings.maxTokens.toString());
     localStorage.setItem('selectedModel', this.settings.selectedModel);
 
-    this.chatContainer.messages.push({
+    this.messageService.messages.push({
       content: message,
       contentRaw: message,
       timestamp: new Date(),
@@ -81,7 +82,7 @@ export class AppComponent implements OnInit {
         endpoint: 'createChatCompletion',
         payload: {
           model: this.settings.selectedModel,
-          messages: this.chatHistory,
+          messages: this.messageService.chatHistory,
           temperature: this.settings.temperature,
           max_tokens: this.settings.maxTokens,
         } as CreateChatCompletionRequest
@@ -90,7 +91,7 @@ export class AppComponent implements OnInit {
         endpoint: 'createCompletion',
         payload: {
           model: this.settings.selectedModel,
-          prompt: this.chatContainer.messages[this.chatContainer.messages.length - 1].content,
+          prompt: this.messageService.messages[this.messageService.messages.length - 1].content,
           temperature: this.settings.temperature,
           max_tokens: this.settings.maxTokens,
         } as CreateCompletionRequest
@@ -99,7 +100,7 @@ export class AppComponent implements OnInit {
         endpoint: 'createImage',
         restrictModel: 'DALL·E',
         payload: {
-          prompt: this.chatContainer.messages[this.chatContainer.messages.length - 1].content,
+          prompt: this.messageService.messages[this.messageService.messages.length - 1].content,
         } as CreateImageRequest
       }
     ];
@@ -144,8 +145,8 @@ export class AppComponent implements OnInit {
         message = response.data.choices[0].text;
       }
       let messageRaw = message;
-      this.chatHistory.push({content: messageRaw, role: ChatCompletionRequestMessageRoleEnum.Assistant});
-      this.chatContainer.messages.push({
+      this.messageService.chatHistory.push({content: messageRaw, role: ChatCompletionRequestMessageRoleEnum.Assistant});
+      this.messageService.messages.push({
         content: this.converter.makeHtml(message),
         contentRaw: messageRaw,
         timestamp: new Date(),
@@ -171,8 +172,8 @@ export class AppComponent implements OnInit {
   }
 
   async resendLastMessage() {
-    if (this.chatHistory.length > 0) {
-      let lastMessage = this.chatHistory
+    if (this.messageService.chatHistory.length > 0) {
+      let lastMessage = this.messageService.chatHistory
         .filter(message => message.role === ChatCompletionRequestMessageRoleEnum.User)
         .pop().content;
       await this.sendMessage(lastMessage);

@@ -1,9 +1,6 @@
 <div class="chat-messages" #messageContainer>
-  <div style="display: flex; justify-content: right">
-    <button class="btn btn-primary">Saved chats</button>
-  </div>
-  <app-info *ngIf="messages.length === 0"></app-info>
-  <div class="chat-message" *ngFor="let message of messages">
+  <app-info *ngIf="getMessages().length === 0"></app-info>
+  <div class="chat-message" *ngFor="let message of getMessages()">
     <ng-container *ngIf="message.isUser; else systemMessage">
       <div class="message-content message-content-right">
         <p class="p-message-content">{{message.content}}</p>
@@ -44,5 +41,5 @@
       </div>
     </div>
   </div>
-  <app-save-as-pdf *ngIf="!chatbotTyping && messages.length > 0"></app-save-as-pdf>
+  <app-save-as-pdf *ngIf="!chatbotTyping && getMessages().length > 0"></app-save-as-pdf>
 </div>

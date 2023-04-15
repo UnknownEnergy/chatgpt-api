@@ -9,7 +9,7 @@ import {SavedChatsPanelComponent} from "./saved-chats-panel/saved-chats-panel.co
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.css']
 })
-export class ToolbarComponent implements OnInit{
+export class ToolbarComponent implements OnInit {
   isChatHeaderCollapsed: any = true;
   darkModeEnabled: boolean = false;
 
@@ -37,7 +37,6 @@ export class ToolbarComponent implements OnInit{
       const body = document.getElementsByTagName('body')[0];
       body.classList.add('dark');
     }
-    this.toggleSavePanel();
   }
 
   toggleSettings() {

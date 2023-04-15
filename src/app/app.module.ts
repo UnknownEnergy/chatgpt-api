@@ -33,6 +33,9 @@ import { SaveAsPdfComponent } from './chat-container/save-as-pdf/save-as-pdf.com
 import { ClearMessagesComponent } from './toolbar/clear-messages/clear-messages.component';
 import { SavedChatsPanelComponent } from './toolbar/saved-chats-panel/saved-chats-panel.component';
 import {MatExpansionModule} from "@angular/material/expansion";
+import {MatDividerModule} from "@angular/material/divider";
+import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatPaginatorModule} from "@angular/material/paginator";
 
 const initializer = (pwaService: PwaService) => () => pwaService.initPwaPrompt();
 
@@ -76,6 +79,9 @@ const initializer = (pwaService: PwaService) => () => pwaService.initPwaPrompt()
     MatMenuModule,
     MatProgressSpinnerModule,
     MatExpansionModule,
+    MatDividerModule,
+    MatTooltipModule,
+    MatPaginatorModule,
   ],
   providers: [
     MatBottomSheet,
