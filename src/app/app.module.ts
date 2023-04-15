@@ -31,6 +31,8 @@ import { ChatContainerComponent } from './chat-container/chat-container.componen
 import { ApiStatusComponent } from './header/api-status/api-status.component';
 import { SaveAsPdfComponent } from './chat-container/save-as-pdf/save-as-pdf.component';
 import { ClearMessagesComponent } from './toolbar/clear-messages/clear-messages.component';
+import { SavedChatsPanelComponent } from './toolbar/saved-chats-panel/saved-chats-panel.component';
+import {MatExpansionModule} from "@angular/material/expansion";
 
 const initializer = (pwaService: PwaService) => () => pwaService.initPwaPrompt();
 
@@ -51,7 +53,8 @@ const initializer = (pwaService: PwaService) => () => pwaService.initPwaPrompt()
     ChatContainerComponent,
     ApiStatusComponent,
     SaveAsPdfComponent,
-    ClearMessagesComponent
+    ClearMessagesComponent,
+    SavedChatsPanelComponent
   ],
   imports: [
     HttpClientModule,
@@ -72,6 +75,7 @@ const initializer = (pwaService: PwaService) => () => pwaService.initPwaPrompt()
     MatIconModule,
     MatMenuModule,
     MatProgressSpinnerModule,
+    MatExpansionModule,
   ],
   providers: [
     MatBottomSheet,

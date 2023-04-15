@@ -1,0 +1,32 @@
+<div class="outer-container">
+  <div style="width: 100%">
+    <div class="header">
+      <button (click)="close()" style="font-size: 30pt" class="btn btn-close"></button>
+    </div>
+    <div class="content">
+      <h1 style="align-self: center">Your saved chats:</h1>
+      <mat-accordion displayMode="flat" class="headers-align">
+        <mat-expansion-panel
+          *ngFor="let app of testList"
+          [expanded]="steps === testList.indexOf(app) + 1"
+          hideToggle
+        >
+          <mat-expansion-panel-header class="application-list-header">
+            <mat-panel-title> {{ app.name }} </mat-panel-title>
+            <mat-panel-description>
+              {{ app.description }}
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+
+          <h1>Test</h1>
+
+        </mat-expansion-panel>
+      </mat-accordion>
+
+    </div>
+    <div class="footer">
+      <button class="btn btn-primary w-75" (click)="saveChat()">Save this chat</button>
+    </div>
+  </div>
+</div>
+

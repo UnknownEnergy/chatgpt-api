@@ -1,4 +1,7 @@
 <div class="chat-messages" #messageContainer>
+  <div style="display: flex; justify-content: right">
+    <button class="btn btn-primary">Saved chats</button>
+  </div>
   <app-info *ngIf="messages.length === 0"></app-info>
   <div class="chat-message" *ngFor="let message of messages">
     <ng-container *ngIf="message.isUser; else systemMessage">

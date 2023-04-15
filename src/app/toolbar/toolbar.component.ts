@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnInit} from '@angular/core';
 import {TipModalComponent} from "./tip-modal/tip-modal.component";
 import {InfoModalComponent} from "./info-modal/info-modal.component";
 import {MatDialog} from "@angular/material/dialog";
+import {SavedChatsPanelComponent} from "./saved-chats-panel/saved-chats-panel.component";
 
 @Component({
   selector: 'app-toolbar',
@@ -36,6 +37,7 @@ export class ToolbarComponent implements OnInit{
       const body = document.getElementsByTagName('body')[0];
       body.classList.add('dark');
     }
+    this.toggleSavePanel();
   }
 
   toggleSettings() {
@@ -62,5 +64,10 @@ export class ToolbarComponent implements OnInit{
       body.classList.remove('dark');
     }
     localStorage.setItem('darkModeEnabled', JSON.stringify(this.darkModeEnabled));
+  }
+
+  toggleSavePanel() {
+    this.dialog.open(SavedChatsPanelComponent);
+    //this.showSavedChatsPanel = !this.showSavedChatsPanel;
   }
 }
