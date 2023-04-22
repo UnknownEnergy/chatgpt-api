@@ -13,17 +13,20 @@ export class ChatContainerComponent {
   @ViewChild('messageContainer') private messageContainer: ElementRef;
 
   constructor(
-    /* ... */
     private highlightService: HighlightService
-  ) {}
+  ) {
+  }
 
   public highlightCode() {
     this.highlightService.highlightAll();
   }
 
-  scrollToBottom(): void {
+  scrollToLastMessage(): void {
     setTimeout(() => {
-      this.messageContainer.nativeElement.scrollTop = this.messageContainer.nativeElement.scrollHeight;
+      const lastMessage = this.messageContainer.nativeElement.querySelector('.chat-message:last-of-type');
+      if (lastMessage) {
+        lastMessage.scrollIntoView({behavior: 'smooth', block: 'start'});
+      }
     }, 0);
   }
 }
