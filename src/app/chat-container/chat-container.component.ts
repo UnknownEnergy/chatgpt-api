@@ -27,9 +27,12 @@ export class ChatContainerComponent {
     return this.messageService.messages;
   }
 
-  scrollToBottom(): void {
+  scrollToLastMessage(): void {
     setTimeout(() => {
-      this.messageContainer.nativeElement.scrollTop = this.messageContainer.nativeElement.scrollHeight;
+      const lastMessage = this.messageContainer.nativeElement.querySelector('.chat-message:last-of-type');
+      if (lastMessage) {
+        lastMessage.scrollIntoView({behavior: 'smooth', block: 'start'});
+      }
     }, 0);
   }
 }

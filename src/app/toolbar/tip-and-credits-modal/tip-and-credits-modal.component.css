@@ -38,6 +38,7 @@ mat-form-field {
   width: 100%;
   height: fit-content;
 }
+
 mat-dialog-actions {
   padding-left: 30px;
   color: white;
@@ -65,4 +66,11 @@ button:hover {
 
 .btn-primary {
   background-color: #00A67E;
+}
+
+.bitcoin-address {
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

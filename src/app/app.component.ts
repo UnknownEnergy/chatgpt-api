@@ -75,7 +75,7 @@ export class AppComponent implements OnInit {
     });
 
     this.chatContainer.chatbotTyping = true;
-    this.chatContainer.scrollToBottom();
+    this.chatContainer.scrollToLastMessage();
 
     const endpoints = [
       {
@@ -156,12 +156,12 @@ export class AppComponent implements OnInit {
     }
     this.chatContainer.highlightCode();
     this.chatContainer.chatbotTyping = false;
-    this.chatContainer.scrollToBottom();
+    this.chatContainer.scrollToLastMessage();
   }
 
   private handleFinalErrorResponse(error) {
     this.chatContainer.chatbotTyping = false;
-    this.chatContainer.scrollToBottom();
+    this.chatContainer.scrollToLastMessage();
 
     if (error.response && error.response.data && error.response.data.error) {
       alert(error.response.data.error.message);
