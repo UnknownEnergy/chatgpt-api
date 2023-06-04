@@ -1,6 +1,8 @@
-<div class="outer-container">
+<div class="outer-container" [style.width]="dialogWidth" [style.height]="dialogHeight">
   <div>
     <div class="header">
+      <button *ngIf="!confirmDeleteAllChats" (click)="deleteAll(); this.confirmDeleteAllChats = !this.confirmDeleteAllChats" class="btn button-danger">Delete all chats</button>
+      <button *ngIf="confirmDeleteAllChats" (click)="deleteAll();" class="btn button-danger">Click again to delete</button>
       <button (click)="close()" class="btn btn-close"></button>
     </div>
     <div class="content">
@@ -13,10 +15,10 @@
             [expanded]="steps === messageHistory.indexOf(chat) + 1"
             hideToggle
           >
-            <mat-expansion-panel-header class="application-list-header">
-              <mat-panel-title> {{ chat.name }} </mat-panel-title>
-              <mat-panel-description>
-                Created on {{ chat.createdOnDate }}
+            <mat-expansion-panel-header>
+              <mat-panel-title [style.max-height]="'auto'"> {{ chat.name }} </mat-panel-title>
+              <mat-panel-description [style.max-width]="descriptionWidth">
+                {{ chat.createdOnDate }}
               </mat-panel-description>
             </mat-expansion-panel-header>
             <div>
@@ -32,19 +34,19 @@
               </div>
               <mat-divider></mat-divider>
               <div class="loadChatBtns">
-                <button *ngIf="!chatSelected" class="loadChatButton button btn-primary"
+                <button *ngIf="!chatSelected" [style.width]="loadButtonWidth" class="button btn-primary"
                         (click)="loadChat(chat, false)">
-                  Load this chat
+                  Load chat
                 </button>
                 <button *ngIf="!aboutToDelete && !chatSelected" (click)="aboutToDelete = !aboutToDelete"
-                        class="button-danger deleteButton">
+                        class="button-danger" [style.width]="deleteButtonWidth">
                   <i class="bi-trash3"></i>
                 </button>
-                <button *ngIf="aboutToDelete" (click)="deleteChat(chat)" class="button-danger deleteConfirmButton">
+                <button *ngIf="aboutToDelete" (click)="deleteChat(chat)" class="button-danger" [style.width]="deleteButtonWidth">
                   <i class="bi-check-lg"></i>
                 </button>
                 <button *ngIf="aboutToDelete" (click)="aboutToDelete = !aboutToDelete"
-                        class="button deleteConfirmButton">
+                        class="button" [style.width]="deleteButtonWidth">
                   <i class="bi-x-lg"></i>
                 </button>
               </div>
@@ -53,8 +55,8 @@
                   one.</h5>
                 <h6 class="text-center">Are you sure you want to load this chat?</h6>
                 <div class="confirmLoadButtons">
-                  <button (click)="loadChat(chat, true)" class="button-danger">Yes, load this chat.</button>
-                  <button (click)="cancelLoadChat()" class="button">No! Go back!</button>
+                  <button (click)="loadChat(chat, true)" class="button-danger loadChatButton">Yes, load this chat.</button>
+                  <button (click)="cancelLoadChat()" class="button loadChatButton">No! Go back!</button>
                 </div>
 
               </div>

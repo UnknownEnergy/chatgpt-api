@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, HostBinding, OnInit} from '@angular/core';
 import {TipAndCreditsModalComponent} from "./tip-and-credits-modal/tip-and-credits-modal.component";
 import {InfoModalComponent} from "./info-modal/info-modal.component";
 import {MatDialog} from "@angular/material/dialog";
 import {SavedChatsPanelComponent} from "./saved-chats-panel/saved-chats-panel.component";
+import {OverlayContainer} from "@angular/cdk/overlay";
 
 @Component({
   selector: 'app-toolbar',
@@ -13,7 +14,7 @@ export class ToolbarComponent implements OnInit {
   isChatHeaderCollapsed: any = true;
   darkModeEnabled: boolean = false;
 
-  constructor(private dialog: MatDialog) {
+  constructor(private dialog: MatDialog, private overlay: OverlayContainer) {
     const savedIsChatHeaderCollapsed = localStorage.getItem('isChatHeaderCollapsed');
     if (savedIsChatHeaderCollapsed) {
       this.isChatHeaderCollapsed = JSON.parse(savedIsChatHeaderCollapsed);
@@ -36,6 +37,7 @@ export class ToolbarComponent implements OnInit {
     if (this.darkModeEnabled) {
       const body = document.getElementsByTagName('body')[0];
       body.classList.add('dark');
+      this.overlay.getContainerElement().classList.add("matDarkMode");
     }
   }
 
@@ -59,8 +61,10 @@ export class ToolbarComponent implements OnInit {
     const body = document.getElementsByTagName('body')[0];
     if (this.darkModeEnabled) {
       body.classList.add('dark');
+      this.overlay.getContainerElement().classList.add("matDarkMode");
     } else {
       body.classList.remove('dark');
+      this.overlay.getContainerElement().classList.remove("matDarkMode");
     }
     localStorage.setItem('darkModeEnabled', JSON.stringify(this.darkModeEnabled));
   }

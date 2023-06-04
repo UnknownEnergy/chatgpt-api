@@ -1,8 +1,8 @@
 .outer-container {
   position: relative;
   padding: 10px;
-  width: 50vw;
-  height: 50vh;
+  width: 70vw;
+  height:70vh;
   border: 1px solid var(--border);
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -18,7 +18,7 @@ h1 h2 h3 h4 h5 h6 {
 
 .header {
   display: flex;
-  justify-content: right;
+  justify-content: space-between;
   width: 100%;
   height: 50px;
 }
@@ -45,7 +45,7 @@ h1 h2 h3 h4 h5 h6 {
 
 .chatNameInput {
   width: 80%;
-  height: 50px;
+  height: 60px;
   border: 1px solid var(--border);
   border-radius: 5px;
   background-color: var(--bgColor2);
@@ -54,7 +54,7 @@ h1 h2 h3 h4 h5 h6 {
 }
 
 .saveChatBtn {
-  height: 50px;
+  height: 60px;
   margin: 2px;
   padding: 5px 10px;
   background-color: #00A67E;
@@ -84,7 +84,7 @@ h1 h2 h3 h4 h5 h6 {
 }
 
 .button-danger {
-  background-color: #ff0000;
+  background-color: #ff4d4f;
   margin: 2px;
   padding: 5px 10px;
   height: 40px;
@@ -132,17 +132,19 @@ h1 h2 h3 h4 h5 h6 {
   justify-content: space-evenly;
 }
 
-.loadChatButton {
-  width: 85%;
+.loadChatButton{
+  height: 60px;
 }
 
-.deleteButton {
-  width: 10%
+mat-expansion-panel-header{
+  height: auto;
+  min-height: 50px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  display: flex;
+  justify-content: space-between;
 }
 
-.deleteConfirmButton {
-  width: 5%;
-}
 
 .confirmLoadChat {
   padding: 10px;

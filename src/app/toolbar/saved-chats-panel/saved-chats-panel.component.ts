@@ -1,9 +1,9 @@
-import {Component, HostListener} from '@angular/core';
+import {Component, HostBinding, HostListener, Renderer2} from '@angular/core';
 import {MatDialogRef} from "@angular/material/dialog";
 import {MessageService} from "../../services/message.service";
 import {HighlightService} from "../../services/highlight.service";
 import {ChatCompletionRequestMessage} from "openai/dist/api";
-import {PageEvent} from "@angular/material/paginator";
+import {debounceTime, fromEvent} from "rxjs";
 
 @Component({
   selector: 'app-saved-chats-panel',
@@ -11,7 +11,7 @@ import {PageEvent} from "@angular/material/paginator";
   styleUrls: ['./saved-chats-panel.component.css']
 })
 export class SavedChatsPanelComponent {
-  constructor(private dialogRef: MatDialogRef<SavedChatsPanelComponent>, private messageService: MessageService, private highlightService: HighlightService) {
+  constructor(private dialogRef: MatDialogRef<SavedChatsPanelComponent>, private messageService: MessageService, private highlightService: HighlightService, private renderer: Renderer2) {
   }
 
   steps: number;
@@ -21,43 +21,86 @@ export class SavedChatsPanelComponent {
   aboutToDelete: boolean = false;
   chatName: string = "";
   currentLoadedChatName: string = "";
-  containerHeight: string = '400px';
+  containerHeight: string = '';
+  dialogWidth: string = '';
+  dialogHeight: string = '';
+  loadButtonWidth: string = '';
+  deleteButtonWidth: string = '';
+  descriptionWidth: string = '';
+  confirmDeleteAllChats: boolean = false;
 
 
   ngOnInit(): void {
+    this.renderer.addClass(document.body, 'indigo-pink');
     if (localStorage.getItem('chatHistory') === null) {
       this.messageHistory = [];
     } else {
       this.messageHistory = JSON.parse(localStorage.getItem('chatHistory'));
-      console.log(JSON.parse(localStorage.getItem('chatHistory')));
-
-      this.containerHeight = this.calculateAccordionHeight();
     }
     if (this.messageService.currentChatName.length > 0) {
       this.currentLoadedChatName = this.messageService.currentChatName;
       this.chatName = this.messageService.currentChatName;
     }
+    this.calculateDialogSize();
+    this.containerHeight = this.calculateAccordionHeight();
+
 
 
   }
 
+
   calculateAccordionHeight(): string {
     const height = window.innerHeight;
-    const breakpoints = [800, 900, 1050, 1200, 1300];
-    const values = ['150px', '200px', '250px', '300px', '350px', '450px'];
+    console.log(height);
+    const {minWindowHeight, maxWindowHeight, minElementHeight, maxElementHeight} = this.dialogWidth === '80vw'
+      ? {minWindowHeight: 200, maxWindowHeight: 1100, minElementHeight: 0, maxElementHeight: 650}
+      : {minWindowHeight: 400, maxWindowHeight: 1300, minElementHeight: 25, maxElementHeight: 700};
+
+    let containerHeight;
+    if (height < minWindowHeight) {
+      containerHeight = [minElementHeight];
+    } else if (height >= minWindowHeight && height <= maxWindowHeight) {
+      const rangeWindowHeight = maxWindowHeight - minWindowHeight;
+      const rangeElementHeight = maxElementHeight - minElementHeight;
+      const heightRatio = (height - minWindowHeight) / rangeWindowHeight;
+      containerHeight = [minElementHeight + Math.round(heightRatio * rangeElementHeight)];
+    } else {
+      containerHeight = [maxElementHeight];
+    }
+    console.log(containerHeight);
+    return containerHeight + 'px';
+  }
+
+
+  calculateDialogSize() {
+    const width = window.innerWidth;
+    const breakpoints = [1400];
+    const values = ['80vw', '50vw'];
 
     let index = 0;
-    while (index < breakpoints.length && height > breakpoints[index]) {
+    while (index < breakpoints.length && width > breakpoints[index]) {
       index++;
     }
 
-    return values[index];
+    if (width < 1100) {
+      this.loadButtonWidth = '50%';
+      this.deleteButtonWidth = "20%";
+      this.descriptionWidth = "75px"
+    } else {
+      this.loadButtonWidth = '85%';
+      this.deleteButtonWidth = "10%";
+      this.descriptionWidth = "150px"
+    }
+
+    this.dialogWidth = values[index];
+    if (this.dialogWidth === '80vw') this.dialogHeight = '80vh'
+    else this.dialogHeight = '70vh';
   }
 
   @HostListener('window:resize', ['$event'])
   onResize(event?) {
-    console.log(window.innerHeight);
     this.containerHeight = this.calculateAccordionHeight();
+    this.calculateDialogSize();
   }
 
   saveChat() {
@@ -85,10 +128,6 @@ export class SavedChatsPanelComponent {
     this.dialogRef.close();
   }
 
-  setStep(number: number) {
-    this.steps = number;
-  }
-
   loadChat(chat: Chat, override: boolean) {
     if (this.messageService.messages.length > 0 && !override) {
       this.chatSelected = true;
@@ -111,6 +150,14 @@ export class SavedChatsPanelComponent {
     this.messageHistory = this.messageHistory.filter(c => c !== chat);
     localStorage.setItem('chatHistory', JSON.stringify(this.messageHistory));
   }
+
+  deleteAll() {
+    if(this.confirmDeleteAllChats) {
+      this.messageHistory = [];
+      localStorage.removeItem('chatHistory');
+      this.confirmDeleteAllChats = false;
+    }
+  }
 }
 
 export class Chat {
@@ -118,5 +165,4 @@ export class Chat {
   createdOnDate: string;
   messages: { content: string; contentRaw: string; isRaw?: boolean; timestamp: Date; avatar: string; isUser: boolean; }[] = [];
   chatHistory: ChatCompletionRequestMessage[] = [];
-
 }
