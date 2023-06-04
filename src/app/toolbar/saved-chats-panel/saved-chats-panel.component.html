@@ -3,7 +3,7 @@
     <div class="header">
       <button *ngIf="!confirmDeleteAllChats" (click)="deleteAll(); this.confirmDeleteAllChats = !this.confirmDeleteAllChats" class="btn button-danger">Delete all chats</button>
       <button *ngIf="confirmDeleteAllChats" (click)="deleteAll();" class="btn button-danger">Click again to delete</button>
-      <button (click)="close()" class="btn btn-close"></button>
+      <button aria-label="Close dialog" (click)="close()" class="btn btn-close"></button>
     </div>
     <div class="content">
       <h1 class="text-center">Your saved chats:</h1>
@@ -34,18 +34,18 @@
               </div>
               <mat-divider></mat-divider>
               <div class="loadChatBtns">
-                <button *ngIf="!chatSelected" [style.width]="loadButtonWidth" class="button btn-primary"
+                <button aria-label="Load chat" *ngIf="!chatSelected" [style.width]="loadButtonWidth" class="button btn-primary"
                         (click)="loadChat(chat, false)">
                   Load chat
                 </button>
-                <button *ngIf="!aboutToDelete && !chatSelected" (click)="aboutToDelete = !aboutToDelete"
+                <button aria-label="Delete chat" *ngIf="!aboutToDelete && !chatSelected" (click)="aboutToDelete = !aboutToDelete"
                         class="button-danger" [style.width]="deleteButtonWidth">
                   <i class="bi-trash3"></i>
                 </button>
-                <button *ngIf="aboutToDelete" (click)="deleteChat(chat)" class="button-danger" [style.width]="deleteButtonWidth">
+                <button aria-label="Confirm delete chat" *ngIf="aboutToDelete" (click)="deleteChat(chat)" class="button-danger" [style.width]="deleteButtonWidth">
                   <i class="bi-check-lg"></i>
                 </button>
-                <button *ngIf="aboutToDelete" (click)="aboutToDelete = !aboutToDelete"
+                <button  aria-label="Cancel deleting chat" *ngIf="aboutToDelete" (click)="aboutToDelete = !aboutToDelete"
                         class="button" [style.width]="deleteButtonWidth">
                   <i class="bi-x-lg"></i>
                 </button>
@@ -55,8 +55,8 @@
                   one.</h5>
                 <h6 class="text-center">Are you sure you want to load this chat?</h6>
                 <div class="confirmLoadButtons">
-                  <button (click)="loadChat(chat, true)" class="button-danger loadChatButton">Yes, load this chat.</button>
-                  <button (click)="cancelLoadChat()" class="button loadChatButton">No! Go back!</button>
+                  <button aria-label="Confirm load chat" (click)="loadChat(chat, true)" class="button-danger loadChatButton">Yes, load this chat.</button>
+                  <button aria-label="Cancel loading chat" (click)="cancelLoadChat()" class="button loadChatButton">No! Go back!</button>
                 </div>
 
               </div>
@@ -69,12 +69,12 @@
     </div>
     <div class="footer" *ngIf="!chatSelected">
       <input [(ngModel)]="chatName" class="mat-input-element chatNameInput" placeholder="Enter a name for your chat">
-      <button *ngIf="chatName != currentLoadedChatName || chatName.length == 0" class="btn btn-primary saveChatBtn"
+      <button aria-label="Save chat" *ngIf="chatName != currentLoadedChatName || chatName.length == 0" class="btn btn-primary saveChatBtn"
               [disabled]="chatName.length === 0"
               [matTooltip]="'You can\'t save a chat without a name!'" [matTooltipDisabled]="chatName.length > 0"
               (click)="saveChat()">Save this chat
       </button>
-      <button *ngIf="chatName == currentLoadedChatName && currentLoadedChatName.length > 0"
+      <button aria-label="Update chat" *ngIf="chatName == currentLoadedChatName && currentLoadedChatName.length > 0"
               class="btn btn-primary saveChatBtn" [disabled]="chatName.length === 0"
               [matTooltip]="'You can\'t save a chat without a name!'" [matTooltipDisabled]="chatName.length > 0"
               (click)="saveChat()">Update this chat
