@@ -43,15 +43,11 @@ export class SavedChatsPanelComponent {
     }
     this.calculateDialogSize();
     this.containerHeight = this.calculateAccordionHeight();
-
-
-
   }
 
 
   calculateAccordionHeight(): string {
     const height = window.innerHeight;
-    console.log(height);
     const {minWindowHeight, maxWindowHeight, minElementHeight, maxElementHeight} = this.dialogWidth === '80vw'
       ? {minWindowHeight: 200, maxWindowHeight: 1100, minElementHeight: 0, maxElementHeight: 650}
       : {minWindowHeight: 400, maxWindowHeight: 1300, minElementHeight: 25, maxElementHeight: 700};
@@ -67,7 +63,6 @@ export class SavedChatsPanelComponent {
     } else {
       containerHeight = [maxElementHeight];
     }
-    console.log(containerHeight);
     return containerHeight + 'px';
   }
 
