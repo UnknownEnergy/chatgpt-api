@@ -1,8 +1,8 @@
 <div class="outer-container" [style.width]="dialogWidth" [style.height]="dialogHeight">
   <div>
     <div class="header">
-      <button *ngIf="!confirmDeleteAllChats" (click)="deleteAll(); this.confirmDeleteAllChats = !this.confirmDeleteAllChats" class="btn button-danger">Delete all chats</button>
-      <button *ngIf="confirmDeleteAllChats" (click)="deleteAll();" class="btn button-danger">Click again to delete</button>
+      <button aria-label="Delete all chats" *ngIf="!confirmDeleteAllChats" (click)="deleteAll(); this.confirmDeleteAllChats = !this.confirmDeleteAllChats" class="btn button-danger">Delete all chats</button>
+      <button aria-label="Confirm deleting all chats" *ngIf="confirmDeleteAllChats" (click)="deleteAll();" class="btn button-danger">Click again to delete</button>
       <button aria-label="Close dialog" (click)="close()" class="btn btn-close"></button>
     </div>
     <div class="content">
