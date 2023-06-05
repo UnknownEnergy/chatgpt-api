@@ -22,6 +22,11 @@ import {InfoComponent} from "./info-text/info.component";
 import {AudioComponent} from './chat-prompt/audio/audio.component';
 import {MatMenuModule} from "@angular/material/menu";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {SavedChatsPanelComponent} from './toolbar/saved-chats-panel/saved-chats-panel.component';
+import {MatExpansionModule} from "@angular/material/expansion";
+import {MatDividerModule} from "@angular/material/divider";
+import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatPaginatorModule} from "@angular/material/paginator";
 import {ChatPromptComponent} from './chat-prompt/chat-prompt.component';
 import {HeaderComponent} from './header/header.component';
 import {UsageComponent} from './toolbar/usage/usage.component';
@@ -51,7 +56,8 @@ const initializer = (pwaService: PwaService) => () => pwaService.initPwaPrompt()
     ChatContainerComponent,
     ApiStatusComponent,
     SaveAsPdfComponent,
-    ClearMessagesComponent
+    ClearMessagesComponent,
+    SavedChatsPanelComponent
   ],
   imports: [
     HttpClientModule,
@@ -72,6 +78,10 @@ const initializer = (pwaService: PwaService) => () => pwaService.initPwaPrompt()
     MatIconModule,
     MatMenuModule,
     MatProgressSpinnerModule,
+    MatExpansionModule,
+    MatDividerModule,
+    MatTooltipModule,
+    MatPaginatorModule,
   ],
   providers: [
     MatBottomSheet,
