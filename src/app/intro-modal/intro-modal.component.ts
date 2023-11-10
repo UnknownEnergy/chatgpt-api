@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {AfterContentChecked, Component, ElementRef, ViewChild} from '@angular/core';
 import {MatDialogRef} from '@angular/material/dialog';
 import {SettingsService} from "../services/settings.service";
 
@@ -7,11 +7,19 @@ import {SettingsService} from "../services/settings.service";
   templateUrl: './intro-modal.component.html',
   styleUrls: ['./intro-modal.component.css']
 })
-export class IntroModalComponent {
+export class IntroModalComponent implements AfterContentChecked {
   apiKey: string;
 
   constructor(public dialogRef: MatDialogRef<IntroModalComponent>,
               private settings: SettingsService) {
+  }
+
+  @ViewChild('apiKeyInput') apiKeyInput: ElementRef;
+
+  ngAfterContentChecked() {
+    setTimeout(() => {
+      this.apiKeyInput.nativeElement.focus();
+    }, 0);
   }
 
   onContinue() {
