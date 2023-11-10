@@ -32,7 +32,7 @@ Example screenshot:
 
 ## Deploy to production
 1. Make sure everything is pushed to master.
-2. Run `npm deploy` to deploy it to production server.
+2. Run `npm run deploy` to deploy it to production server.
 3. Check out https://chatworm.com/
 
 ## Release on different App Stores

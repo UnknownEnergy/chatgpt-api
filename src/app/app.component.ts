@@ -98,8 +98,17 @@ export class AppComponent implements OnInit {
       },
       {
         endpoint: 'createImage',
-        restrictModel: 'DALL·E',
+        restrictModel: 'DALL·E·3',
         payload: {
+          model: "dall-e-3",
+          prompt: this.messageService.messages[this.messageService.messages.length - 1].content,
+        } as CreateImageRequest
+      },
+      {
+        endpoint: 'createImage',
+        restrictModel: 'DALL·E·2',
+        payload: {
+          model: "dall-e-2",
           prompt: this.messageService.messages[this.messageService.messages.length - 1].content,
         } as CreateImageRequest
       }

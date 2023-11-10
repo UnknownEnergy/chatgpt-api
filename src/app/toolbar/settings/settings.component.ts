@@ -60,7 +60,13 @@ export class SettingsComponent {
         },
         {
           created: 0,
-          id: 'DALL·E',
+          id: 'DALL·E·3',
+          object: '',
+          owned_by: ''
+        },
+        {
+          created: 0,
+          id: 'DALL·E·2',
           object: '',
           owned_by: ''
         },
