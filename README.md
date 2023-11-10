@@ -3,10 +3,16 @@
 
 <img src="src/assets/cover.png" alt="Chatworm"/>
 
-**Web app**: https://chatworm.com/  
-**Android app**: https://play.google.com/store/apps/details?id=com.chatworm.twa  
-**Windows app**: https://apps.microsoft.com/store/detail/chatworm/9N1RF0VWV3SN  
-  
+**Web app**:   
+
+https://chatworm.com/  
+
+**Android app**:  
+<a href='https://play.google.com/store/apps/details?id=com.chatworm.twa&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' width="140" height="60"/></a>
+
+**Windows app**:  
+<a href="https://apps.microsoft.com/detail/Chatworm/9N1RF0VWV3SN?launch=true&mode=mini"><img src="https://get.microsoft.com/images/en-us%20dark.svg" width="120" height="50"/></a>
+
 Works also with the newest **GTP-4** Version if you got access from OpenAI to the new GTP4 model via API.  
 Otherwise you have to wait and can use the older models instead.  
   
