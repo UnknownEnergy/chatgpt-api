@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
-import {Configuration, Model, OpenAIApi} from "openai";
+import OpenAI from "openai";
 import {SettingsService} from "../../services/settings.service";
+import Model = OpenAI.Model;
 
 @Component({
   selector: 'app-settings',
@@ -20,7 +21,7 @@ export class SettingsComponent {
 
   refreshModels() {
     const openai = this.getOpenAi();
-    openai.listModels().then(response => {
+    openai.models.list().then(response => {
       const importantModels = [
         {
           created: 0,
@@ -77,11 +78,12 @@ export class SettingsComponent {
           owned_by: ''
         }
       ];
-      const otherModels = response.data.data.filter(model => {
+      const otherModels = response.data.filter(model => {
         return !importantModels.some(importantModel => importantModel.id === model.id);
       }).sort((a, b) => {
         return a.id.localeCompare(b.id);
       });
+      // @ts-ignore
       this.models = [...importantModels, ...otherModels];
     })
   }
@@ -104,9 +106,10 @@ export class SettingsComponent {
   }
 
   private getOpenAi() {
-    const configuration = new Configuration({
+
+    return new OpenAI({
       apiKey: this.settings.apiKey,
+      dangerouslyAllowBrowser: true
     });
-    return new OpenAIApi(configuration);
   }
 }

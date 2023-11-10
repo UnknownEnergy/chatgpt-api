@@ -1,6 +1,6 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import * as RecordRTC from 'recordrtc';
-import {Configuration, OpenAIApi} from "openai";
+import OpenAI from "openai";
 import {SettingsService} from "../../services/settings.service";
 
 @Component({
@@ -29,11 +29,11 @@ export class AudioComponent implements OnInit {
   }
 
   public getOpenAi() {
-    const configuration = new Configuration({
+
+    return new OpenAI({
       apiKey: this.settings.apiKey,
-      formDataCtor: CustomFormData
+      dangerouslyAllowBrowser: true
     });
-    return new OpenAIApi(configuration);
   }
 
 
@@ -100,10 +100,4 @@ export class AudioComponent implements OnInit {
     input.click();
   }
 
-}
-
-class CustomFormData extends FormData {
-  getHeaders() {
-    return {}
-  }
 }

@@ -2,8 +2,7 @@ import {Component, HostBinding, HostListener, Renderer2} from '@angular/core';
 import {MatDialogRef} from "@angular/material/dialog";
 import {MessageService} from "../../services/message.service";
 import {HighlightService} from "../../services/highlight.service";
-import {ChatCompletionRequestMessage} from "openai/dist/api";
-import {debounceTime, fromEvent} from "rxjs";
+import OpenAI from "openai";
 
 @Component({
   selector: 'app-saved-chats-panel',
@@ -159,5 +158,5 @@ export class Chat {
   name: string;
   createdOnDate: string;
   messages: { content: string; contentRaw: string; isRaw?: boolean; timestamp: Date; avatar: string; isUser: boolean; }[] = [];
-  chatHistory: ChatCompletionRequestMessage[] = [];
+  chatHistory: OpenAI.ChatCompletionMessage[] = [];
 }

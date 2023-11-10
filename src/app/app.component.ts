@@ -1,12 +1,5 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {
-  ChatCompletionRequestMessageRoleEnum,
-  Configuration,
-  CreateChatCompletionRequest,
-  CreateCompletionRequest,
-  OpenAIApi
-} from "openai";
-import {ChatCompletionRequestMessage, CreateImageRequest} from "openai/dist/api";
+import OpenAI from "openai";
 import showdown from 'showdown';
 import {HttpClient} from "@angular/common/http";
 import {IntroModalComponent} from "./intro-modal/intro-modal.component";
@@ -59,7 +52,8 @@ export class AppComponent implements OnInit {
       return;
     }
 
-    this.messageService.chatHistory.push({content: message, role: ChatCompletionRequestMessageRoleEnum.User});
+    // @ts-ignore
+    this.messageService.chatHistory.push({content: message, role: 'user'});
 
     localStorage.setItem('apiKey', this.settings.apiKey);
     localStorage.setItem('temperature', this.settings.temperature.toString());
@@ -79,82 +73,109 @@ export class AppComponent implements OnInit {
 
     const endpoints = [
       {
-        endpoint: 'createChatCompletion',
+        endpoint: 'chat.completions.create',
         payload: {
           model: this.settings.selectedModel,
           messages: this.messageService.chatHistory,
           temperature: this.settings.temperature,
           max_tokens: this.settings.maxTokens,
-        } as CreateChatCompletionRequest
+        } as OpenAI.Chat.ChatCompletionCreateParamsNonStreaming
       },
       {
-        endpoint: 'createCompletion',
+        endpoint: 'completions.create',
         payload: {
           model: this.settings.selectedModel,
           prompt: this.messageService.messages[this.messageService.messages.length - 1].content,
           temperature: this.settings.temperature,
           max_tokens: this.settings.maxTokens,
-        } as CreateCompletionRequest
+        } as OpenAI.CompletionCreateParamsNonStreaming
       },
       {
-        endpoint: 'createImage',
+        endpoint: 'images.generate',
         restrictModel: 'DALL·E·3',
         payload: {
           model: "dall-e-3",
           prompt: this.messageService.messages[this.messageService.messages.length - 1].content,
-        } as CreateImageRequest
+        } as OpenAI.Images.ImageGenerateParams
       },
       {
-        endpoint: 'createImage',
+        endpoint: 'images.generate',
         restrictModel: 'DALL·E·2',
         payload: {
           model: "dall-e-2",
           prompt: this.messageService.messages[this.messageService.messages.length - 1].content,
-        } as CreateImageRequest
+        } as OpenAI.Images.ImageGenerateParams
       }
     ];
 
-    const openai = this.getOpenAi()
-    this.callEndpoints(0, openai, endpoints, this.settings.selectedModel, '');
+    const ai = this.getOpenAi()
+    this.callEndpoints(0, ai, endpoints, this.settings.selectedModel, '');
   }
 
-  callEndpoints(index, openai, endpoints, model, error) {
+  callEndpoints(index, ai, endpoints, model, error) {
     if (index >= endpoints.length) {
       this.handleFinalErrorResponse(error);
       return;
     }
 
     if(endpoints[index].restrictModel && model !== endpoints[index].restrictModel) {
-      this.callEndpoints(index + 1, openai, endpoints, model, error);
+      this.callEndpoints(index + 1, ai, endpoints, model, error);
       return;
     }
 
-    const {endpoint, payload} = endpoints[index];
-    openai[endpoint](payload)
-      .then(response => {
-        this.handleSuccessResponse(response);
-      })
-      .catch(error => {
-        if (error.response && error.response.status === 404) {
-          this.callEndpoints(index + 1, openai, endpoints, model, error);
-          return;
-        }
-        this.handleFinalErrorResponse(error);
-      });
+    const payload = endpoints[index].payload;
+
+    if (endpoints[index].endpoint === 'chat.completions.create') {
+      ai.chat.completions.create(payload)
+        .then(response => {
+          this.handleSuccessResponse(response);
+        })
+        .catch(error => {
+          if (error && error.type === 'invalid_request_error') {
+            this.callEndpoints(index + 1, ai, endpoints, model, error);
+            return;
+          }
+          this.handleFinalErrorResponse(error);
+        });
+    } else if (endpoints[index].endpoint === 'completions.create') {
+      ai.completions.create(payload)
+        .then(response => {
+          this.handleSuccessResponse(response);
+        })
+        .catch(error => {
+          if (error && error.type === 'invalid_request_error') {
+            this.callEndpoints(index + 1, ai, endpoints, model, error);
+            return;
+          }
+          this.handleFinalErrorResponse(error);
+        });
+    } else if (endpoints[index].endpoint === 'images.generate') {
+      ai.images.generate(payload)
+        .then(response => {
+          this.handleSuccessResponse(response);
+        })
+        .catch(error => {
+          if (error && error.type === 'invalid_request_error') {
+            this.callEndpoints(index + 1, ai, endpoints, model, error);
+            return;
+          }
+          this.handleFinalErrorResponse(error);
+        });
+    }
   }
 
   private handleSuccessResponse(response) {
-    if (response && response.data) {
+    if (response && response) {
       let message = '';
-      if (response.data.choices && response.data.choices[0].message) {
-        message = response.data.choices[0].message.content;
-      } else if (response.data.data && response.data.data[0].url) {
-        message = '<img src="' + response.data.data[0].url + '" height="500px"/>';
+      if (response.choices && response.choices[0].message) {
+        message = response.choices[0].message.content;
+      } else if (response.data && response.data[0].url) {
+        message = '<img src="' + response.data[0].url + '" height="500px"/>';
       } else {
-        message = response.data.choices[0].text;
+        message = response.choices[0].text;
       }
       let messageRaw = message;
-      this.messageService.chatHistory.push({content: messageRaw, role: ChatCompletionRequestMessageRoleEnum.Assistant});
+      this.messageService.chatHistory.push({content: messageRaw, role: 'assistant'});
       this.messageService.messages.push({
         content: this.converter.makeHtml(message),
         contentRaw: messageRaw,
@@ -172,8 +193,8 @@ export class AppComponent implements OnInit {
     this.chatContainer.chatbotTyping = false;
     this.chatContainer.scrollToLastMessage();
 
-    if (error.response && error.response.data && error.response.data.error) {
-      alert(error.response.data.error.message);
+    if (error.response && error.response && error.response.error) {
+      alert(error.response.error.message);
     } else {
       alert(error.message);
       throw error;
@@ -183,16 +204,18 @@ export class AppComponent implements OnInit {
   async resendLastMessage() {
     if (this.messageService.chatHistory.length > 0) {
       let lastMessage = this.messageService.chatHistory
-        .filter(message => message.role === ChatCompletionRequestMessageRoleEnum.User)
+        // @ts-ignore
+        .filter(message => message.role === 'user')
         .pop().content;
       await this.sendMessage(lastMessage);
     }
   }
 
   private getOpenAi() {
-    const configuration = new Configuration({
+
+    return new OpenAI({
       apiKey: this.settings.apiKey,
+      dangerouslyAllowBrowser: true
     });
-    return new OpenAIApi(configuration);
   }
 }
