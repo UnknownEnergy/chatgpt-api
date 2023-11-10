@@ -24,13 +24,37 @@ export class SettingsComponent {
       const importantModels = [
         {
           created: 0,
-          id: 'gpt-4',
+          id: 'gpt-4-1106-preview',
+          object: '',
+          owned_by: ''
+        },
+        {
+          created: 0,
+          id: 'gpt-4-1106-vision-preview',
+          object: '',
+          owned_by: ''
+        },
+        {
+          created: 0,
+          id: 'gpt-3.5-turbo-1106',
           object: '',
           owned_by: ''
         },
         {
           created: 0,
           id: 'gpt-3.5-turbo',
+          object: '',
+          owned_by: ''
+        },
+        {
+          created: 0,
+          id: 'gpt-4',
+          object: '',
+          owned_by: ''
+        },
+        {
+          created: 0,
+          id: 'gpt-4-32k',
           object: '',
           owned_by: ''
         },

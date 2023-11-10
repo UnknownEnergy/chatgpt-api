@@ -14,13 +14,13 @@ export class UsageComponent implements AfterViewInit {
   constructor(private http: HttpClient,
               private settings: SettingsService) {
     this.settings.refreshApiKey.subscribe(() => {
-      this.refreshCredits();
+      // this.refreshCredits();
     });
   }
 
   ngAfterViewInit(): void {
-    this.refreshCredits();
-    setInterval(this.refreshCredits, 300000);
+    // this.refreshCredits();
+    // setInterval(this.refreshCredits, 300000);
   }
 
   // INFO: for free credits activate this:

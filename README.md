@@ -23,7 +23,7 @@ Example screenshot:
 
 ## Pull Request for Improvements?
 1. Start coding changes to the project using your local setup.
-2. Once the improvements have been made, run `npm build`. This will generate new files in the `dist` folder which are hosted on our demo page.
+2. Once the improvements have been made, run `npm run build`. This will generate new files in the `dist` folder which are hosted on our demo page.
 3. Create a pull request which includes the updated `dist` folder.
 
 ## Feature Requests or Bugs?

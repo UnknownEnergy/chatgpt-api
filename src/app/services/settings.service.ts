@@ -5,9 +5,9 @@ import {EventEmitter, Injectable, Input} from "@angular/core";
 })
 export class SettingsService {
   apiKey: string = '';
-  selectedModel: string = 'gpt-3.5-turbo';
+  selectedModel: string = 'gpt-3.5-turbo-1106';
   temperature: number = 0.7;
-  maxTokens: number = 256;
+  maxTokens: number = 512;
   refreshApiKey = new EventEmitter<string>();
 
   constructor() {

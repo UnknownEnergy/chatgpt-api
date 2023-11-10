@@ -12,7 +12,7 @@
       <select class="btn btn-primary" [(ngModel)]="settings.selectedModel">
         <option *ngFor="let model of models" [value]="model.id">
           {{model.id}}
-          <p *ngIf="model.id === 'gpt-3.5-turbo'">(default)</p>
+          <p *ngIf="model.id === 'gpt-3.5-turbo-1106'">(default)</p>
         </option>
       </select>
     </div>
@@ -30,8 +30,8 @@
       <div class="p-left-column">
         <p>Max Tokens:
           <br>
-          <span *ngIf="settings.maxTokens === 256">(default)</span>
-          <span *ngIf="settings.maxTokens !== 256">(default: 256)</span>
+          <span *ngIf="settings.maxTokens === 512">(default)</span>
+          <span *ngIf="settings.maxTokens !== 512">(default: 512)</span>
         </p>
       </div>
       <input class="input-max-tokens"
