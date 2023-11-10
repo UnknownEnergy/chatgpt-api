@@ -55,21 +55,7 @@ export class AudioComponent implements OnInit {
     this.recordRTC.stopRecording(() => {
       const blob = this.recordRTC.getBlob();
       const file = new File([blob], 'recorded-audio.wav');
-      this.isLoading.emit(true);
-      this.openAi.createTranscription(file, 'whisper-1')
-        .then((response) => {
-          this.audioTextUpdated.emit(response.data.text);
-          this.isLoading.emit(false);
-        })
-        .catch(error => {
-          this.isLoading.emit(false);
-          if (error.response && error.response.data && error.response.data.error) {
-            alert(error.response.data.error.message);
-          } else {
-            alert(error.message);
-            throw error;
-          }
-        });
+      this.callOpenAi(file);
     });
     this.stream.getTracks().forEach((track) => track.stop());
   }
@@ -81,23 +67,30 @@ export class AudioComponent implements OnInit {
 
     input.addEventListener('change', () => {
       const file = input.files[0];
-      this.isLoading.emit(true);
-      this.openAi.createTranscription(file, 'whisper-1',)
-        .then((response) => {
-          this.audioTextUpdated.emit(response.data.text);
-          this.isLoading.emit(false);
-        }).catch(error => {
+      this.callOpenAi(file);
+    });
+    input.click();
+  }
+
+  private callOpenAi(file: File) {
+    this.isLoading.emit(true);
+    this.openAi.audio.transcriptions.create({
+      file: file,
+      model: 'whisper-1'
+    })
+      .then((response) => {
+        this.audioTextUpdated.emit(response.text);
         this.isLoading.emit(false);
-        if (error.response && error.response.data && error.response.data.error) {
-          alert(error.response.data.error.message);
+      })
+      .catch(error => {
+        this.isLoading.emit(false);
+        if (error.response && error.response && error.response.error) {
+          alert(error.response.error.message);
         } else {
           alert(error.message);
           throw error;
         }
       });
-    });
-
-    input.click();
   }
 
 }
