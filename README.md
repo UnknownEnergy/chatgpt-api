@@ -39,5 +39,13 @@ Example screenshot:
 1. Open https://www.pwabuilder.com/reportcard?site=https://chatworm.com
 2. Release on the stores
 
+## Update packages
+- Run to update to latest versions: 
+```bash
+npx npm-check-updates -u
+npm install --force 
+``` 
+
+
 ## License
 This project is licensed under the [MIT License](./LICENSE).
