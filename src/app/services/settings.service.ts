@@ -8,6 +8,8 @@ export class SettingsService {
   selectedModel: string = 'gpt-3.5-turbo-1106';
   temperature: number = 0.7;
   maxTokens: number = 512;
+  textToSpeechEnabled: boolean = false;
+  voice: string = 'alloy';
   refreshApiKey = new EventEmitter<string>();
 
   constructor() {
@@ -26,6 +28,14 @@ export class SettingsService {
     const savedSelectedModel = localStorage.getItem('selectedModel');
     if (savedSelectedModel) {
       this.selectedModel = savedSelectedModel;
+    }
+    const savedTextToSpeechEnabled = localStorage.getItem('textToSpeechEnabled');
+    if (savedTextToSpeechEnabled) {
+      this.textToSpeechEnabled = JSON.parse(savedTextToSpeechEnabled);
+    }
+    const savedVoice = localStorage.getItem('voice');
+    if (savedVoice) {
+      this.voice = savedVoice;
     }
   }
 }

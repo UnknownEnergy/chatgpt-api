@@ -176,6 +176,7 @@ export class AppComponent implements OnInit {
       }
       let messageRaw = message;
       this.messageService.chatHistory.push({content: messageRaw, role: 'assistant'});
+      this.textToSpeak(messageRaw);
       this.messageService.messages.push({
         content: this.converter.makeHtml(message),
         contentRaw: messageRaw,
@@ -187,6 +188,26 @@ export class AppComponent implements OnInit {
     this.chatContainer.highlightCode();
     this.chatContainer.chatbotTyping = false;
     this.chatContainer.scrollToLastMessage();
+  }
+
+  private textToSpeak(messageRaw: string) {
+    if(!this.settings.textToSpeechEnabled) {
+      return;
+    }
+
+    const ai = this.getOpenAi()
+    ai.audio.speech.create({
+      model: "tts-1",
+      // @ts-ignore
+      voice: this.settings.voice,
+      input: messageRaw,
+    }).then(async response => {
+      const arrayBuffer = await response.arrayBuffer();
+      const blob = new Blob([arrayBuffer], {type: 'audio/mpeg'});
+      const url = URL.createObjectURL(blob);
+      const audio = new Audio(url);
+      await audio.play();
+    });
   }
 
   private handleFinalErrorResponse(error) {

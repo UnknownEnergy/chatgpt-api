@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, EventEmitter} from '@angular/core';
 import OpenAI from "openai";
 import {SettingsService} from "../../services/settings.service";
 import Model = OpenAI.Model;
@@ -103,6 +103,14 @@ export class SettingsComponent {
     if (charCode < 48 || charCode > 57) {
       $event.preventDefault();
     }
+  }
+
+  onTextToSpeechChange(event: Event) {
+    localStorage.setItem('textToSpeechEnabled', JSON.stringify(this.settings.textToSpeechEnabled));
+  }
+
+  onVoiceChange(event: Event) {
+    localStorage.setItem('voice', this.settings.voice);
   }
 
   private getOpenAi() {
