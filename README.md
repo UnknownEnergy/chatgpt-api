@@ -3,9 +3,12 @@
 
 <img src="src/assets/cover.png" alt="Chatworm"/>
 
+**Demo Video**:  
+[![Demo video](https://img.youtube.com/vi/i1r8eHARnIc/0.jpg)](https://www.youtube.com/shorts/i1r8eHARnIc)
+
 **Web app**:   
 
-https://chatworm.com/  
+https://chatworm.com/
 
 **Android app**:  
 <a href='https://play.google.com/store/apps/details?id=com.chatworm.twa&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' width="140" height="60"/></a>
