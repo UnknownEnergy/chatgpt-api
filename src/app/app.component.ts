@@ -207,7 +207,39 @@ export class AppComponent implements OnInit {
       const url = URL.createObjectURL(blob);
       const audio = new Audio(url);
       await audio.play();
+
+      const audioCache = {
+        url: url,
+        blob: blob
+      };
+      this.cacheAudio(messageRaw, audioCache);
+
+      const audioElement = document.createElement('audio');
+      audioElement.src = url;
+      audioElement.controls = true;
+
+      const lastMessageIndex = this.messageService.messages.length - 1;
+      this.messageService.messages[lastMessageIndex].content += audioElement.outerHTML;
     });
+  }
+
+  cacheAudio(message: string, audioCache: { url: string, blob: Blob }) {
+    // Store the audio cache in the desired way
+    // For example, you can use localStorage or a database
+    // Here is an example using localStorage
+    const cacheKey = `audioCache_${message}`;
+    localStorage.setItem(cacheKey, JSON.stringify(audioCache));
+  }
+
+  retrieveAudioCache(message: string) {
+    // Retrieve the audio cache from the desired storage
+    // For example, if you used localStorage to store the cache
+    const cacheKey = `audioCache_${message}`;
+    const audioCache = localStorage.getItem(cacheKey);
+    if (audioCache) {
+      return JSON.parse(audioCache);
+    }
+    return null;
   }
 
   private handleFinalErrorResponse(error) {

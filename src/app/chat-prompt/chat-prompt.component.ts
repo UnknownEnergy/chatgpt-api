@@ -26,6 +26,15 @@ export class ChatPromptComponent implements AfterViewInit{
     this.messageInputRef.nativeElement.focus();
   }
 
+  onSendClick() {
+    if (!this.messageInput) {
+      this.resendMessage.emit();
+    } else {
+      this.sendMessage.emit(this.messageInput);
+      this.messageInput = '';
+    }
+  }
+
   changeLoading(loading: boolean) {
     this.isLoading = loading;
     this.cdr.detectChanges();
