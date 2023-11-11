@@ -129,10 +129,23 @@ export class SavedChatsPanelComponent {
     }
 
     this.messageService.currentChatName = chat.name;
+    this.removeAudioAutoplay(chat);
     this.messageService.messages = chat.messages;
     this.messageService.chatHistory = chat.chatHistory;
     this.highlightService.highlightAll();
     this.dialogRef.close();
+  }
+
+  private removeAudioAutoplay(chat: Chat) {
+    chat.messages = chat.messages.map((message) => {
+      let newContent = message.content;
+      const audioRegex = /<audio(.*?)(\sautoplay\s?)(.*?)(\s|\/?>)/g;
+      newContent = newContent.replace(audioRegex, '<audio$1$3$4');
+      return {
+        ...message,
+        content: newContent
+      };
+    });
   }
 
   cancelLoadChat() {
