@@ -6,6 +6,7 @@ import {
   Output,
   ViewChild
 } from '@angular/core';
+import {SettingsService} from "../services/settings.service";
 
 @Component({
   selector: 'app-chat-prompt-component',
@@ -19,7 +20,8 @@ export class ChatPromptComponent implements AfterViewInit{
   @Output() sendMessage = new EventEmitter<string>();
   @Output() resendMessage = new EventEmitter<any>();
 
-  constructor(private cdr: ChangeDetectorRef) {
+  constructor(private cdr: ChangeDetectorRef,
+              private settingsService: SettingsService) {
   }
 
   ngAfterViewInit() {
@@ -43,5 +45,8 @@ export class ChatPromptComponent implements AfterViewInit{
   updateMessage(message: string) {
     this.messageInput = message;
     this.cdr.detectChanges();
+    if(this.settingsService.quickSendEnabled) {
+      this.onSendClick();
+    }
   }
 }

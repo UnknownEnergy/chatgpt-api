@@ -113,6 +113,10 @@ export class SettingsComponent {
     localStorage.setItem('voice', this.settings.voice);
   }
 
+  onQuickSendChange(event: Event) {
+    localStorage.setItem('quickSendEnabled', JSON.stringify(this.settings.quickSendEnabled));
+  }
+
   private getOpenAi() {
 
     return new OpenAI({

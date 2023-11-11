@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import OpenAI from "openai";
 import showdown from 'showdown';
 import {HttpClient} from "@angular/common/http";
@@ -27,7 +27,8 @@ export class AppComponent implements OnInit {
   constructor(private http: HttpClient,
               private dialog: MatDialog,
               public settings: SettingsService,
-              private messageService: MessageService) {
+              private messageService: MessageService,
+              private cdr: ChangeDetectorRef,) {
   }
 
   ngOnInit(): void {
@@ -107,6 +108,8 @@ export class AppComponent implements OnInit {
         } as OpenAI.Images.ImageGenerateParams
       }
     ];
+
+    this.cdr.detectChanges();
 
     const ai = this.getOpenAi()
     this.callEndpoints(0, ai, endpoints, this.settings.selectedModel, '');
@@ -188,6 +191,7 @@ export class AppComponent implements OnInit {
     this.chatContainer.highlightCode();
     this.chatContainer.chatbotTyping = false;
     this.chatContainer.scrollToLastMessage();
+    this.cdr.detectChanges();
   }
 
   private textToSpeak(messageRaw: string) {
@@ -205,8 +209,6 @@ export class AppComponent implements OnInit {
       const arrayBuffer = await response.arrayBuffer();
       const blob = new Blob([arrayBuffer], {type: 'audio/mpeg'});
       const url = URL.createObjectURL(blob);
-      const audio = new Audio(url);
-      await audio.play();
 
       const audioCache = {
         url: url,
@@ -217,23 +219,20 @@ export class AppComponent implements OnInit {
       const audioElement = document.createElement('audio');
       audioElement.src = url;
       audioElement.controls = true;
+      audioElement.autoplay = true;
 
       const lastMessageIndex = this.messageService.messages.length - 1;
       this.messageService.messages[lastMessageIndex].content += audioElement.outerHTML;
+      this.cdr.detectChanges();
     });
   }
 
   cacheAudio(message: string, audioCache: { url: string, blob: Blob }) {
-    // Store the audio cache in the desired way
-    // For example, you can use localStorage or a database
-    // Here is an example using localStorage
     const cacheKey = `audioCache_${message}`;
     localStorage.setItem(cacheKey, JSON.stringify(audioCache));
   }
 
   retrieveAudioCache(message: string) {
-    // Retrieve the audio cache from the desired storage
-    // For example, if you used localStorage to store the cache
     const cacheKey = `audioCache_${message}`;
     const audioCache = localStorage.getItem(cacheKey);
     if (audioCache) {

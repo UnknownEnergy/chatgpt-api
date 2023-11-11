@@ -8,8 +8,9 @@ export class SettingsService {
   selectedModel: string = 'gpt-3.5-turbo-1106';
   temperature: number = 0.7;
   maxTokens: number = 512;
-  textToSpeechEnabled: boolean = false;
+  textToSpeechEnabled: boolean = true;
   voice: string = 'alloy';
+  quickSendEnabled: boolean = true;
   refreshApiKey = new EventEmitter<string>();
 
   constructor() {
@@ -36,6 +37,10 @@ export class SettingsService {
     const savedVoice = localStorage.getItem('voice');
     if (savedVoice) {
       this.voice = savedVoice;
+    }
+    const savedQuickSendEnabled = localStorage.getItem('quickSendEnabled');
+    if (savedQuickSendEnabled) {
+      this.quickSendEnabled = JSON.parse(savedQuickSendEnabled);
     }
   }
 }

@@ -29,7 +29,6 @@ export class AudioComponent implements OnInit {
   }
 
   public getOpenAi() {
-
     return new OpenAI({
       apiKey: this.settings.apiKey,
       dangerouslyAllowBrowser: true
