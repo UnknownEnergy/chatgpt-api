@@ -117,6 +117,10 @@ export class SettingsComponent {
     localStorage.setItem('quickSendEnabled', JSON.stringify(this.settings.quickSendEnabled));
   }
 
+  onAutoSwitchChange(event: Event) {
+    localStorage.setItem('autoSwitchEnabled', JSON.stringify(this.settings.autoSwitchEnabled));
+  }
+
   private getOpenAi() {
 
     return new OpenAI({

@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import OpenAI from "openai";
 import showdown from 'showdown';
 import {HttpClient} from "@angular/common/http";
@@ -24,8 +24,7 @@ export class AppComponent implements OnInit {
   @ViewChild('toolbarComponent') toolbarComponent: ToolbarComponent;
   @ViewChild('chatContainerComponent') chatContainer: ChatContainerComponent;
 
-  constructor(private http: HttpClient,
-              private dialog: MatDialog,
+  constructor(private dialog: MatDialog,
               public settings: SettingsService,
               private messageService: MessageService,
               private cdr: ChangeDetectorRef,) {
@@ -52,6 +51,8 @@ export class AppComponent implements OnInit {
     if (!message) {
       return;
     }
+
+    this.autoSwitchModel(message);
 
     // @ts-ignore
     this.messageService.chatHistory.push({content: message, role: 'user'});
@@ -115,13 +116,38 @@ export class AppComponent implements OnInit {
     this.callEndpoints(0, ai, endpoints, this.settings.selectedModel, '');
   }
 
+  private autoSwitchModel(message: string) {
+    if (this.settings.autoSwitchEnabled) {
+      const first20Chars = message.toLowerCase().substring(0, 35);
+      if (first20Chars.includes('draw')
+        || first20Chars.includes('image')
+        || first20Chars.includes('picture')
+        || first20Chars.includes('dalle')
+        || first20Chars.includes('dall-e')
+        || first20Chars.includes('dall·e')) {
+        this.settings.selectedModel = 'DALL·E·3';
+      } else if(first20Chars.includes('gpt4')
+        || first20Chars.includes('gpt-4')) {
+        this.settings.selectedModel = 'gpt-4-1106-preview';
+      } else if(first20Chars.includes('textdavinci')
+        || first20Chars.includes('no content policy')
+        || first20Chars.includes('no policy')
+        || first20Chars.includes('text-davinci')) {
+        this.settings.selectedModel = 'text-davinci-003';
+      }
+      else {
+        this.settings.selectedModel = 'gpt-3.5-turbo-1106';
+      }
+    }
+  }
+
   callEndpoints(index, ai, endpoints, model, error) {
     if (index >= endpoints.length) {
       this.handleFinalErrorResponse(error);
       return;
     }
 
-    if(endpoints[index].restrictModel && model !== endpoints[index].restrictModel) {
+    if (endpoints[index].restrictModel && model !== endpoints[index].restrictModel) {
       this.callEndpoints(index + 1, ai, endpoints, model, error);
       return;
     }
@@ -179,7 +205,9 @@ export class AppComponent implements OnInit {
       }
       let messageRaw = message;
       this.messageService.chatHistory.push({content: messageRaw, role: 'assistant'});
-      this.textToSpeak(messageRaw);
+      if(!response.data || !response.data[0].url) {
+        this.textToSpeak(messageRaw);
+      }
       this.messageService.messages.push({
         content: this.converter.makeHtml(message),
         contentRaw: messageRaw,
@@ -195,7 +223,7 @@ export class AppComponent implements OnInit {
   }
 
   private textToSpeak(messageRaw: string) {
-    if(!this.settings.textToSpeechEnabled) {
+    if (!this.settings.textToSpeechEnabled) {
       return;
     }
 
