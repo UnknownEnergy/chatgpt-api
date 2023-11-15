@@ -205,16 +205,17 @@ export class AppComponent implements OnInit {
       }
       let messageRaw = message;
       this.messageService.chatHistory.push({content: messageRaw, role: 'assistant'});
-      if(!response.data || !response.data[0].url) {
-        this.textToSpeak(messageRaw);
-      }
-      this.messageService.messages.push({
+      let messageObj = {
         content: this.converter.makeHtml(message),
-        contentRaw: messageRaw,
+          contentRaw: messageRaw,
         timestamp: new Date(),
         avatar: '<img src="/assets/chatworm_simple.png" alt="Chatworm" width="50px"/>',
         isUser: false,
-      });
+      };
+      if(!response.data || !response.data[0].url) {
+        this.textToSpeak(messageRaw, messageObj);
+      }
+      this.messageService.messages.push(messageObj);
     }
     this.chatContainer.highlightCode();
     this.chatContainer.chatbotTyping = false;
@@ -222,7 +223,7 @@ export class AppComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
-  private textToSpeak(messageRaw: string) {
+  private textToSpeak(messageRaw: string, messageObj: any) {
     if (!this.settings.textToSpeechEnabled) {
       return;
     }
@@ -242,8 +243,7 @@ export class AppComponent implements OnInit {
       audioElement.controls = true;
       audioElement.autoplay = true;
 
-      const lastMessageIndex = this.messageService.messages.length - 1;
-      this.messageService.messages[lastMessageIndex].content += audioElement.outerHTML;
+      messageObj.content += audioElement.outerHTML;
       this.cdr.detectChanges();
     });
   }
