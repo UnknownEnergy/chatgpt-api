@@ -138,12 +138,9 @@ export class SavedChatsPanelComponent {
 
   private removeAudioAutoplay(chat: Chat) {
     chat.messages = chat.messages.map((message) => {
-      let newContent = message.content;
-      const audioRegex = /<audio(.*?)(\sautoplay\s?)(.*?)(\s|\/?>)/g;
-      newContent = newContent.replace(audioRegex, '<audio$1$3$4');
       return {
         ...message,
-        content: newContent
+        audioAutoplay: false
       };
     });
   }
@@ -170,6 +167,6 @@ export class SavedChatsPanelComponent {
 export class Chat {
   name: string;
   createdOnDate: string;
-  messages: { content: string; contentRaw: string; isRaw?: boolean; timestamp: Date; avatar: string; isUser: boolean; }[] = [];
+  messages: { content: string; contentRaw: string; isRaw?: boolean; timestamp: Date; avatar: string; isUser: boolean; audioUrl?: string, audioAutoplay?: boolean }[] = [];
   chatHistory: OpenAI.ChatCompletionMessage[] = [];
 }

@@ -14,6 +14,7 @@
         <ng-container *ngIf="!message.isRaw; else rawMessage">
           <div [innerHTML]="message.content">
           </div>
+          <audio *ngIf="message.audioUrl" [autoplay]="message.audioAutoplay" [controls]="true" [src]="message.audioUrl"></audio>
         </ng-container>
         <ng-template #rawMessage>
           <div>

@@ -1,7 +1,6 @@
 import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import OpenAI from "openai";
 import showdown from 'showdown';
-import {HttpClient} from "@angular/common/http";
 import {IntroModalComponent} from "./intro-modal/intro-modal.component";
 import {MatDialog} from "@angular/material/dialog";
 import {ToolbarComponent} from "./toolbar/toolbar.component";
@@ -237,14 +236,12 @@ export class AppComponent implements OnInit {
     }).then(async response => {
       const arrayBuffer = await response.arrayBuffer();
       const blob = new Blob([arrayBuffer], {type: 'audio/mpeg'});
-      const url = URL.createObjectURL(blob);
-
-      const audioElement = new Audio(url);
-      audioElement.controls = true;
-      audioElement.autoplay = true;
-
-      messageObj.content += audioElement.outerHTML;
-      this.cdr.detectChanges();
+      const reader = new FileReader();
+      reader.readAsDataURL(blob);
+      reader.onloadend = function() {
+        messageObj.audioUrl = reader.result;
+        messageObj.audioAutoplay = true;
+      };
     });
   }
 
