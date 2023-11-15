@@ -19,6 +19,15 @@
     </div>
     <div class="d-flex align-items-center">
       <div class="p-left-column">
+        <label for="textToSpeechCheckbox">Enable auto switch of models:</label>
+      </div>
+      <div class="p-left-column">
+        <input type="checkbox" id="autoSwitchCheckbox" [(ngModel)]="settings.autoSwitchEnabled"
+               (change)="onAutoSwitchChange($event)">
+      </div>
+    </div>
+    <div class="d-flex align-items-center">
+      <div class="p-left-column">
         <p>Randomness: {{settings.temperature}}
           <br>
           <span *ngIf="settings.temperature === 0.7">(default)</span>
@@ -71,15 +80,6 @@
       <div class="p-left-column">
         <input type="checkbox" id="quickSendCheckbox" [(ngModel)]="settings.quickSendEnabled"
                (change)="onQuickSendChange($event)">
-      </div>
-    </div>
-    <div class="d-flex align-items-center">
-      <div class="p-left-column">
-        <label for="textToSpeechCheckbox">Enable auto switch of models:</label>
-      </div>
-      <div class="p-left-column">
-        <input type="checkbox" id="autoSwitchCheckbox" [(ngModel)]="settings.autoSwitchEnabled"
-               (change)="onAutoSwitchChange($event)">
       </div>
     </div>
   </div>
