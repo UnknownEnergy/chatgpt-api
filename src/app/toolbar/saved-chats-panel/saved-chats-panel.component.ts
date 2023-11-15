@@ -114,7 +114,11 @@ export class SavedChatsPanelComponent {
     if (chatExists) {
       this.messageHistory[this.messageHistory.indexOf(chatExists)] = chat;
     } else this.messageHistory.push(chat);
-    localStorage.setItem('chatHistory', JSON.stringify(this.messageHistory));
+    try {
+      localStorage.setItem('chatHistory', JSON.stringify(this.messageHistory));
+    } catch (e) {
+      alert('Chat history is full! Cant save! Please clear some space.');
+    }
     this.close();
   }
 
