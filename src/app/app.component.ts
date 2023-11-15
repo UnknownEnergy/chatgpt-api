@@ -238,14 +238,7 @@ export class AppComponent implements OnInit {
       const blob = new Blob([arrayBuffer], {type: 'audio/mpeg'});
       const url = URL.createObjectURL(blob);
 
-      const audioCache = {
-        url: url,
-        blob: blob
-      };
-      this.cacheAudio(messageRaw, audioCache);
-
-      const audioElement = document.createElement('audio');
-      audioElement.src = url;
+      const audioElement = new Audio(url);
       audioElement.controls = true;
       audioElement.autoplay = true;
 
@@ -253,20 +246,6 @@ export class AppComponent implements OnInit {
       this.messageService.messages[lastMessageIndex].content += audioElement.outerHTML;
       this.cdr.detectChanges();
     });
-  }
-
-  cacheAudio(message: string, audioCache: { url: string, blob: Blob }) {
-    const cacheKey = `audioCache_${message}`;
-    localStorage.setItem(cacheKey, JSON.stringify(audioCache));
-  }
-
-  retrieveAudioCache(message: string) {
-    const cacheKey = `audioCache_${message}`;
-    const audioCache = localStorage.getItem(cacheKey);
-    if (audioCache) {
-      return JSON.parse(audioCache);
-    }
-    return null;
   }
 
   private handleFinalErrorResponse(error) {
