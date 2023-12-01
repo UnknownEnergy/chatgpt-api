@@ -6,7 +6,7 @@ import {ChatCompletionMessage} from "openai/src/resources/chat/completions";
   providedIn: 'root'
 })
 export class MessageService {
-  messages: { content: string; contentRaw: string; isRaw?: boolean; timestamp: Date; avatar: string; isUser: boolean; audioUrl?: string, audioAutoplay?: boolean}[] = [];
+  messages: { content: string; contentRaw: string; isRaw?: boolean; timestamp: Date; avatar: string; isUser: boolean; audioUrl?: string, audioAutoplay?: boolean, image?: string}[] = [];
   chatHistory: Array<OpenAI.ChatCompletionMessage> = [];
   currentChatName: string = '';
 

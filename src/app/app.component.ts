@@ -46,15 +46,35 @@ export class AppComponent implements OnInit {
     });
   }
 
-  async sendMessage(message: string) {
+  async sendMessage(message: string, image: string) {
     if (!message) {
       return;
     }
 
-    this.autoSwitchModel(message);
+    this.autoSwitchModel(message, image);
 
-    // @ts-ignore
-    this.messageService.chatHistory.push({content: message, role: 'user'});
+    if (image) {
+      this.messageService.chatHistory.push({
+        // @ts-ignore
+        content: [
+          {
+            type: "text",
+            text: message
+          },
+          {
+            type: "image_url",
+            image_url: {
+              url: image
+            }
+          }
+        ],
+        // @ts-ignore
+        role: 'user'
+      });
+    } else {
+      // @ts-ignore
+      this.messageService.chatHistory.push({content: message, role: 'user'});
+    }
 
     localStorage.setItem('apiKey', this.settings.apiKey);
     localStorage.setItem('temperature', this.settings.temperature.toString());
@@ -66,7 +86,8 @@ export class AppComponent implements OnInit {
       contentRaw: message,
       timestamp: new Date(),
       avatar: '<img src="/assets/person.png" alt="Chatworm" width="50px"/>',
-      isUser: true
+      isUser: true,
+      image: image
     });
 
     this.chatContainer.chatbotTyping = true;
@@ -115,8 +136,14 @@ export class AppComponent implements OnInit {
     this.callEndpoints(0, ai, endpoints, this.settings.selectedModel, '');
   }
 
-  private autoSwitchModel(message: string) {
+  private autoSwitchModel(message: string, image: string) {
     if (this.settings.autoSwitchEnabled) {
+      const containsArrayContent = this.messageService.chatHistory.some(message => Array.isArray(message.content));
+      if(image || containsArrayContent) {
+        this.settings.selectedModel = 'gpt-4-vision-preview';
+        return;
+      }
+
       const first20Chars = message.toLowerCase().substring(0, 35);
       if (first20Chars.includes('draw')
         || first20Chars.includes('image')
@@ -125,16 +152,15 @@ export class AppComponent implements OnInit {
         || first20Chars.includes('dall-e')
         || first20Chars.includes('dall·e')) {
         this.settings.selectedModel = 'DALL·E·3';
-      } else if(first20Chars.includes('gpt4')
+      } else if (first20Chars.includes('gpt4')
         || first20Chars.includes('gpt-4')) {
         this.settings.selectedModel = 'gpt-4-1106-preview';
-      } else if(first20Chars.includes('textdavinci')
+      } else if (first20Chars.includes('textdavinci')
         || first20Chars.includes('no content policy')
         || first20Chars.includes('no policy')
         || first20Chars.includes('text-davinci')) {
         this.settings.selectedModel = 'text-davinci-003';
-      }
-      else {
+      } else {
         this.settings.selectedModel = 'gpt-3.5-turbo-1106';
       }
     }
@@ -198,7 +224,7 @@ export class AppComponent implements OnInit {
       if (response.choices && response.choices[0].message) {
         message = response.choices[0].message.content;
       } else if (response.data && response.data[0].url) {
-        message = '<img src="' + response.data[0].url + '" height="500px"/>';
+        message = '<img src="' + response.data[0].url + '" height="300px"/>';
       } else {
         message = response.choices[0].text;
       }
@@ -206,12 +232,12 @@ export class AppComponent implements OnInit {
       this.messageService.chatHistory.push({content: messageRaw, role: 'assistant'});
       let messageObj = {
         content: this.converter.makeHtml(message),
-          contentRaw: messageRaw,
+        contentRaw: messageRaw,
         timestamp: new Date(),
         avatar: '<img src="/assets/chatworm_simple.png" alt="Chatworm" width="50px"/>',
         isUser: false,
       };
-      if(!response.data || !response.data[0].url) {
+      if (!response.data || !response.data[0].url) {
         this.textToSpeak(messageRaw, messageObj);
       }
       this.messageService.messages.push(messageObj);
@@ -238,7 +264,7 @@ export class AppComponent implements OnInit {
       const blob = new Blob([arrayBuffer], {type: 'audio/mpeg'});
       const reader = new FileReader();
       reader.readAsDataURL(blob);
-      reader.onloadend = function() {
+      reader.onloadend = function () {
         messageObj.audioUrl = reader.result;
         messageObj.audioAutoplay = true;
       };
@@ -263,7 +289,7 @@ export class AppComponent implements OnInit {
         // @ts-ignore
         .filter(message => message.role === 'user')
         .pop().content;
-      await this.sendMessage(lastMessage);
+      await this.sendMessage(lastMessage, '');
     }
   }
 

@@ -1,0 +1,6 @@
+<button [matMenuTriggerFor]="imageMenu"><i class="bi-camera"></i></button>
+<mat-menu #imageMenu="matMenu">
+  <button (click)="openCamera()"><i class="bi-camera"></i> Take a picture</button>
+  <input type="file" id="fileInput" (change)="onFileSelected($event)" accept="image/*">
+  <label for="fileInput"><i class="bi-upload"></i> Upload a picture</label>
+</mat-menu>

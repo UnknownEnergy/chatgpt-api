@@ -31,7 +31,7 @@ export class SettingsComponent {
         },
         {
           created: 0,
-          id: 'gpt-4-1106-vision-preview',
+          id: 'gpt-4-vision-preview',
           object: '',
           owned_by: ''
         },

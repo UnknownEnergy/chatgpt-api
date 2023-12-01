@@ -17,8 +17,9 @@ export class ChatPromptComponent implements AfterViewInit{
   isLoading: boolean;
   messageInput: string = '';
   @ViewChild('messageInputArea') messageInputRef;
-  @Output() sendMessage = new EventEmitter<string>();
+  @Output() sendMessage = new EventEmitter<{message: string, image: string}>();
   @Output() resendMessage = new EventEmitter<any>();
+  imagePreview: string = '';
 
   constructor(private cdr: ChangeDetectorRef,
               private settingsService: SettingsService) {
@@ -32,7 +33,8 @@ export class ChatPromptComponent implements AfterViewInit{
     if (!this.messageInput) {
       this.resendMessage.emit();
     } else {
-      this.sendMessage.emit(this.messageInput);
+      this.sendMessage.emit({message: this.messageInput, image: this.imagePreview});
+      this.imagePreview = '';
       this.messageInput = '';
     }
   }
@@ -48,5 +50,14 @@ export class ChatPromptComponent implements AfterViewInit{
     if(this.settingsService.quickSendEnabled) {
       this.onSendClick();
     }
+  }
+
+  updateImagePreview(preview: string) {
+    this.imagePreview = preview;
+  }
+
+  onEnterSend($event) {
+    $event.preventDefault();
+    this.onSendClick();
   }
 }

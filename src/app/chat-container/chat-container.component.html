@@ -3,6 +3,7 @@
   <div class="chat-message" *ngFor="let message of getMessages()">
     <ng-container *ngIf="message.isUser; else systemMessage">
       <div class="message-content message-content-right">
+        <img *ngIf="message.image" [src]="message.image" height="300px" alt="preview image">
         <p class="p-message-content">{{message.content}}</p>
         <div class="message-timestamp">{{ message.timestamp | date:'shortTime' }}</div>
       </div>
