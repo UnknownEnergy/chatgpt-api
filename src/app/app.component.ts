@@ -138,7 +138,8 @@ export class AppComponent implements OnInit {
 
   private autoSwitchModel(message: string, image: string) {
     if (this.settings.autoSwitchEnabled) {
-      const containsArrayContent = this.messageService.chatHistory.some(message => Array.isArray(message.content));
+      const lastMessage = this.messageService.chatHistory[this.messageService.chatHistory.length - 1];
+      const containsArrayContent = lastMessage ? Array.isArray(lastMessage.content) : false;
       if(image || containsArrayContent) {
         this.settings.selectedModel = 'gpt-4-vision-preview';
         return;
@@ -185,7 +186,37 @@ export class AppComponent implements OnInit {
           this.handleSuccessResponse(response);
         })
         .catch(error => {
-          if (error && error.type === 'invalid_request_error') {
+          if (error && error.type === 'invalid_request_error' && error.message.includes("image_url is only supported by certain models")) {
+            // Modify the payload format
+            const modifiedPayload = { ...payload };
+            modifiedPayload.messages = modifiedPayload.messages.map(message => {
+              const newContent = {
+                content: '',
+                role: 'user'
+              };
+              if (Array.isArray(message.content)) {
+                console.log(message.content)
+                message.content.forEach(contentItem => {
+                  if (contentItem.type === 'text') {
+                    newContent.content += contentItem.text;
+                  }
+                });
+                console.log(newContent)
+                return newContent;
+              }
+              return message;
+            });
+
+            // Retry the endpoint with the modified payload
+            ai.chat.completions.create(modifiedPayload)
+              .then(response => {
+                this.handleSuccessResponse(response);
+              })
+              .catch(retryError => {
+                this.callEndpoints(index + 1, ai, endpoints, model, retryError);
+              });
+            return;
+          } else if (error && error.type === 'invalid_request_error') {
             this.callEndpoints(index + 1, ai, endpoints, model, error);
             return;
           }
