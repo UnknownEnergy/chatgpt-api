@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Output, ViewChild} from '@angular/core';
 import {MatMenuTrigger} from "@angular/material/menu";
+import { Camera, CameraResultType } from '@capacitor/camera';
 
 @Component({
   selector: 'app-image-camera-component',
@@ -26,29 +27,46 @@ export class ImageCameraComponent {
   }
 
   openCamera() {
-    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      navigator.mediaDevices.getUserMedia({ video: true })
-        .then(stream => {
-          const video = document.createElement('video');
-          video.srcObject = stream;
-          video.play();
-
-          setTimeout(() => {
-            const canvas = document.createElement('canvas');
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-            this.imagePreview = canvas.toDataURL('image/jpeg');
-            this.imagePreviewChanged.emit(this.imagePreview);
-
-            stream.getTracks().forEach(track => track.stop());
-          }, 1000);
-        })
-        .catch(error => {
-          console.error('Error accessing the camera:', error);
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+      let main = this;
+      async function takePicture() {
+        const image = await Camera.getPhoto({
+          quality: 90,
+          allowEditing: false,
+          resultType: CameraResultType.Uri
         });
+
+        main.imagePreview = image.webPath;
+        main.imagePreviewChanged.emit(main.imagePreview);
+      }
+
+      takePicture();
     } else {
-      console.error('Camera access not supported');
+      // Use the browser's camera functionality
+      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ video: true })
+          .then(stream => {
+            const video = document.createElement('video');
+            video.srcObject = stream;
+            video.play();
+
+            setTimeout(() => {
+              const canvas = document.createElement('canvas');
+              canvas.width = video.videoWidth;
+              canvas.height = video.videoHeight;
+              canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+              this.imagePreview = canvas.toDataURL('image/jpeg');
+              this.imagePreviewChanged.emit(this.imagePreview);
+
+              stream.getTracks().forEach(track => track.stop());
+            }, 1000);
+          })
+          .catch(error => {
+            console.error('Error accessing the camera:', error);
+          });
+      } else {
+        console.error('Camera access not supported');
+      }
     }
   }
 }
