@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1701464702849,
+  "timestamp": 1701465852607,
   "index": "./index.html",
   "assetGroups": [
     {
@@ -11,12 +11,13 @@
         "ignoreVary": true
       },
       "urls": [
+        "./468.81b4fdcfac90c22c.js",
         "./favicon.ico",
         "./index.html",
-        "./main.fcb296dbe21f1653.js",
+        "./main.6331f82bdfec495e.js",
         "./manifest.webmanifest",
         "./polyfills.c49f2dcf7350568c.js",
-        "./runtime.01f134aaaa21150f.js",
+        "./runtime.9f9bf4dae8b6e209.js",
         "./styles.f04e5263143d9ac1.css"
       ],
       "patterns": []
@@ -52,6 +53,7 @@
   ],
   "dataGroups": [],
   "hashTable": {
+    "./468.81b4fdcfac90c22c.js": "1c75db0362b1f4836b28e707ee3402cc97aaa6ca",
     "./assets/chatworm-72x72.png": "f34993d14d89b3b9c1cfed3b38449c18d18aaa57",
     "./assets/chatworm.png": "6dc11906419b0f44abb433a5cd947dad28fade00",
     "./assets/chatworm_simple.png": "7208550c6b370c812bfe0882672d793aa2616010",
@@ -70,11 +72,11 @@
     "./bootstrap-icons.49c9b8524d23a4c2.woff": "cce254d50d2f744cd8f384cd4aa2a23c8850e2ee",
     "./bootstrap-icons.f41d849d445f6f5f.woff2": "d33714cb0836ea9ebe02f4ccc22806593903167a",
     "./favicon.ico": "b5465289afe19a0926b5268008830b6824c290f9",
-    "./index.html": "8614490ce9c9c032c4e4eebc9a16e2d690df5e45",
-    "./main.fcb296dbe21f1653.js": "684cf82d3b79569d3d17497fcd5bf6f6b92c1219",
+    "./index.html": "63677d92f6a5865d2b44c765a9a43461073978a3",
+    "./main.6331f82bdfec495e.js": "bda1e8cb2771181a0b966eba2c74a14429bb8d10",
     "./manifest.webmanifest": "4ed5aadcd65bf45274abe65a0a665b94426920f0",
     "./polyfills.c49f2dcf7350568c.js": "75d4369cbcf2e925bce1ecc7d4921af01dcb8b61",
-    "./runtime.01f134aaaa21150f.js": "d4db9b07f695cb70828d666f74e0b0f2621b20b6",
+    "./runtime.9f9bf4dae8b6e209.js": "9299a9b896bfc48aaf2f9c0c7f99305c448f673b",
     "./styles.f04e5263143d9ac1.css": "8a6da7292a369ff2bb0bb37d3325418fb5f1cd4d"
   },
   "navigationUrls": [
