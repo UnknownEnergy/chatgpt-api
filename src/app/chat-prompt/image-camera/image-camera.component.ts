@@ -33,10 +33,10 @@ export class ImageCameraComponent {
         const image = await Camera.getPhoto({
           quality: 90,
           allowEditing: false,
-          resultType: CameraResultType.Uri
+          resultType: CameraResultType.Base64
         });
 
-        main.imagePreview = image.webPath;
+        main.imagePreview = 'data:image/jpeg;base64,' + image.base64String;
         main.imagePreviewChanged.emit(main.imagePreview);
       }
 
