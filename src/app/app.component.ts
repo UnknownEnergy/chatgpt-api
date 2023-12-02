@@ -91,7 +91,9 @@ export class AppComponent implements OnInit {
     });
 
     this.chatContainer.chatbotTyping = true;
-    this.chatContainer.scrollToLastMessage();
+    setTimeout(() => {
+      this.chatContainer.scrollToLastMessage();
+    }, 100);
 
     const endpoints = [
       {
@@ -145,21 +147,22 @@ export class AppComponent implements OnInit {
         return;
       }
 
-      const first20Chars = message.toLowerCase().substring(0, 35);
-      if (first20Chars.includes('draw')
-        || first20Chars.includes('image')
-        || first20Chars.includes('picture')
-        || first20Chars.includes('dalle')
-        || first20Chars.includes('dall-e')
-        || first20Chars.includes('dall·e')) {
+      const first35Chars = message.toLowerCase().substring(0, 35);
+      const imageDrawingPhrases = ['draw an image', 'draw a picture', 'sketch a picture', 'create an illustration',
+        'generate a visual', 'draw an icon', 'draw a graphic', 'illustrate an image', 'design an icon',
+        'create a visual', 'generate a drawing', 'sketch a mockup', 'render an illustration', 'produce a picture',
+        'craft an image', 'draft a graphic', 'formulate a drawing', 'construct an icon', 'compose a visual',
+        'paint a picture', 'draw a diagram', 'sketch an artwork', 'design a logo', 'create a cartoon',
+        'zeichne ein bild', 'male ein bild', 'zeichne ein diagram', 'male ein diagram', 'zeichne eine grafik', 'male ein grafik',
+        'erstelle ein bild', 'erstelle eine grafik', 'erstelle eine zeichnung', 'erstelle ein diagram', 'zeichne eine zeichnung'];
+      const gpt4Phrases = ['use gpt4', 'use gpt-4'];
+      const textDavinciPhrases = ['use textdavinci', 'use no content policy', 'use no policy', 'use text-davinci'];
+
+      if (imageDrawingPhrases.some(phrase => first35Chars.includes(phrase))) {
         this.settings.selectedModel = 'DALL·E·3';
-      } else if (first20Chars.includes('gpt4')
-        || first20Chars.includes('gpt-4')) {
+      } else if (gpt4Phrases.some(phrase => first35Chars.includes(phrase))) {
         this.settings.selectedModel = 'gpt-4-1106-preview';
-      } else if (first20Chars.includes('textdavinci')
-        || first20Chars.includes('no content policy')
-        || first20Chars.includes('no policy')
-        || first20Chars.includes('text-davinci')) {
+      } else if (textDavinciPhrases.some(phrase => first35Chars.includes(phrase))) {
         this.settings.selectedModel = 'text-davinci-003';
       } else {
         this.settings.selectedModel = 'gpt-3.5-turbo-1106';
