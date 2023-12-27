@@ -9,7 +9,7 @@
       <button class="api-button" (click)="openApiKeyWebsite()">Get&nbsp;API&nbsp;Key</button>
     </div>
     <div class="d-flex align-items-center">
-      <p class="p-left-column">Model:</p>
+      <p class="p-left-column">Current used Model:</p>
       <select class="btn btn-primary" [(ngModel)]="settings.selectedModel">
         <option *ngFor="let model of models" [value]="model.id">
           {{model.id}}
@@ -19,11 +19,20 @@
     </div>
     <div class="d-flex align-items-center">
       <div class="p-left-column">
-        <label for="textToSpeechCheckbox">Enable auto switch of models:</label>
+        <label for="textToSpeechCheckbox">Enable automatic switch of models:</label>
       </div>
       <div class="p-left-column">
         <input type="checkbox" id="autoSwitchCheckbox" [(ngModel)]="settings.autoSwitchEnabled"
                (change)="onAutoSwitchChange($event)">
+      </div>
+    </div>
+    <div class="d-flex align-items-center">
+      <div class="p-left-column">
+        <label for="saveMoneyCheckbox">Save money (use GPT3.5 Turbo instead of GTP4):</label>
+      </div>
+      <div class="p-left-column">
+        <input type="checkbox" id="saveMoneyCheckbox" [(ngModel)]="settings.saveMoneyEnabled"
+               (change)="onSaveMoneyChange($event)">
       </div>
     </div>
     <div class="d-flex align-items-center">
@@ -53,7 +62,7 @@
     </div>
     <div class="d-flex align-items-center">
       <div class="p-left-column">
-        <label for="textToSpeechCheckbox">Enable text to speech</label>
+        <label for="textToSpeechCheckbox">Text to speech (Chatworm will talk back):</label>
       </div>
       <div class="p-left-column">
         <input type="checkbox" id="textToSpeechCheckbox" [(ngModel)]="settings.textToSpeechEnabled"
@@ -62,7 +71,7 @@
     </div>
     <div class="d-flex align-items-center">
       <div class="p-left-column">
-        <p>Voice:</p>
+        <p>Used voice on text to speech:</p>
       </div>
       <select class="btn btn-primary" [(ngModel)]="settings.voice" (change)="onVoiceChange($event)">
         <option value="alloy">Alloy</option>
@@ -75,7 +84,7 @@
     </div>
     <div class="d-flex align-items-center">
       <div class="p-left-column">
-        <label for="textToSpeechCheckbox">Enable quick send on speech to text:</label>
+        <label for="textToSpeechCheckbox">Quick send on speech to text (no enter/send click required):</label>
       </div>
       <div class="p-left-column">
         <input type="checkbox" id="quickSendCheckbox" [(ngModel)]="settings.quickSendEnabled"

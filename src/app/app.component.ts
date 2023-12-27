@@ -155,17 +155,13 @@ export class AppComponent implements OnInit {
         'paint a picture', 'draw a diagram', 'sketch an artwork', 'design a logo', 'create a cartoon',
         'zeichne ein bild', 'male ein bild', 'zeichne ein diagram', 'male ein diagram', 'zeichne eine grafik', 'male ein grafik',
         'erstelle ein bild', 'erstelle eine grafik', 'erstelle eine zeichnung', 'erstelle ein diagram', 'zeichne eine zeichnung'];
-      const gpt4Phrases = ['use gpt4', 'use gpt-4'];
-      const textDavinciPhrases = ['use textdavinci', 'use no content policy', 'use no policy', 'use text-davinci'];
 
       if (imageDrawingPhrases.some(phrase => first35Chars.includes(phrase))) {
         this.settings.selectedModel = 'DALL·E·3';
-      } else if (gpt4Phrases.some(phrase => first35Chars.includes(phrase))) {
-        this.settings.selectedModel = 'gpt-4-1106-preview';
-      } else if (textDavinciPhrases.some(phrase => first35Chars.includes(phrase))) {
-        this.settings.selectedModel = 'text-davinci-003';
-      } else {
+      } else if (this.settings.saveMoneyEnabled) {
         this.settings.selectedModel = 'gpt-3.5-turbo-1106';
+      } else {
+        this.settings.selectedModel = 'gpt-4-1106-preview';
       }
     }
   }

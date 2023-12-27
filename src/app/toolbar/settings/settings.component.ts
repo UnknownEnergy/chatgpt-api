@@ -71,12 +71,6 @@ export class SettingsComponent {
           object: '',
           owned_by: ''
         },
-        {
-          created: 0,
-          id: 'text-davinci-003',
-          object: '',
-          owned_by: ''
-        }
       ];
       const otherModels = response.data.filter(model => {
         return !importantModels.some(importantModel => importantModel.id === model.id);
@@ -127,5 +121,9 @@ export class SettingsComponent {
       apiKey: this.settings.apiKey,
       dangerouslyAllowBrowser: true
     });
+  }
+
+  onSaveMoneyChange($event: Event) {
+    localStorage.setItem('saveMoneyEnabled', JSON.stringify(this.settings.saveMoneyEnabled));
   }
 }
