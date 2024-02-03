@@ -5,7 +5,7 @@ import {EventEmitter, Injectable, Input} from "@angular/core";
 })
 export class SettingsService {
   apiKey: string = '';
-  selectedModel: string = 'gpt-3.5-turbo-1106';
+  selectedModel: string = 'gpt-3.5-turbo-0125';
   temperature: number = 0.7;
   maxTokens: number = 512;
   textToSpeechEnabled: boolean = true;
