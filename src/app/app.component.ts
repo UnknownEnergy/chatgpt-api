@@ -143,7 +143,7 @@ export class AppComponent implements OnInit {
       const lastMessage = this.messageService.chatHistory[this.messageService.chatHistory.length - 1];
       const containsArrayContent = lastMessage ? Array.isArray(lastMessage.content) : false;
       if(image || containsArrayContent) {
-        this.settings.selectedModel = 'gpt-4-vision-preview';
+        this.settings.selectedModel = 'gpt-4-turbo';
         return;
       }
 
@@ -159,9 +159,9 @@ export class AppComponent implements OnInit {
       if (imageDrawingPhrases.some(phrase => first35Chars.includes(phrase))) {
         this.settings.selectedModel = 'DALL·E·3';
       } else if (this.settings.saveMoneyEnabled) {
-        this.settings.selectedModel = 'gpt-3.5-turbo-0125';
+        this.settings.selectedModel = 'gpt-3.5-turbo';
       } else {
-        this.settings.selectedModel = 'gpt-4-0125-preview';
+        this.settings.selectedModel = 'gpt-4-turbo';
       }
     }
   }

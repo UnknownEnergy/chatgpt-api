@@ -25,6 +25,12 @@ export class SettingsComponent {
       const importantModels = [
         {
           created: 0,
+          id: 'gpt-4-turbo',
+          object: '',
+          owned_by: ''
+        },
+        {
+          created: 0,
           id: 'gpt-4-0125-preview',
           object: '',
           owned_by: ''
@@ -43,6 +49,12 @@ export class SettingsComponent {
         },
         {
           created: 0,
+          id: 'gpt-3.5-turbo',
+          object: '',
+          owned_by: ''
+        },
+        {
+          created: 0,
           id: 'gpt-3.5-turbo-0125',
           object: '',
           owned_by: ''
@@ -50,12 +62,6 @@ export class SettingsComponent {
         {
           created: 0,
           id: 'gpt-3.5-turbo-1106',
-          object: '',
-          owned_by: ''
-        },
-        {
-          created: 0,
-          id: 'gpt-3.5-turbo',
           object: '',
           owned_by: ''
         },
