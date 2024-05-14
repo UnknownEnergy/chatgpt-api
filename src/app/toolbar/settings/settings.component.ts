@@ -25,6 +25,12 @@ export class SettingsComponent {
       const importantModels = [
         {
           created: 0,
+          id: 'gpt-4o',
+          object: '',
+          owned_by: ''
+        },
+        {
+          created: 0,
           id: 'gpt-4-turbo',
           object: '',
           owned_by: ''

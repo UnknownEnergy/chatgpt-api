@@ -5,7 +5,7 @@ import {EventEmitter, Injectable, Input} from "@angular/core";
 })
 export class SettingsService {
   apiKey: string = '';
-  selectedModel: string = 'gpt-3.5-turbo';
+  selectedModel: string = 'gpt-4o';
   temperature: number = 0.7;
   maxTokens: number = 512;
   textToSpeechEnabled: boolean = true;
@@ -13,7 +13,7 @@ export class SettingsService {
   quickSendEnabled: boolean = true;
   refreshApiKey = new EventEmitter<string>();
   autoSwitchEnabled: boolean = true;
-  saveMoneyEnabled: boolean = true;
+  saveMoneyEnabled: boolean = false;
 
   constructor() {
     const savedApiKey = localStorage.getItem('apiKey');

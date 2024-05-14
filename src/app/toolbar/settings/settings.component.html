@@ -13,7 +13,7 @@
       <select class="btn btn-primary" [(ngModel)]="settings.selectedModel">
         <option *ngFor="let model of models" [value]="model.id">
           {{model.id}}
-          <p *ngIf="model.id === 'gpt-3.5-turbo'">(default)</p>
+          <p *ngIf="model.id === 'gpt-4o'">(default)</p>
         </option>
       </select>
     </div>
@@ -28,7 +28,7 @@
     </div>
     <div class="d-flex align-items-center">
       <div class="p-left-column">
-        <label for="saveMoneyCheckbox">Save money (use GPT3.5 Turbo instead of GTP4):</label>
+        <label for="saveMoneyCheckbox">Save money (use GPT3.5 Turbo instead of GPT-4o):</label>
       </div>
       <div class="p-left-column">
         <input type="checkbox" id="saveMoneyCheckbox" [(ngModel)]="settings.saveMoneyEnabled"
