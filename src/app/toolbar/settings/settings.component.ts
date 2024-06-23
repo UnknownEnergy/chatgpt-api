@@ -70,11 +70,15 @@ export class SettingsComponent {
   }
 
   openApiKeyWebsite() {
-    if (this.isClaudeModel(this.settings.selectedModel)) {
-      window.open("https://console.anthropic.com/settings/keys", "_blank");
-    } else {
-      window.open("https://platform.openai.com/account/api-keys", "_blank");
-    }
+    window.open("https://platform.openai.com/account/api-keys", "_blank");
+  }
+
+  openApiKeyAnthrophicWebsite() {
+    window.open("https://console.anthropic.com/settings/keys", "_blank");
+  }
+
+  openHowTo() {
+    window.open("https://stackoverflow.com/questions/3102819/disable-same-origin-policy-in-chrome", "_blank");
   }
 
   onInputOnlyAllowPositiveIntegers($event: KeyboardEvent) {
@@ -112,10 +116,7 @@ export class SettingsComponent {
   }
 
   private getAnthropic() {
-    return new Anthropic({apiKey: this.settings.apiKeyAnthropic});
-  }
 
-  private isClaudeModel(model: string): boolean {
-    return model.toLowerCase().includes('claude');
+    return new Anthropic({apiKey: this.settings.apiKeyAnthropic});
   }
 }

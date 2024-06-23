@@ -76,7 +76,11 @@ export class UsageComponent implements AfterViewInit {
     });
   }
 
-  openUsageWebsite() {
+  openOpenAIWebsite() {
     window.open("https://platform.openai.com/account/usage", "_blank");
+  }
+
+  openAnthropicWebsite() {
+    window.open("https://console.anthropic.com/settings/usage", "_blank");
   }
 }

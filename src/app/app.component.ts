@@ -148,12 +148,7 @@ export class AppComponent implements OnInit {
       model: this.settings.selectedModel,
       max_tokens: this.settings.maxTokens,
       temperature: this.settings.temperature,
-      messages: [
-        {
-          role: "user",
-          content: content
-        }
-      ],
+      messages: this.messageService.chatHistory,
       system: "You are a helpful AI assistant." // Adjust this system message as needed
     });
   }
@@ -178,7 +173,7 @@ export class AppComponent implements OnInit {
     promise.then(response => {
       let message = '';
       if (isClaudeModel) {
-        message = response.completion;
+        message = response.content[0].text;
       } else if (response.choices && response.choices[0].message) {
         message = response.choices[0].message.content;
       } else if (response.data && response.data[0].url) {
@@ -204,6 +199,8 @@ export class AppComponent implements OnInit {
       this.chatContainer.chatbotTyping = false;
       this.chatContainer.scrollToLastMessage();
       this.cdr.detectChanges();
+    }).catch((error: any) => {
+      this.handleErrorResponse(error);
     });
   }
 

@@ -1,5 +1,6 @@
-<!--<button aria-label="Usage" (click)="openUsageWebsite()" class="progress-bar" role="progressbar" [attr.aria-valuenow]="total_used"-->
-<!--        [attr.aria-valuemin]="0" [attr.aria-valuemax]="total_granted">{{total_used|currency}}-->
-<!--  / {{total_granted|currency}}</button>-->
-<button aria-label="Usage" (click)="openUsageWebsite()" class="progress-bar" role="progressbar" [attr.aria-valuenow]="total_used"
-        [attr.aria-valuemin]="0" [attr.aria-valuemax]="total_granted">Usage</button>
+<button aria-label="Usage" class="progress-bar" [matMenuTriggerFor]="menu">Usage</button>
+
+<mat-menu #menu="matMenu">
+  <button (click)="openOpenAIWebsite()">OpenAI</button>
+  <button (click)="openAnthropicWebsite()">Anthropic</button>
+</mat-menu>
