@@ -5,6 +5,7 @@ import {EventEmitter, Injectable, Input} from "@angular/core";
 })
 export class SettingsService {
   apiKey: string = '';
+  apiKeyAnthropic: string = '';
   selectedModel: string = 'gpt-4o';
   temperature: number = 0.7;
   maxTokens: number = 512;
@@ -19,6 +20,10 @@ export class SettingsService {
     const savedApiKey = localStorage.getItem('apiKey');
     if (savedApiKey) {
       this.apiKey = savedApiKey;
+    }
+    const savedAnthropicApiKey = localStorage.getItem('apiKeyAnthropic');
+    if (savedAnthropicApiKey) {
+      this.apiKeyAnthropic = savedAnthropicApiKey;
     }
     const savedTemperature = localStorage.getItem('temperature');
     if (savedTemperature) {

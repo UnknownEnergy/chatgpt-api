@@ -2,9 +2,17 @@
   <div class="row">
     <div class="col-md-8 d-flex">
       <input class="input-api" [type]="showPassword ? 'text' : 'password'" [(ngModel)]="settings.apiKey"
-             placeholder="Enter API Key..."
+             placeholder="Enter OpenAI API Key..."
              (input)="onTypeApiKey()">
       <button aria-label="Show API Key" class="api-button" (click)="showPassword = !showPassword;"><i
+        class="bi bi-eye"></i></button>
+      <button class="api-button" (click)="openApiKeyWebsite()">Get&nbsp;API&nbsp;Key</button>
+    </div>
+    <div class="col-md-8 d-flex">
+      <input class="input-api" [type]="showPassword2 ? 'text' : 'password'" [(ngModel)]="settings.apiKeyAnthropic"
+             placeholder="Enter Anthrophic API Key..."
+             (input)="onTypeApiKeyAnthropic()">
+      <button aria-label="Show API Key" class="api-button" (click)="showPassword2 = !showPassword2;"><i
         class="bi bi-eye"></i></button>
       <button class="api-button" (click)="openApiKeyWebsite()">Get&nbsp;API&nbsp;Key</button>
     </div>

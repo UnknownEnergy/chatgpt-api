@@ -1,6 +1,7 @@
-import {Component, EventEmitter} from '@angular/core';
+import {Component} from '@angular/core';
 import OpenAI from "openai";
 import {SettingsService} from "../../services/settings.service";
+import Anthropic from "@anthropic-ai/sdk";
 import Model = OpenAI.Model;
 
 @Component({
@@ -10,6 +11,7 @@ import Model = OpenAI.Model;
 })
 export class SettingsComponent {
   showPassword: boolean = false;
+  showPassword2: boolean = false;
   models: Model[] = [];
 
   constructor(public settings: SettingsService) {
@@ -20,90 +22,39 @@ export class SettingsComponent {
   }
 
   refreshModels() {
+    // const claudeModels = await this.fetchClaudeModels();
+    // this.fetchOpenAIModels().then(openAIModels => {
+    //   this.models = [...this.getPredefinedModels(), ...openAIModels, ...claudeModels];
+    // });
+    this.models = this.getPredefinedModels();
+  }
+
+  private async fetchOpenAIModels(): Promise<Model[]> {
     const openai = this.getOpenAi();
-    openai.models.list().then(response => {
-      const importantModels = [
-        {
-          created: 0,
-          id: 'gpt-4o',
-          object: '',
-          owned_by: ''
-        },
-        {
-          created: 0,
-          id: 'gpt-4-turbo',
-          object: '',
-          owned_by: ''
-        },
-        {
-          created: 0,
-          id: 'gpt-4-0125-preview',
-          object: '',
-          owned_by: ''
-        },
-        {
-          created: 0,
-          id: 'gpt-4-1106-preview',
-          object: '',
-          owned_by: ''
-        },
-        {
-          created: 0,
-          id: 'gpt-4-vision-preview',
-          object: '',
-          owned_by: ''
-        },
-        {
-          created: 0,
-          id: 'gpt-3.5-turbo',
-          object: '',
-          owned_by: ''
-        },
-        {
-          created: 0,
-          id: 'gpt-3.5-turbo-0125',
-          object: '',
-          owned_by: ''
-        },
-        {
-          created: 0,
-          id: 'gpt-3.5-turbo-1106',
-          object: '',
-          owned_by: ''
-        },
-        {
-          created: 0,
-          id: 'gpt-4',
-          object: '',
-          owned_by: ''
-        },
-        {
-          created: 0,
-          id: 'gpt-4-32k',
-          object: '',
-          owned_by: ''
-        },
-        {
-          created: 0,
-          id: 'DALL·E·3',
-          object: '',
-          owned_by: ''
-        },
-        {
-          created: 0,
-          id: 'DALL·E·2',
-          object: '',
-          owned_by: ''
-        },
-      ];
-      const otherModels = response.data.filter(model => {
-        return !importantModels.some(importantModel => importantModel.id === model.id);
-      }).sort((a, b) => {
-        return a.id.localeCompare(b.id);
-      });
-      // @ts-ignore
-      this.models = [...importantModels, ...otherModels];
-    })
+    try {
+      const response = await openai.models.list();
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching OpenAI models:", error);
+      return [];
+    }
+  }
+
+  private async fetchClaudeModels(): Promise<Model[]> {
+    const anthropic = this.getAnthropic();
+    return [];
+  }
+
+  private getPredefinedModels(): Model[] {
+    return [
+      {id: 'gpt-4o', object: 'model', created: 0, owned_by: 'openai'},
+      {id: 'gpt-4-turbo', object: 'model', created: 0, owned_by: 'openai'},
+      {id: 'gpt-3.5-turbo', object: 'model', created: 0, owned_by: 'openai'},
+      {id: 'DALL·E·3', object: 'model', created: 0, owned_by: 'openai'},
+      {id: 'claude-3-5-sonnet-20240620', object: 'model', created: 0, owned_by: 'anthropic'},
+      {id: 'claude-3-opus-20240229', object: 'model', created: 0, owned_by: 'anthropic'},
+      {id: 'claude-3-haiku-20240307', object: 'model', created: 0, owned_by: 'anthropic'},
+    ];
   }
 
   onTypeApiKey() {
@@ -112,8 +63,18 @@ export class SettingsComponent {
     this.settings.refreshApiKey.emit();
   }
 
+  onTypeApiKeyAnthropic() {
+    this.refreshModels();
+    localStorage.setItem('apiKeyAnthropic', this.settings.apiKeyAnthropic);
+    this.settings.refreshApiKey.emit();
+  }
+
   openApiKeyWebsite() {
-    window.open("https://platform.openai.com/account/api-keys", "_blank");
+    if (this.isClaudeModel(this.settings.selectedModel)) {
+      window.open("https://console.anthropic.com/settings/keys", "_blank");
+    } else {
+      window.open("https://platform.openai.com/account/api-keys", "_blank");
+    }
   }
 
   onInputOnlyAllowPositiveIntegers($event: KeyboardEvent) {
@@ -139,15 +100,22 @@ export class SettingsComponent {
     localStorage.setItem('autoSwitchEnabled', JSON.stringify(this.settings.autoSwitchEnabled));
   }
 
-  private getOpenAi() {
+  onSaveMoneyChange($event: Event) {
+    localStorage.setItem('saveMoneyEnabled', JSON.stringify(this.settings.saveMoneyEnabled));
+  }
 
+  private getOpenAi() {
     return new OpenAI({
       apiKey: this.settings.apiKey,
       dangerouslyAllowBrowser: true
     });
   }
 
-  onSaveMoneyChange($event: Event) {
-    localStorage.setItem('saveMoneyEnabled', JSON.stringify(this.settings.saveMoneyEnabled));
+  private getAnthropic() {
+    return new Anthropic({apiKey: this.settings.apiKeyAnthropic});
+  }
+
+  private isClaudeModel(model: string): boolean {
+    return model.toLowerCase().includes('claude');
   }
 }
