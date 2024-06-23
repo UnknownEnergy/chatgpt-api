@@ -266,7 +266,12 @@ export class AppComponent implements OnInit {
   }
 
   private getClaude() {
-    return new Anthropic({apiKey: this.settings.apiKeyAnthropic});
+    return new Anthropic({
+      fetch: async (url, init) => {
+        return await fetch(this.settings.corsProxy+ url.toString(), init);
+      },
+      apiKey: this.settings.apiKeyAnthropic,
+    });
   }
 
   private autoSwitchModel(message: string, image: string) {

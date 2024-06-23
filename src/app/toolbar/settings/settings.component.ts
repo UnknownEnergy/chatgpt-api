@@ -22,10 +22,6 @@ export class SettingsComponent {
   }
 
   refreshModels() {
-    // const claudeModels = await this.fetchClaudeModels();
-    // this.fetchOpenAIModels().then(openAIModels => {
-    //   this.models = [...this.getPredefinedModels(), ...openAIModels, ...claudeModels];
-    // });
     this.models = this.getPredefinedModels();
   }
 
@@ -38,11 +34,6 @@ export class SettingsComponent {
       console.error("Error fetching OpenAI models:", error);
       return [];
     }
-  }
-
-  private async fetchClaudeModels(): Promise<Model[]> {
-    const anthropic = this.getAnthropic();
-    return [];
   }
 
   private getPredefinedModels(): Model[] {
@@ -69,16 +60,16 @@ export class SettingsComponent {
     this.settings.refreshApiKey.emit();
   }
 
+  onTypeCorsProxy() {
+    localStorage.setItem('corsProxy', this.settings.corsProxy);
+  }
+
   openApiKeyWebsite() {
     window.open("https://platform.openai.com/account/api-keys", "_blank");
   }
 
   openApiKeyAnthrophicWebsite() {
     window.open("https://console.anthropic.com/settings/keys", "_blank");
-  }
-
-  openHowTo() {
-    window.open("https://stackoverflow.com/questions/3102819/disable-same-origin-policy-in-chrome", "_blank");
   }
 
   onInputOnlyAllowPositiveIntegers($event: KeyboardEvent) {
@@ -113,10 +104,5 @@ export class SettingsComponent {
       apiKey: this.settings.apiKey,
       dangerouslyAllowBrowser: true
     });
-  }
-
-  private getAnthropic() {
-
-    return new Anthropic({apiKey: this.settings.apiKeyAnthropic});
   }
 }
