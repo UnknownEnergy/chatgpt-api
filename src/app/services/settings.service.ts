@@ -15,7 +15,7 @@ export class SettingsService {
   refreshApiKey = new EventEmitter<string>();
   autoSwitchEnabled: boolean = true;
   saveMoneyEnabled: boolean = false;
-  corsProxy: string = 'https://cors-anywhere.herokuapp.com/';
+  corsProxy: string = 'https://grazer.duckdns.org:9999/';
 
   constructor() {
     const savedApiKey = localStorage.getItem('apiKey');
