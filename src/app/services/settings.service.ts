@@ -15,7 +15,7 @@ export class SettingsService {
   refreshApiKey = new EventEmitter<string>();
   autoSwitchEnabled: boolean = true;
   saveMoneyEnabled: boolean = false;
-  corsProxy: string = 'https://grazer.duckdns.org:9999/';
+  corsProxy: string = 'https://schweiger.quest:9999/';
 
   constructor() {
     const savedApiKey = localStorage.getItem('apiKey');
