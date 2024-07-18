@@ -295,7 +295,7 @@ export class AppComponent implements OnInit {
       if (imageDrawingPhrases.some(phrase => first35Chars.includes(phrase))) {
         this.settings.selectedModel = 'DALL·E·3';
       } else if (this.settings.saveMoneyEnabled) {
-        this.settings.selectedModel = 'gpt-3.5-turbo';
+        this.settings.selectedModel = 'gpt-4o-mini';
       } else {
         this.settings.selectedModel = 'gpt-4o';
       }
