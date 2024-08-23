@@ -149,7 +149,7 @@ export class AppComponent implements OnInit {
       max_tokens: this.settings.maxTokens,
       temperature: this.settings.temperature,
       messages: this.messageService.chatHistory,
-      system: "You are a helpful AI assistant." // Adjust this system message as needed
+      system: "You are a helpful AI assistant.",
     });
   }
 
@@ -268,9 +268,10 @@ export class AppComponent implements OnInit {
   private getClaude() {
     return new Anthropic({
       fetch: async (url, init) => {
-        return await fetch(this.settings.corsProxy+ url.toString(), init);
+        return await fetch(url.toString(), init);
       },
       apiKey: this.settings.apiKeyAnthropic,
+      dangerouslyAllowBrowser: true
     });
   }
 

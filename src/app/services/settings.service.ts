@@ -15,7 +15,6 @@ export class SettingsService {
   refreshApiKey = new EventEmitter<string>();
   autoSwitchEnabled: boolean = true;
   saveMoneyEnabled: boolean = false;
-  corsProxy: string = 'https://schweiger.quest:9999/';
 
   constructor() {
     const savedApiKey = localStorage.getItem('apiKey');
@@ -57,10 +56,6 @@ export class SettingsService {
     const saveMoneyEnabled = localStorage.getItem('saveMoneyEnabled');
     if (saveMoneyEnabled) {
       this.saveMoneyEnabled = JSON.parse(saveMoneyEnabled);
-    }
-    const savedCorsProxy = localStorage.getItem('corsProxy');
-    if (savedCorsProxy) {
-      this.corsProxy = savedCorsProxy;
     }
   }
 }

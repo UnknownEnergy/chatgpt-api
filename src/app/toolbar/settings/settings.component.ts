@@ -1,7 +1,6 @@
 import {Component} from '@angular/core';
 import OpenAI from "openai";
 import {SettingsService} from "../../services/settings.service";
-import Anthropic from "@anthropic-ai/sdk";
 import Model = OpenAI.Model;
 
 @Component({
@@ -59,10 +58,6 @@ export class SettingsComponent {
     this.refreshModels();
     localStorage.setItem('apiKeyAnthropic', this.settings.apiKeyAnthropic);
     this.settings.refreshApiKey.emit();
-  }
-
-  onTypeCorsProxy() {
-    localStorage.setItem('corsProxy', this.settings.corsProxy);
   }
 
   openApiKeyWebsite() {
