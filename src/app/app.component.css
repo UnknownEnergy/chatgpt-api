@@ -15,6 +15,7 @@ app-header-component {
 app-toolbar {
   top: var(--header-size);
   min-height: var(--toolbar-size);
+  z-index: 1000;
 }
 
 app-chat-prompt-component {
