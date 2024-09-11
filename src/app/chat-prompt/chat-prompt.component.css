@@ -1,5 +1,6 @@
 
 .chat-prompt {
+  position: fixed;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
   bottom: 0;
@@ -11,6 +12,15 @@
   border-top: 1px solid var(--border);
   margin-left: 10px;
   margin-right: 10px;
+  z-index: 1000;
+  transition: transform 0.3s ease-out;
+}
+
+/* Add this to ensure the chat prompt stays above the keyboard on mobile */
+@supports (-webkit-touch-callout: none) {
+  .chat-prompt {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
 }
 
 .textarea-message {
@@ -30,6 +40,9 @@
   -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
   -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
   transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
 input {

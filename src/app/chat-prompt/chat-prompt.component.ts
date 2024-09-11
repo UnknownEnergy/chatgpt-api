@@ -1,11 +1,4 @@
-import {
-  AfterViewInit,
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  Output,
-  ViewChild
-} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Output, ViewChild} from '@angular/core';
 import {SettingsService} from "../services/settings.service";
 
 @Component({
@@ -13,11 +6,11 @@ import {SettingsService} from "../services/settings.service";
   templateUrl: './chat-prompt.component.html',
   styleUrls: ['./chat-prompt.component.css']
 })
-export class ChatPromptComponent implements AfterViewInit{
+export class ChatPromptComponent implements AfterViewInit {
   isLoading: boolean;
   messageInput: string = '';
   @ViewChild('messageInputArea') messageInputRef;
-  @Output() sendMessage = new EventEmitter<{message: string, image: string}>();
+  @Output() sendMessage = new EventEmitter<{ message: string, image: string }>();
   @Output() resendMessage = new EventEmitter<any>();
   imagePreview: string = '';
 
@@ -47,7 +40,7 @@ export class ChatPromptComponent implements AfterViewInit{
   updateMessage(message: string) {
     this.messageInput = message;
     this.cdr.detectChanges();
-    if(this.settingsService.quickSendEnabled) {
+    if (this.settingsService.quickSendEnabled) {
       this.onSendClick();
     }
   }

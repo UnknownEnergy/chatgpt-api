@@ -3,7 +3,8 @@ app-toolbar,
 app-chat-prompt-component {
   position: fixed;
   width: 100%;
-  z-index: 1;
+  left: 0;
+  right: 0;
 }
 
 app-header-component {
@@ -19,18 +20,18 @@ app-toolbar {
 app-chat-prompt-component {
   bottom: 0;
   min-height: var(--chat-prompt-size);
+  z-index: 1000;
 }
 
-::-webkit-scrollbar {
-  background-color: var(--bgColor);
-  color: #aba499;
+app-chat-container {
+  position: fixed;
+  top: calc(var(--header-size) + var(--toolbar-size));
+  bottom: var(--chat-prompt-size);
+  left: 0;
+  right: 0;
+  overflow-y: auto;
 }
 
-::-webkit-scrollbar-corner {
-  background-color: #181a1b;
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: #008d6a;
-  border-radius: 5px;
+body {
+  overscroll-behavior-y: contain;
 }
