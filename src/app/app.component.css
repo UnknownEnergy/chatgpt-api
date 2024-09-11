@@ -32,7 +32,3 @@ app-chat-container {
   right: 0;
   overflow-y: auto;
 }
-
-body {
-  overscroll-behavior-y: contain;
-}

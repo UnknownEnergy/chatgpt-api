@@ -80,7 +80,8 @@ body {
   background-color: #00644b;
   margin: 0;
   padding: 0;
-  overflow: hidden;
+  overscroll-behavior-y: contain;
+  min-height: 100vh;
 }
 
 body.dark {
