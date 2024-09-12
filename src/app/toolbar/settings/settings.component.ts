@@ -39,6 +39,8 @@ export class SettingsComponent {
     return [
       {id: 'gpt-4o', object: 'model', created: 0, owned_by: 'openai'},
       {id: 'gpt-4o-mini', object: 'model', created: 0, owned_by: 'openai'},
+      {id: 'o1-preview', object: 'model', created: 0, owned_by: 'openai'},
+      {id: 'o1-mini', object: 'model', created: 0, owned_by: 'openai'},
       {id: 'gpt-4-turbo', object: 'model', created: 0, owned_by: 'openai'},
       {id: 'gpt-3.5-turbo', object: 'model', created: 0, owned_by: 'openai'},
       {id: 'DALL·E·3', object: 'model', created: 0, owned_by: 'openai'},
