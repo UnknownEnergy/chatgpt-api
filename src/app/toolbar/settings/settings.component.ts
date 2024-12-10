@@ -44,8 +44,10 @@ export class SettingsComponent {
       {id: 'gpt-4-turbo', object: 'model', created: 0, owned_by: 'openai'},
       {id: 'gpt-3.5-turbo', object: 'model', created: 0, owned_by: 'openai'},
       {id: 'DALL·E·3', object: 'model', created: 0, owned_by: 'openai'},
+      {id: 'claude-3-5-sonnet-20241022', object: 'model', created: 0, owned_by: 'anthropic'},
       {id: 'claude-3-5-sonnet-20240620', object: 'model', created: 0, owned_by: 'anthropic'},
       {id: 'claude-3-opus-20240229', object: 'model', created: 0, owned_by: 'anthropic'},
+      {id: 'claude-3-5-haiku-20241022', object: 'model', created: 0, owned_by: 'anthropic'},
       {id: 'claude-3-haiku-20240307', object: 'model', created: 0, owned_by: 'anthropic'},
     ];
   }
