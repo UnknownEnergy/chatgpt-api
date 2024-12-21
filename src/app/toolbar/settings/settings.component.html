@@ -16,6 +16,14 @@
         class="bi bi-eye"></i></button>
       <button class="api-button" (click)="openApiKeyAnthrophicWebsite()">Get&nbsp;API&nbsp;Key</button>
     </div>
+    <div class="col-md-8 d-flex">
+      <input class="input-api" [type]="showPassword3 ? 'text' : 'password'" [(ngModel)]="settings.apiKeyGemini"
+             placeholder="Enter Gemini API Key..."
+             (input)="onTypeApiKeyGemini()">
+      <button aria-label="Show API Key" class="api-button" (click)="showPassword3 = !showPassword3;"><i
+        class="bi bi-eye"></i></button>
+      <button class="api-button" (click)="openApiKeyGeminiWebsite()">Get&nbsp;API&nbsp;Key</button>
+    </div>
     <div class="d-flex align-items-center">
       <p class="p-left-column">Current used Model:</p>
       <div class="custom-dropdown">
@@ -39,12 +47,17 @@
     </div>
     <div class="d-flex align-items-center">
       <a href="https://platform.openai.com/docs/models" target="_blank" class="text-info small">
-        Further check OpenAI
+        Further check OpenAI models
       </a>
     </div>
     <div class="d-flex align-items-center">
       <a href="https://docs.anthropic.com/en/docs/about-claude/models" target="_blank" class="text-info small">
-        Further check Anthropic
+        Further check Anthropic models
+      </a>
+    </div>
+    <div class="d-flex align-items-center">
+      <a href="https://ai.google.dev/gemini-api/docs/models/gemini" target="_blank" class="text-info small">
+        Further check Gemini models
       </a>
     </div>
     <div class="d-flex align-items-center">

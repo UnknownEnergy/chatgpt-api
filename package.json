@@ -25,6 +25,7 @@
     "@anthropic-ai/sdk": "^0.33.1",
     "@capacitor/camera": "^5.0.7",
     "@capacitor/core": "^5.5.1",
+    "@google/generative-ai": "^0.21.0",
     "@types/recordrtc": "^5.6.14",
     "bootstrap": "^5.3.2",
     "bootstrap-icons": "^1.11.1",

@@ -9,6 +9,7 @@ import {ChatContainerComponent} from "./chat-container/chat-container.component"
 import {MessageService} from "./services/message.service";
 import {Audio} from "openai/resources";
 import Anthropic from "@anthropic-ai/sdk";
+import {GoogleGenerativeAI} from "@google/generative-ai";
 import SpeechCreateParams = Audio.SpeechCreateParams;
 
 @Component({
@@ -67,15 +68,18 @@ export class AppComponent implements OnInit {
 
     const ai = this.getAIClient();
     const isClaudeModel = this.isClaudeModel(this.settings.selectedModel);
+    const isGeminiModel = this.isGeminiModel(this.settings.selectedModel);
 
     try {
       let response: any;
-      if (isClaudeModel) {
+      if (isGeminiModel) {
+        response = this.callGeminiAPI(message, image);
+      } else if (isClaudeModel) {
         response = this.callClaudeAPI(ai as Anthropic, message, image);
       } else {
         response = this.callOpenAIAPI(ai as OpenAI, message, image);
       }
-      this.handleSuccessResponse(response, isClaudeModel);
+      this.handleSuccessResponse(response);
 
     } catch (error) {
       this.handleErrorResponse(error);
@@ -106,6 +110,7 @@ export class AppComponent implements OnInit {
   private saveSettings() {
     localStorage.setItem('apiKey', this.settings.apiKey);
     localStorage.setItem('apiKeyAnthropic', this.settings.apiKeyAnthropic);
+    localStorage.setItem('apiKeyGemini', this.settings.apiKeyGemini);
     localStorage.setItem('temperature', this.settings.temperature.toString());
     localStorage.setItem('maxTokens', this.settings.maxTokens.toString());
     localStorage.setItem('selectedModel', this.settings.selectedModel);
@@ -169,11 +174,34 @@ export class AppComponent implements OnInit {
     }
   }
 
-  private handleSuccessResponse(promise: any, isClaudeModel: boolean) {
+  private async callGeminiAPI(message: string, image: string | null) {
+    const genAI = new GoogleGenerativeAI(this.settings.apiKeyGemini);
+    const model = genAI.getGenerativeModel({model: this.settings.selectedModel});
+
+    const chat = model.startChat({
+      history: this.messageService.chatHistory.map(msg => ({
+        role: msg.role === 'assistant' ? "model" : msg.role,
+        parts: [{text: msg.content}]
+      }))
+    });
+
+    try {
+      const result = await chat.sendMessage(message);
+
+      return result.response;
+    } catch (error) {
+      console.error("Error calling Gemini API:", error);
+      throw error;
+    }
+  }
+
+  private handleSuccessResponse(promise: any) {
     promise.then(response => {
       let message = '';
-      if (isClaudeModel) {
+      if (this.isClaudeModel(this.settings.selectedModel)) {
         message = response.content[0].text;
+      } else if (this.isGeminiModel(this.settings.selectedModel)) {
+        message = response.candidates[0].content.parts[0].text;
       } else if (response.choices && response.choices[0].message) {
         message = response.choices[0].message.content;
       } else if (response.data && response.data[0].url) {
@@ -256,6 +284,10 @@ export class AppComponent implements OnInit {
 
   private isClaudeModel(model: string): boolean {
     return model.toLowerCase().includes('claude');
+  }
+
+  private isGeminiModel(model: string): boolean {
+    return model.toLowerCase().includes('gemini');
   }
 
   private getOpenAi() {
