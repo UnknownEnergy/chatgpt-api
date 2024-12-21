@@ -152,17 +152,19 @@ export class AppComponent implements OnInit {
   }
 
   private callOpenAIAPI(openai: OpenAI, message: string, image: string) {
-    if (this.settings.selectedModel.startsWith('DALL·E')) {
+    const isCompletionTokensModel = this.settings.selectedModel.includes('o1');
+
+    if (this.settings.selectedModel.includes('dall-e')) {
       return openai.images.generate({
-        model: this.settings.selectedModel === 'DALL·E·3' ? "dall-e-3" : "dall-e-2",
+        model: this.settings.selectedModel,
         prompt: message,
       });
     } else {
       return openai.chat.completions.create({
         model: this.settings.selectedModel,
         messages: this.messageService.chatHistory,
-        temperature: this.settings.temperature,
-        max_tokens: this.settings.maxTokens,
+        ...(isCompletionTokensModel ? {} : {temperature: this.settings.temperature}),
+        ...(isCompletionTokensModel ? {max_completion_tokens: this.settings.maxTokens} : {max_tokens: this.settings.maxTokens}),
       } as OpenAI.Chat.ChatCompletionCreateParamsNonStreaming);
     }
   }

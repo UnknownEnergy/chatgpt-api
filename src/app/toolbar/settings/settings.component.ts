@@ -88,7 +88,7 @@ export class SettingsComponent {
       {id: 'gpt-4o-mini', object: 'model', created: 0, owned_by: 'openai'},
       {id: 'o1', object: 'model', created: 0, owned_by: 'openai'},
       {id: 'o1-mini', object: 'model', created: 0, owned_by: 'openai'},
-      {id: 'DALL·E·3', object: 'model', created: 0, owned_by: 'openai'},
+      {id: 'dall-e-3', object: 'model', created: 0, owned_by: 'openai'},
       {id: 'claude-3-5-sonnet-latest', object: 'model', created: 0, owned_by: 'anthropic'},
       {id: 'claude-3-5-haiku-latest', object: 'model', created: 0, owned_by: 'anthropic'},
     ];
