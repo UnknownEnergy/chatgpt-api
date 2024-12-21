@@ -18,12 +18,19 @@
     </div>
     <div class="d-flex align-items-center">
       <p class="p-left-column">Current used Model:</p>
-      <select class="btn btn-primary" [(ngModel)]="settings.selectedModel">
-        <option *ngFor="let model of models" [value]="model.id">
-          {{model.id}}
-          <p *ngIf="model.id === 'gpt-4o'">(default)</p>
-        </option>
-      </select>
+      <div class="custom-dropdown">
+        <div class="dropdown-header" (click)="toggleDropdown()">
+          {{ getSelectedModel() || 'Select a model' }} <span class="arrow">{{ isOpen ? '▲' : '▼' }}</span>
+        </div>
+        <ul *ngIf="isOpen" class="dropdown-list">
+          <li *ngFor="let model of models"
+              [ngClass]="{'highlighted-model': isPredefinedModel(model)}"
+              (click)="selectModel(model.id)">
+            {{ model.id }}
+            <span *ngIf="model.id === 'gpt-4o'">(default)</span>
+          </li>
+        </ul>
+      </div>
     </div>
     <div class="d-flex align-items-center">
       <a href="https://livebench.ai/#/" target="_blank" class="text-info small">

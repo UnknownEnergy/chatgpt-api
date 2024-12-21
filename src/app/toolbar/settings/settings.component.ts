@@ -139,4 +139,24 @@ export class SettingsComponent {
       dangerouslyAllowBrowser: true
     });
   }
+
+  isOpen: boolean = false;
+
+  toggleDropdown() {
+    this.isOpen = !this.isOpen;
+  }
+
+  selectModel(modelId: string) {
+    this.settings.selectedModel = modelId; // Set the selected model
+    this.isOpen = false; // Close the dropdown
+  }
+
+  getSelectedModel() {
+    return this.models.find(model => model.id === this.settings.selectedModel)?.id;
+  }
+
+  isPredefinedModel(model: Model): boolean {
+    const predefinedModels = this.getPredefinedModels();
+    return predefinedModels.some(predefined => predefined.id === model.id);
+  }
 }
