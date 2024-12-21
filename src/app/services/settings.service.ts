@@ -13,8 +13,6 @@ export class SettingsService {
   voice: string = 'alloy';
   quickSendEnabled: boolean = true;
   refreshApiKey = new EventEmitter<string>();
-  autoSwitchEnabled: boolean = true;
-  saveMoneyEnabled: boolean = false;
 
   constructor() {
     const savedApiKey = localStorage.getItem('apiKey');
@@ -48,14 +46,6 @@ export class SettingsService {
     const savedQuickSendEnabled = localStorage.getItem('quickSendEnabled');
     if (savedQuickSendEnabled) {
       this.quickSendEnabled = JSON.parse(savedQuickSendEnabled);
-    }
-    const autoSwitchEnabled = localStorage.getItem('autoSwitchEnabled');
-    if (autoSwitchEnabled) {
-      this.autoSwitchEnabled = JSON.parse(autoSwitchEnabled);
-    }
-    const saveMoneyEnabled = localStorage.getItem('saveMoneyEnabled');
-    if (saveMoneyEnabled) {
-      this.saveMoneyEnabled = JSON.parse(saveMoneyEnabled);
     }
   }
 }

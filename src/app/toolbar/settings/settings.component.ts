@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import OpenAI from "openai";
+import Anthropic from "@anthropic-ai/sdk";
 import {SettingsService} from "../../services/settings.service";
 import Model = OpenAI.Model;
 
@@ -21,34 +22,75 @@ export class SettingsComponent {
   }
 
   refreshModels() {
-    this.models = this.getPredefinedModels();
+    const predefinedModels = this.getPredefinedModels();
+    const predefinedIds = new Set(predefinedModels.map(m => m.id));
+    const seenIds = new Set(predefinedIds); // Track all seen IDs including predefined ones
+
+    Promise.all([
+      this.fetchOpenAIModels(),
+      this.fetchAnthropicModels()
+    ])
+      .then(([openAiModels, anthropicModels]) => {
+        // Combine API-fetched models and remove duplicates
+        const apiModels = [...(openAiModels || []), ...(anthropicModels || [])]
+          .filter(model => {
+            if (!model || seenIds.has(model.id)) {
+              return false; // Skip if null/undefined or already seen
+            }
+            seenIds.add(model.id);
+            return !predefinedIds.has(model.id); // Skip if in predefined models
+          })
+          .sort((a, b) => a.id.localeCompare(b.id));
+
+        // Combine predefined models with sorted API models
+        this.models = [...predefinedModels, ...apiModels];
+      })
+      .catch(error => {
+        console.error("Error refreshing models:", error);
+        this.models = predefinedModels;
+      });
   }
 
-  private async fetchOpenAIModels(): Promise<Model[]> {
+  private fetchOpenAIModels(): Promise<Model[]> {
     const openai = this.getOpenAi();
-    try {
-      const response = await openai.models.list();
-      return response.data;
-    } catch (error) {
-      console.error("Error fetching OpenAI models:", error);
-      return [];
-    }
+    return openai.models.list()
+      .then(response => {
+        console.log('OpenAI models:', response);
+        return response.data;
+      })
+      .catch(error => {
+        console.error("Error fetching OpenAI models:", error);
+        return [];
+      });
+  }
+
+  private fetchAnthropicModels(): Promise<any[]> {
+    const anthropic = new Anthropic({
+      apiKey: this.settings.apiKeyAnthropic,
+      dangerouslyAllowBrowser: true
+    });
+
+    return anthropic.models.list()
+      .then(response => {
+        console.log('Anthropic models:', response);
+        return response.data;
+      })
+      .catch(error => {
+        console.error("Error fetching Anthropic models:", error);
+        return [];
+      });
   }
 
   private getPredefinedModels(): Model[] {
     return [
+      {id: 'gpt-4o-2024-11-20', object: 'model', created: 0, owned_by: 'openai'},
       {id: 'gpt-4o', object: 'model', created: 0, owned_by: 'openai'},
       {id: 'gpt-4o-mini', object: 'model', created: 0, owned_by: 'openai'},
-      {id: 'o1-preview', object: 'model', created: 0, owned_by: 'openai'},
+      {id: 'o1', object: 'model', created: 0, owned_by: 'openai'},
       {id: 'o1-mini', object: 'model', created: 0, owned_by: 'openai'},
-      {id: 'gpt-4-turbo', object: 'model', created: 0, owned_by: 'openai'},
-      {id: 'gpt-3.5-turbo', object: 'model', created: 0, owned_by: 'openai'},
       {id: 'DALL·E·3', object: 'model', created: 0, owned_by: 'openai'},
-      {id: 'claude-3-5-sonnet-20241022', object: 'model', created: 0, owned_by: 'anthropic'},
-      {id: 'claude-3-5-sonnet-20240620', object: 'model', created: 0, owned_by: 'anthropic'},
-      {id: 'claude-3-opus-20240229', object: 'model', created: 0, owned_by: 'anthropic'},
-      {id: 'claude-3-5-haiku-20241022', object: 'model', created: 0, owned_by: 'anthropic'},
-      {id: 'claude-3-haiku-20240307', object: 'model', created: 0, owned_by: 'anthropic'},
+      {id: 'claude-3-5-sonnet-latest', object: 'model', created: 0, owned_by: 'anthropic'},
+      {id: 'claude-3-5-haiku-latest', object: 'model', created: 0, owned_by: 'anthropic'},
     ];
   }
 
@@ -89,14 +131,6 @@ export class SettingsComponent {
 
   onQuickSendChange(event: Event) {
     localStorage.setItem('quickSendEnabled', JSON.stringify(this.settings.quickSendEnabled));
-  }
-
-  onAutoSwitchChange(event: Event) {
-    localStorage.setItem('autoSwitchEnabled', JSON.stringify(this.settings.autoSwitchEnabled));
-  }
-
-  onSaveMoneyChange($event: Event) {
-    localStorage.setItem('saveMoneyEnabled', JSON.stringify(this.settings.saveMoneyEnabled));
   }
 
   private getOpenAi() {

@@ -54,8 +54,6 @@ export class AppComponent implements OnInit {
       return;
     }
 
-    this.autoSwitchModel(message, image);
-
     this.updateChatHistory(message, image);
     this.saveSettings();
     this.addUserMessage(message, image);
@@ -273,33 +271,5 @@ export class AppComponent implements OnInit {
       apiKey: this.settings.apiKeyAnthropic,
       dangerouslyAllowBrowser: true
     });
-  }
-
-  private autoSwitchModel(message: string, image: string) {
-    if (this.settings.autoSwitchEnabled) {
-      const lastMessage = this.messageService.chatHistory[this.messageService.chatHistory.length - 1];
-      const containsArrayContent = lastMessage ? Array.isArray(lastMessage.content) : false;
-      if (image || containsArrayContent) {
-        this.settings.selectedModel = 'gpt-4o';
-        return;
-      }
-
-      const first35Chars = message.toLowerCase().substring(0, 35);
-      const imageDrawingPhrases = ['draw an image', 'draw a picture', 'sketch a picture', 'create an illustration',
-        'generate a visual', 'draw an icon', 'draw a graphic', 'illustrate an image', 'design an icon',
-        'create a visual', 'generate a drawing', 'sketch a mockup', 'render an illustration', 'produce a picture',
-        'craft an image', 'draft a graphic', 'formulate a drawing', 'construct an icon', 'compose a visual',
-        'paint a picture', 'draw a diagram', 'sketch an artwork', 'design a logo', 'create a cartoon',
-        'zeichne ein bild', 'male ein bild', 'zeichne ein diagram', 'male ein diagram', 'zeichne eine grafik', 'male ein grafik',
-        'erstelle ein bild', 'erstelle eine grafik', 'erstelle eine zeichnung', 'erstelle ein diagram', 'zeichne eine zeichnung'];
-
-      if (imageDrawingPhrases.some(phrase => first35Chars.includes(phrase))) {
-        this.settings.selectedModel = 'DALL·E·3';
-      } else if (this.settings.saveMoneyEnabled) {
-        this.settings.selectedModel = 'gpt-4o-mini';
-      } else {
-        this.settings.selectedModel = 'gpt-4o';
-      }
-    }
   }
 }
