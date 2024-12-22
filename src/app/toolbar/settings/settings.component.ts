@@ -30,10 +30,10 @@ export class SettingsComponent {
     Promise.all([
       this.fetchOpenAIModels(),
       this.fetchAnthropicModels(),
-      // this.fetchGeminiModels()
+      this.fetchGeminiModels()
     ])
-      .then(([openAiModels, anthropicModels]) => {
-        const apiModels = [...(openAiModels || []), ...(anthropicModels || [])]
+      .then(([openAiModels, anthropicModels, geminiModels]) => {
+        const apiModels = [...(openAiModels || []), ...(anthropicModels || []), ...(geminiModels || [])]
           .filter(model => {
             if (!model || seenIds.has(model.id)) {
               return false;
@@ -81,31 +81,38 @@ export class SettingsComponent {
       });
   }
 
-  // private async fetchGeminiModels(): Promise<any[]> {
-  //   try {
-  //     const apiUrl = 'https://api.google.com/generative-ai/models'; // Replace with the actual URL
-  //     const apiResponse = await fetch(apiUrl, {
-  //       method: 'GET',
-  //       headers: {
-  //         'Authorization': `Bearer ${this.settings.apiKeyGemini}`,
-  //         'Content-Type': 'application/json'
-  //       }
-  //     });
-  //
-  //     if (!apiResponse.ok) {
-  //       throw new Error(`HTTP error! status: ${apiResponse.status}`);
-  //     }
-  //
-  //     const modelsResponse = await apiResponse.json();
-  //     console.log('Fetched Gemini models via REST:', modelsResponse);
-  //
-  //     // Adjust based on the actual response structure from the REST API
-  //     return modelsResponse.models || [];
-  //   } catch (restError) {
-  //     console.error("Error fetching Gemini models via REST API:", restError);
-  //     return [];
-  //   }
-  // }
+  private async fetchGeminiModels(): Promise<any[]> {
+    try {
+      const apiUrl = 'https://generativelanguage.googleapis.com/v1beta/models?key=' + this.settings.apiKeyGemini;
+      const apiResponse = await fetch(apiUrl, {
+        method: 'GET',
+      });
+
+      if (!apiResponse.ok) {
+        throw new Error(`HTTP error! status: ${apiResponse.status}`);
+      }
+
+      const modelsResponse = await apiResponse.json();
+      console.log('Fetched Gemini models via REST:', modelsResponse);
+
+      return this.extractModelIds(modelsResponse.models) || [];
+    } catch (restError) {
+      console.error("Error fetching Gemini models via REST API:", restError);
+      return [];
+    }
+  }
+
+  extractModelIds(models) {
+    return models.map(model => {
+      const modelName = model.name.split('/')[1];
+      return {
+        id: modelName,
+        object: 'model',
+        created: 0,
+        owned_by: 'gemini'
+      };
+    });
+  }
 
   private getPredefinedModels(): Model[] {
     return [
