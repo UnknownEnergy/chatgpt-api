@@ -83,4 +83,8 @@ export class UsageComponent implements AfterViewInit {
   openAnthropicWebsite() {
     window.open("https://console.anthropic.com/settings/usage", "_blank");
   }
+
+  openGeminiWebsite() {
+    window.open("https://console.cloud.google.com/apis/dashboard", "_blank");
+  }
 }
