@@ -87,4 +87,10 @@ export class UsageComponent implements AfterViewInit {
   openGeminiWebsite() {
     window.open("https://console.cloud.google.com/apis/dashboard", "_blank");
   }
+
+  openDeepSeekWebsite() {
+    window.open("https://platform.deepseek.com/usage", "_blank");
+  }
+
+  protected readonly open = open;
 }
