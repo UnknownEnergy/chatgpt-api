@@ -13,6 +13,7 @@ export class SettingsComponent {
   showPassword: boolean = false;
   showPassword2: boolean = false;
   showPassword3: boolean = false;
+  showPassword4: boolean = false;
   models: Model[] = [];
 
   constructor(public settings: SettingsService) {
@@ -30,10 +31,11 @@ export class SettingsComponent {
     Promise.all([
       this.fetchOpenAIModels(),
       this.fetchAnthropicModels(),
-      this.fetchGeminiModels()
+      this.fetchGeminiModels(),
+      this.fetchDeepSeekModels()
     ])
-      .then(([openAiModels, anthropicModels, geminiModels]) => {
-        const apiModels = [...(openAiModels || []), ...(anthropicModels || []), ...(geminiModels || [])]
+      .then(([openAiModels, anthropicModels, geminiModels, deepSeekModels]) => {
+        const apiModels = [...(openAiModels || []), ...(anthropicModels || []), ...(geminiModels || []), ...(deepSeekModels || [])]
           .filter(model => {
             if (!model || seenIds.has(model.id)) {
               return false;
@@ -114,6 +116,37 @@ export class SettingsComponent {
     });
   }
 
+  private async fetchDeepSeekModels(): Promise<any[]> {
+    try {
+      const apiUrl = 'https://api.deepseek.com/v1/models';
+      const response = await fetch(apiUrl, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${this.settings.apiKeyDeepSeek}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const modelsResponse = await response.json();
+      console.log('Fetched DeepSeek models:', modelsResponse);
+
+      // Extract model IDs and return them
+      return modelsResponse.data.map(model => ({
+        id: model.id,
+        object: model.object,
+        created: 0,
+        owned_by: 'deepseek'
+      })) || [];
+    } catch (error) {
+      console.error("Error fetching DeepSeek models:", error);
+      return [];
+    }
+  }
+
   private getPredefinedModels(): Model[] {
     return [
       {id: 'gpt-4o-2024-11-20', object: 'model', created: 0, owned_by: 'openai'},
@@ -127,6 +160,8 @@ export class SettingsComponent {
       {id: 'gemini-exp-1206', object: 'model', created: 0, owned_by: 'gemini'},
       {id: 'gemini-2.0-flash-thinking-exp-1219', object: 'model', created: 0, owned_by: 'gemini'},
       {id: 'gemini-2.0-flash-exp', object: 'model', created: 0, owned_by: 'gemini'},
+      {id: 'deepseek-chat', object: 'model', created: 0, owned_by: 'deepseek'},
+      {id: 'deepseek-coder', object: 'model', created: 0, owned_by: 'deepseek'},
     ];
   }
 
@@ -148,6 +183,12 @@ export class SettingsComponent {
     this.settings.refreshApiKey.emit();
   }
 
+  onTypeApiKeyDeepSeek() {
+    this.refreshModels();
+    localStorage.setItem('apiKeyDeepSeek', this.settings.apiKeyDeepSeek);
+    this.settings.refreshApiKey.emit();
+  }
+
   openApiKeyWebsite() {
     window.open("https://platform.openai.com/account/api-keys", "_blank");
   }
@@ -158,6 +199,10 @@ export class SettingsComponent {
 
   openApiKeyGeminiWebsite() {
     window.open("https://aistudio.google.com/app/apikey", "_blank");
+  }
+
+  openApiKeyDeepSeekWebsite() {
+    window.open("https://platform.deepseek.com/api_keys", "_blank");
   }
 
   onInputOnlyAllowPositiveIntegers($event: KeyboardEvent) {

@@ -69,6 +69,7 @@ export class AppComponent implements OnInit {
     const ai = this.getAIClient();
     const isClaudeModel = this.isClaudeModel(this.settings.selectedModel);
     const isGeminiModel = this.isGeminiModel(this.settings.selectedModel);
+    const isDeepSeekModel = this.isDeepSeekModel(this.settings.selectedModel);
 
     try {
       let response: any;
@@ -76,6 +77,8 @@ export class AppComponent implements OnInit {
         response = this.callGeminiAPI(message, image);
       } else if (isClaudeModel) {
         response = this.callClaudeAPI(ai as Anthropic, message, image);
+      } else if (isDeepSeekModel) {
+        response = this.callOpenAIAPI(ai as OpenAI, message, image);
       } else {
         response = this.callOpenAIAPI(ai as OpenAI, message, image);
       }
@@ -198,8 +201,11 @@ export class AppComponent implements OnInit {
   private handleSuccessResponse(promise: any) {
     promise.then(response => {
       let message = '';
-      if (this.isClaudeModel(this.settings.selectedModel)) {
-        message = response.content[0].text;
+
+      if (this.isDeepSeekModel(this.settings.selectedModel)) {
+        message = response.choices[0].message.content;
+      } else if (this.isClaudeModel(this.settings.selectedModel)) {
+        message = response.choices[0].message.content;
       } else if (this.isGeminiModel(this.settings.selectedModel)) {
         message = response.candidates[0].content.parts[0].text;
       } else if (response.choices && response.choices[0].message) {
@@ -279,7 +285,13 @@ export class AppComponent implements OnInit {
   }
 
   private getAIClient() {
-    return this.isClaudeModel(this.settings.selectedModel) ? this.getClaude() : this.getOpenAi();
+    if(this.isClaudeModel(this.settings.selectedModel)) {
+      return this.getClaude();
+    }
+    else if (this.isDeepSeekModel(this.settings.selectedModel)) {
+      return this.getDeepSeekOpenAi();
+    }
+    return this.getOpenAi();
   }
 
   private isClaudeModel(model: string): boolean {
@@ -290,9 +302,21 @@ export class AppComponent implements OnInit {
     return model.toLowerCase().includes('gemini');
   }
 
+  private isDeepSeekModel(model: string): boolean {
+    return model.toLowerCase().includes('deepseek');
+  }
+
   private getOpenAi() {
     return new OpenAI({
       apiKey: this.settings.apiKey,
+      dangerouslyAllowBrowser: true
+    });
+  }
+
+  private getDeepSeekOpenAi() {
+    return new OpenAI({
+      baseURL: 'https://api.deepseek.com',
+      apiKey: this.settings.apiKeyDeepSeek,
       dangerouslyAllowBrowser: true
     });
   }
