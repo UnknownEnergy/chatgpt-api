@@ -21,7 +21,7 @@ Brand new Models: Models like GPT-4o, gpt-4o-mini, o1, o1-mini
 🤖 NEW! Google Gemini Support: Now includes support for Gemini models!  
 🤖 NEW! Deepseek Support: Now includes support for Deepseek models!  
     
-This is a single page application there is no server between your browser and Open AI. The app is just downloaded and cached by your browser and you communicate directly with the API.  
+This is a single page application there is no server between your browser and the model APIs. The app is just downloaded and cached by your browser and you communicate directly with the API.  
 
 Example screenshot:  
 ![demo](src/assets/demo_screenshot.png "Example Screenshot")
