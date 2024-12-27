@@ -15,10 +15,12 @@ https://chatworm.com/
 
 **Windows app**:  
 <a href="https://apps.microsoft.com/detail/Chatworm/9N1RF0VWV3SN?launch=true&mode=mini"><img src="https://get.microsoft.com/images/en-us%20dark.svg" width="120" height="50"/></a>
-
-Works also with the newest **GTP-4** Version if you got access from OpenAI to the new GTP4 model via API.  
-Otherwise you have to wait and can use the older models instead.  
   
+Brand new Models: Models like GPT-4o, gpt-4o-mini, o1, o1-mini  
+🤖 Anthropic Support: Support for Claude 3.5 and other models as well!  
+🤖 NEW! Google Gemini Support: Now includes support for Gemini models!  
+🤖 NEW! Deepseek Support: Now includes support for Deepseek models!  
+    
 This is a single page application there is no server between your browser and Open AI. The app is just downloaded and cached by your browser and you communicate directly with the API.  
 
 Example screenshot:  
