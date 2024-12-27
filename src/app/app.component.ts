@@ -205,7 +205,7 @@ export class AppComponent implements OnInit {
       if (this.isDeepSeekModel(this.settings.selectedModel)) {
         message = response.choices[0].message.content;
       } else if (this.isClaudeModel(this.settings.selectedModel)) {
-        message = response.choices[0].message.content;
+        message = response.content[0].text;
       } else if (this.isGeminiModel(this.settings.selectedModel)) {
         message = response.candidates[0].content.parts[0].text;
       } else if (response.choices && response.choices[0].message) {
