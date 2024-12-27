@@ -1,5 +1,5 @@
 # Chat Worm
-## A ChatGPT Client to access the API
+## Chat directly via API
 
 <img src="src/assets/cover.png" alt="Chatworm"/>
 
