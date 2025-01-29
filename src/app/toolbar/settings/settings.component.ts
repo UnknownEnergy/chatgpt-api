@@ -157,11 +157,12 @@ export class SettingsComponent {
       {id: 'dall-e-3', object: 'model', created: 0, owned_by: 'openai'},
       {id: 'claude-3-5-sonnet-latest', object: 'model', created: 0, owned_by: 'anthropic'},
       {id: 'claude-3-5-haiku-latest', object: 'model', created: 0, owned_by: 'anthropic'},
+      {id: 'deepseek-reasoner', object: 'model', created: 0, owned_by: 'deepseek'},
+      {id: 'deepseek-chat', object: 'model', created: 0, owned_by: 'deepseek'},
+      {id: 'deepseek-coder', object: 'model', created: 0, owned_by: 'deepseek'},
       {id: 'gemini-exp-1206', object: 'model', created: 0, owned_by: 'gemini'},
       {id: 'gemini-2.0-flash-thinking-exp-1219', object: 'model', created: 0, owned_by: 'gemini'},
       {id: 'gemini-2.0-flash-exp', object: 'model', created: 0, owned_by: 'gemini'},
-      {id: 'deepseek-chat', object: 'model', created: 0, owned_by: 'deepseek'},
-      {id: 'deepseek-coder', object: 'model', created: 0, owned_by: 'deepseek'},
     ];
   }
 
