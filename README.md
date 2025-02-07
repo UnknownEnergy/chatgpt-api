@@ -19,9 +19,9 @@ https://chatworm.com/
 Brand new Models: Models like GPT-4o, gpt-4o-mini, o1, o1-mini  
 🤖 Anthropic Support: Support for Claude 3.5 and other models as well!  
 🤖 NEW! Google Gemini Support: Now includes support for Gemini models!  
-🤖 NEW! Deepseek Support: Now includes support for Deepseek models!
-🤖 NEW! Alibaba Qwen Support: Now includes support for Qwen models!
-🤖 NEW! xAI Grok Support: Now includes support for Grok models!
+🤖 NEW! Deepseek Support: Now includes support for Deepseek models!  
+🤖 NEW! Alibaba Qwen Support: Now includes support for Qwen models!  
+🤖 NEW! xAI Grok Support: Now includes support for Grok models!  
     
 This is a single page application there is no server between your browser and the model APIs. The app is just downloaded and cached by your browser and you communicate directly with the API.  
 
