@@ -9,6 +9,26 @@
   border-top-right-radius: 5px;
   border-bottom: 1px solid var(--border);
   margin: 0 10px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.chat-settings::-webkit-scrollbar {
+  width: 8px;
+}
+
+.chat-settings::-webkit-scrollbar-track {
+  background: var(--bgColorInput);
+  border-radius: 4px;
+}
+
+.chat-settings::-webkit-scrollbar-thumb {
+  background: #00A67E;
+  border-radius: 4px;
+}
+
+.chat-settings::-webkit-scrollbar-thumb:hover {
+  background: #005a44;
 }
 
 .chat-settings.collapsed {
