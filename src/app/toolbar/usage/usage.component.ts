@@ -96,5 +96,9 @@ export class UsageComponent implements AfterViewInit {
     window.open("https://bailian.console.alibabacloud.com/#/data-analysis", "_blank");
   }
 
+  openGrokWebsite() {
+    window.open("https://console.x.ai/", "_blank");
+  }
+
   protected readonly open = open;
 }

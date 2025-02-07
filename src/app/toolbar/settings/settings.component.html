@@ -40,6 +40,18 @@
         class="bi bi-eye"></i></button>
       <button class="api-button" (click)="openApiKeyQwenWebsite()">Get&nbsp;API&nbsp;Key</button>
     </div>
+    <div class="col-md-8 d-flex">
+      <input
+        class="input-api"
+        [type]="showPassword6 ? 'text' : 'password'"
+        [(ngModel)]="settings.apiKeyGrok"
+        placeholder="Enter Grok API Key..."
+        (input)="onTypeApiKeyGrok()" />
+      <button aria-label="Show API Key" class="api-button" (click)="showPassword6 = !showPassword6;">
+        <i class="bi bi-eye"></i>
+      </button>
+      <button class="api-button" (click)="openApiKeyGrokWebsite()">Get&nbsp;API&nbsp;Key</button>
+    </div>
     <div class="d-flex align-items-center">
       <p class="p-left-column">Current used Model:</p>
       <div class="custom-dropdown">
@@ -63,21 +75,24 @@
       </a>
     </div>
     <div class="d-flex align-items-center">
-      Further check:&nbsp;
+      Further check models:&nbsp;
       <a href="https://platform.openai.com/docs/models" target="_blank" class="text-info small">
-        OpenAI models
+        OpenAI
       </a>&nbsp;
       <a href="https://docs.anthropic.com/en/docs/about-claude/models" target="_blank" class="text-info small">
-        Anthropic models
+        Anthropic
       </a>&nbsp;
       <a href="https://ai.google.dev/gemini-api/docs/models/gemini" target="_blank" class="text-info small">
-        Gemini models
+        Gemini
       </a>&nbsp;
       <a href="https://api-docs.deepseek.com/quick_start/pricing/" target="_blank" class="text-info small">
-        Deepseek models
+        Deepseek
       </a>&nbsp;
       <a href="https://www.alibabacloud.com/help/en/model-studio/getting-started/models" target="_blank" class="text-info small">
-        Qwen models
+        Qwen
+      </a>&nbsp;
+      <a href="https://docs.x.ai/docs/models" target="_blank" class="text-info small">
+        Grok
       </a>
     </div>
     <div class="d-flex align-items-center">

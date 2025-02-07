@@ -9,6 +9,7 @@ export class SettingsService {
   apiKeyGemini: string = "";
   apiKeyDeepSeek: string = "";
   apiKeyQwen: string = "";
+  apiKeyGrok: string = "";
   selectedModel: string = 'gpt-4o';
   temperature: number = 0.7;
   maxTokens: number = 512;
@@ -37,6 +38,10 @@ export class SettingsService {
     const savedQwenApiKey = localStorage.getItem('apiKeyQwen');
     if (savedQwenApiKey) {
       this.apiKeyQwen = savedQwenApiKey;
+    }
+    const savedGrokApiKey = localStorage.getItem('apiKeyGrok');
+    if (savedGrokApiKey) {
+      this.apiKeyGrok = savedGrokApiKey;
     }
     const savedTemperature = localStorage.getItem('temperature');
     if (savedTemperature) {

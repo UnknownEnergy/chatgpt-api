@@ -15,6 +15,7 @@ export class SettingsComponent {
   showPassword3: boolean = false;
   showPassword4: boolean = false;
   showPassword5: boolean = false;
+  showPassword6: boolean = false;
   models: Model[] = [];
 
   constructor(public settings: SettingsService) {
@@ -168,6 +169,8 @@ export class SettingsComponent {
       {id: 'qwen-max', object: 'model', created: 0, owned_by: 'qwen'},
       {id: 'qwen-plus', object: 'model', created: 0, owned_by: 'qwen'},
       {id: 'qwen-turbo', object: 'model', created: 0, owned_by: 'qwen'},
+      {id: 'grok-2-latest', object: 'model', created: 0, owned_by: 'grok'},
+      {id: 'grok-beta', object: 'model', created: 0, owned_by: 'grok'},
     ];
   }
 
@@ -201,6 +204,12 @@ export class SettingsComponent {
     this.settings.refreshApiKey.emit();
   }
 
+  onTypeApiKeyGrok() {
+    this.refreshModels();
+    localStorage.setItem('apiKeyGrok', this.settings.apiKeyGrok);
+    this.settings.refreshApiKey.emit();
+  }
+
   openApiKeyWebsite() {
     window.open("https://platform.openai.com/account/api-keys", "_blank");
   }
@@ -219,6 +228,10 @@ export class SettingsComponent {
 
   openApiKeyQwenWebsite() {
     window.open("https://bailian.console.alibabacloud.com/?apiKey=1#/api-key", "_blank");
+  }
+
+  openApiKeyGrokWebsite() {
+    window.open("https://console.x.ai/", "_blank");
   }
 
   onInputOnlyAllowPositiveIntegers($event: KeyboardEvent) {

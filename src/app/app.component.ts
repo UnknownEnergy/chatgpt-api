@@ -296,6 +296,8 @@ export class AppComponent implements OnInit {
       return this.getDeepSeekOpenAi();
     } else if (this.isQwenModel(this.settings.selectedModel)) {
       return this.getQwenOpenAi();
+    } else if (this.isGrokModel(this.settings.selectedModel)) {
+      return this.getGrokOpenAi();
     }
     return this.getOpenAi();
   }
@@ -314,6 +316,10 @@ export class AppComponent implements OnInit {
 
   private isQwenModel(model: string): boolean {
     return model.toLowerCase().includes('qwen');
+  }
+
+  private isGrokModel(model: string): boolean {
+    return model.toLowerCase().includes('grok');
   }
 
   private getOpenAi() {
@@ -336,6 +342,14 @@ export class AppComponent implements OnInit {
       baseURL: 'https://dashscope-intl.aliyuncs.com/compatible-mode/v1',
       apiKey: this.settings.apiKeyQwen,
       dangerouslyAllowBrowser: true
+    });
+  }
+
+  private getGrokOpenAi() {
+    return new OpenAI({
+      baseURL: 'https://api.x.ai/v1',
+      apiKey: this.settings.apiKeyGrok,
+      dangerouslyAllowBrowser: true,
     });
   }
 
