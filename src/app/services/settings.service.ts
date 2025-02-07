@@ -8,6 +8,7 @@ export class SettingsService {
   apiKeyAnthropic: string = '';
   apiKeyGemini: string = "";
   apiKeyDeepSeek: string = "";
+  apiKeyQwen: string = "";
   selectedModel: string = 'gpt-4o';
   temperature: number = 0.7;
   maxTokens: number = 512;
@@ -32,6 +33,10 @@ export class SettingsService {
     const savedDeepSeekApiKey = localStorage.getItem('apiKeyDeepSeek');
     if (savedDeepSeekApiKey) {
       this.apiKeyDeepSeek = savedDeepSeekApiKey;
+    }
+    const savedQwenApiKey = localStorage.getItem('apiKeyQwen');
+    if (savedQwenApiKey) {
+      this.apiKeyQwen = savedQwenApiKey;
     }
     const savedTemperature = localStorage.getItem('temperature');
     if (savedTemperature) {

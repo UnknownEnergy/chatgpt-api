@@ -14,6 +14,7 @@ export class SettingsComponent {
   showPassword2: boolean = false;
   showPassword3: boolean = false;
   showPassword4: boolean = false;
+  showPassword5: boolean = false;
   models: Model[] = [];
 
   constructor(public settings: SettingsService) {
@@ -164,6 +165,9 @@ export class SettingsComponent {
       {id: 'gemini-exp-1206', object: 'model', created: 0, owned_by: 'gemini'},
       {id: 'gemini-2.0-flash-thinking-exp-1219', object: 'model', created: 0, owned_by: 'gemini'},
       {id: 'gemini-2.0-flash-exp', object: 'model', created: 0, owned_by: 'gemini'},
+      {id: 'qwen-max', object: 'model', created: 0, owned_by: 'qwen'},
+      {id: 'qwen-plus', object: 'model', created: 0, owned_by: 'qwen'},
+      {id: 'qwen-turbo', object: 'model', created: 0, owned_by: 'qwen'},
     ];
   }
 
@@ -191,6 +195,12 @@ export class SettingsComponent {
     this.settings.refreshApiKey.emit();
   }
 
+  onTypeApiKeyQwen() {
+    this.refreshModels();
+    localStorage.setItem('apiKeyQwen', this.settings.apiKeyQwen);
+    this.settings.refreshApiKey.emit();
+  }
+
   openApiKeyWebsite() {
     window.open("https://platform.openai.com/account/api-keys", "_blank");
   }
@@ -205,6 +215,10 @@ export class SettingsComponent {
 
   openApiKeyDeepSeekWebsite() {
     window.open("https://platform.deepseek.com/api_keys", "_blank");
+  }
+
+  openApiKeyQwenWebsite() {
+    window.open("https://bailian.console.alibabacloud.com/?apiKey=1#/api-key", "_blank");
   }
 
   onInputOnlyAllowPositiveIntegers($event: KeyboardEvent) {

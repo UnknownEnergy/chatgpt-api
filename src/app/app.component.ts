@@ -70,6 +70,7 @@ export class AppComponent implements OnInit {
     const isClaudeModel = this.isClaudeModel(this.settings.selectedModel);
     const isGeminiModel = this.isGeminiModel(this.settings.selectedModel);
     const isDeepSeekModel = this.isDeepSeekModel(this.settings.selectedModel);
+    const isQwenModel = this.isQwenModel(this.settings.selectedModel);
 
     try {
       let response: any;
@@ -78,6 +79,8 @@ export class AppComponent implements OnInit {
       } else if (isClaudeModel) {
         response = this.callClaudeAPI(ai as Anthropic, message, image);
       } else if (isDeepSeekModel) {
+        response = this.callOpenAIAPI(ai as OpenAI, message, image);
+      } else if (isQwenModel) {
         response = this.callOpenAIAPI(ai as OpenAI, message, image);
       } else {
         response = this.callOpenAIAPI(ai as OpenAI, message, image);
@@ -208,6 +211,8 @@ export class AppComponent implements OnInit {
         message = response.content[0].text;
       } else if (this.isGeminiModel(this.settings.selectedModel)) {
         message = response.candidates[0].content.parts[0].text;
+      } else if (this.isQwenModel(this.settings.selectedModel)) {
+        message = response.choices[0].message.content;
       } else if (response.choices && response.choices[0].message) {
         message = response.choices[0].message.content;
       } else if (response.data && response.data[0].url) {
@@ -285,11 +290,12 @@ export class AppComponent implements OnInit {
   }
 
   private getAIClient() {
-    if(this.isClaudeModel(this.settings.selectedModel)) {
+    if (this.isClaudeModel(this.settings.selectedModel)) {
       return this.getClaude();
-    }
-    else if (this.isDeepSeekModel(this.settings.selectedModel)) {
+    } else if (this.isDeepSeekModel(this.settings.selectedModel)) {
       return this.getDeepSeekOpenAi();
+    } else if (this.isQwenModel(this.settings.selectedModel)) {
+      return this.getQwenOpenAi();
     }
     return this.getOpenAi();
   }
@@ -306,6 +312,10 @@ export class AppComponent implements OnInit {
     return model.toLowerCase().includes('deepseek');
   }
 
+  private isQwenModel(model: string): boolean {
+    return model.toLowerCase().includes('qwen');
+  }
+
   private getOpenAi() {
     return new OpenAI({
       apiKey: this.settings.apiKey,
@@ -317,6 +327,14 @@ export class AppComponent implements OnInit {
     return new OpenAI({
       baseURL: 'https://api.deepseek.com',
       apiKey: this.settings.apiKeyDeepSeek,
+      dangerouslyAllowBrowser: true
+    });
+  }
+
+  private getQwenOpenAi() {
+    return new OpenAI({
+      baseURL: 'https://dashscope-intl.aliyuncs.com/compatible-mode/v1',
+      apiKey: this.settings.apiKeyQwen,
       dangerouslyAllowBrowser: true
     });
   }

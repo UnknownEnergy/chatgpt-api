@@ -92,5 +92,9 @@ export class UsageComponent implements AfterViewInit {
     window.open("https://platform.deepseek.com/usage", "_blank");
   }
 
+  openQwenWebsite() {
+    window.open("https://bailian.console.alibabacloud.com/#/data-analysis", "_blank");
+  }
+
   protected readonly open = open;
 }
