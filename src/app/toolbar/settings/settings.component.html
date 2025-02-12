@@ -46,14 +46,22 @@
         [type]="showPassword6 ? 'text' : 'password'"
         [(ngModel)]="settings.apiKeyGrok"
         placeholder="Enter Grok API Key..."
-        (input)="onTypeApiKeyGrok()" />
+        (input)="onTypeApiKeyGrok()"/>
       <button aria-label="Show API Key" class="api-button" (click)="showPassword6 = !showPassword6;">
         <i class="bi bi-eye"></i>
       </button>
       <button class="api-button" (click)="openApiKeyGrokWebsite()">Get&nbsp;API&nbsp;Key</button>
     </div>
+    <div class="col-md-8 d-flex">
+      <input class="input-api" [type]="showPassword7 ? 'text' : 'password'" [(ngModel)]="settings.apiKeyMistral"
+             placeholder="Enter Mistral AI API Key..."
+             (input)="onTypeApiKeyMistral()">
+      <button aria-label="Show API Key" class="api-button" (click)="showPassword7 = !showPassword7;"><i
+        class="bi bi-eye"></i></button>
+      <button class="api-button" (click)="openApiKeyMistralWebsite()">Get&nbsp;API&nbsp;Key</button>
+    </div>
     <div class="d-flex align-items-center">
-      <p class="p-left-column">Current used Model:</p>
+      <p class="p-left-column">Active Model:</p>
       <div class="custom-dropdown">
         <div class="dropdown-header" (click)="toggleDropdown()">
           {{ getSelectedModel() || 'Select a model' }} <span class="arrow">{{ isOpen ? '▲' : '▼' }}</span>
@@ -74,8 +82,11 @@
         here
       </a>
     </div>
+    <br/><br/>
     <div class="d-flex align-items-center">
       Further check models:&nbsp;
+    </div>
+    <div class="d-flex align-items-center">
       <a href="https://platform.openai.com/docs/models" target="_blank" class="text-info small">
         OpenAI
       </a>&nbsp;
@@ -85,19 +96,25 @@
       <a href="https://ai.google.dev/gemini-api/docs/models/gemini" target="_blank" class="text-info small">
         Gemini
       </a>&nbsp;
+    </div>
+    <div class="d-flex align-items-center">
       <a href="https://api-docs.deepseek.com/quick_start/pricing/" target="_blank" class="text-info small">
         Deepseek
       </a>&nbsp;
-      <a href="https://www.alibabacloud.com/help/en/model-studio/getting-started/models" target="_blank" class="text-info small">
+      <a href="https://www.alibabacloud.com/help/en/model-studio/getting-started/models" target="_blank"
+         class="text-info small">
         Qwen
       </a>&nbsp;
       <a href="https://docs.x.ai/docs/models" target="_blank" class="text-info small">
         Grok
+      </a>&nbsp;
+      <a href="https://docs.mistral.ai/getting-started/models/models_overview/" target="_blank" class="text-info small">
+        Mistral AI
       </a>
     </div>
     <div class="d-flex align-items-center">
       <div class="p-left-column">
-        <p>Randomness: {{settings.temperature}}
+        <p>Randomness: {{ settings.temperature }}
           <br>
           <span *ngIf="settings.temperature === 0.7">(default)</span>
           <span *ngIf="settings.temperature !== 0.7">(default: 0.7)</span>

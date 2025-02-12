@@ -100,5 +100,9 @@ export class UsageComponent implements AfterViewInit {
     window.open("https://console.x.ai/", "_blank");
   }
 
+  openMistralWebsite() {
+    window.open("https://console.mistral.ai/usage/", "_blank");
+  }
+
   protected readonly open = open;
 }

@@ -1,25 +1,38 @@
 <mat-dialog-content>
-<div class="d-flex justify-content-between align-items-center">
-  <div class="d-flex align-items-center">
-    <img src="/assets/chatworm.png" alt="Chatworm" width="72px"/>
-    <div class="m-4">
-      <h2 class="mb-0 ml-2">Chat Worm</h2>
-      <h5 class="mb-0 ml-2">Chat directly via API</h5>
+  <div class="d-flex justify-content-between align-items-center">
+    <div class="d-flex align-items-center">
+      <img src="/assets/chatworm.png" alt="Chatworm" width="72px"/>
+      <div class="m-4">
+        <h2 class="mb-0 ml-2">Chat Worm</h2>
+        <h5 class="mb-0 ml-2">Chat directly via API</h5>
+      </div>
     </div>
   </div>
-</div>
-<p>Better ChatGPT client to access the API directly.<br/>
-  Trusted open source app on Github: <iframe src="https://ghbtns.com/github-btn.html?user=UnknownEnergy&repo=chatgpt-api&type=star&count=true" frameborder="0" scrolling="0" width="150" height="20" title="GitHub"></iframe><br/>
-  1000+ Android App Downloads <a href='https://play.google.com/store/apps/details?id=com.chatworm.twa&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' width="140" height="60"/></a><br/>
-  500+ Windows App Downloads <a href="https://apps.microsoft.com/detail/Chatworm/9N1RF0VWV3SN?launch=true
-	&mode=mini"><img src="https://get.microsoft.com/images/en-us%20dark.svg" width="120" height="50"/></a><br/><br/>
-  Follow these three simple steps to setup:</p>
-  1️⃣ <button (click)="openApiKeyWebsite()">Get&nbsp;API&nbsp;Key here</button>
+  <p>Better ChatGPT client to access the API directly.<br/>
+    Trusted open source app on Github:
+    <iframe src="https://ghbtns.com/github-btn.html?user=UnknownEnergy&repo=chatgpt-api&type=star&count=true"
+            frameborder="0" scrolling="0" width="150" height="20" title="GitHub"></iframe>
+    <br/>
+    <b>1500+</b> Android App Downloads <a
+      href='https://play.google.com/store/apps/details?id=com.chatworm.twa&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img
+      alt='Get it on Google Play'
+      src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' width="140"
+      height="60"/></a><br/>
+    <b>500+</b> Windows App Downloads <a href="https://apps.microsoft.com/detail/Chatworm/9N1RF0VWV3SN?launch=true
+	&mode=mini"><img src="https://get.microsoft.com/images/en-us%20dark.svg" width="120" height="50"/></a>
+    <br/> Supports <b>OpenAI, Anthropic, Deepseek, Gemini,<br/> Qwen, Mistral, Grok</b> and many more models!<br/>
+    INFO: Other AIs can be used later inside the tool.
+  </p>
+  <p>
+    Follow these three simple steps to setup:</p>
+  1️⃣
+  <button (click)="openApiKeyWebsite()">Get&nbsp;API&nbsp;Key here</button>
   <br/>
   <div class="d-flex align-content-center align-items-center">
     2️⃣&nbsp;<input [(ngModel)]="apiKey" autofocus placeholder="Enter API Key here..." #apiKeyInput>
   </div>
 </mat-dialog-content>
 <mat-dialog-actions class="justify-content-center">
-  3️⃣ <button (click)="onContinue()">Continue</button>
+  3️⃣
+  <button (click)="onContinue()">Continue</button>
 </mat-dialog-actions>

@@ -11,6 +11,7 @@ import {Audio} from "openai/resources";
 import Anthropic from "@anthropic-ai/sdk";
 import {GoogleGenerativeAI} from "@google/generative-ai";
 import SpeechCreateParams = Audio.SpeechCreateParams;
+import {Mistral} from '@mistralai/mistralai';
 
 @Component({
   selector: 'app-root',
@@ -71,6 +72,7 @@ export class AppComponent implements OnInit {
     const isGeminiModel = this.isGeminiModel(this.settings.selectedModel);
     const isDeepSeekModel = this.isDeepSeekModel(this.settings.selectedModel);
     const isQwenModel = this.isQwenModel(this.settings.selectedModel);
+    const isMistralModel = this.isMistralModel(this.settings.selectedModel);
 
     try {
       let response: any;
@@ -82,6 +84,8 @@ export class AppComponent implements OnInit {
         response = this.callOpenAIAPI(ai as OpenAI, message, image);
       } else if (isQwenModel) {
         response = this.callOpenAIAPI(ai as OpenAI, message, image);
+      } else if (isMistralModel) {
+        response = this.callMistralAPI(ai as Mistral, message, image);
       } else {
         response = this.callOpenAIAPI(ai as OpenAI, message, image);
       }
@@ -117,6 +121,7 @@ export class AppComponent implements OnInit {
     localStorage.setItem('apiKey', this.settings.apiKey);
     localStorage.setItem('apiKeyAnthropic', this.settings.apiKeyAnthropic);
     localStorage.setItem('apiKeyGemini', this.settings.apiKeyGemini);
+    localStorage.setItem('apiKeyMistral', this.settings.apiKeyMistral);
     localStorage.setItem('temperature', this.settings.temperature.toString());
     localStorage.setItem('maxTokens', this.settings.maxTokens.toString());
     localStorage.setItem('selectedModel', this.settings.selectedModel);
@@ -201,6 +206,15 @@ export class AppComponent implements OnInit {
     }
   }
 
+  private async callMistralAPI(mistral: Mistral, message: string, image: string | null) {
+    return mistral.chat.complete({
+      model: this.settings.selectedModel,
+      messages: this.messageService.chatHistory,
+      temperature: this.settings.temperature,
+      maxTokens: this.settings.maxTokens,
+    });
+  }
+
   private handleSuccessResponse(promise: any) {
     promise.then(response => {
       let message = '';
@@ -212,6 +226,8 @@ export class AppComponent implements OnInit {
       } else if (this.isGeminiModel(this.settings.selectedModel)) {
         message = response.candidates[0].content.parts[0].text;
       } else if (this.isQwenModel(this.settings.selectedModel)) {
+        message = response.choices[0].message.content;
+      } else if (this.isMistralModel(this.settings.selectedModel)) {
         message = response.choices[0].message.content;
       } else if (response.choices && response.choices[0].message) {
         message = response.choices[0].message.content;
@@ -298,6 +314,8 @@ export class AppComponent implements OnInit {
       return this.getQwenOpenAi();
     } else if (this.isGrokModel(this.settings.selectedModel)) {
       return this.getGrokOpenAi();
+    } else if (this.isMistralModel(this.settings.selectedModel)) {
+      return this.getMistral();
     }
     return this.getOpenAi();
   }
@@ -320,6 +338,10 @@ export class AppComponent implements OnInit {
 
   private isGrokModel(model: string): boolean {
     return model.toLowerCase().includes('grok');
+  }
+
+  private isMistralModel(model: string): boolean {
+    return model.toLowerCase().includes('mistral');
   }
 
   private getOpenAi() {
@@ -360,6 +382,12 @@ export class AppComponent implements OnInit {
       },
       apiKey: this.settings.apiKeyAnthropic,
       dangerouslyAllowBrowser: true
+    });
+  }
+
+  private getMistral() {
+    return new Mistral({
+      apiKey: this.settings.apiKeyMistral
     });
   }
 }

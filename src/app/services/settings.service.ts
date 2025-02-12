@@ -1,4 +1,4 @@
-import {EventEmitter, Injectable, Input} from "@angular/core";
+import { EventEmitter, Injectable } from "@angular/core";
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +10,7 @@ export class SettingsService {
   apiKeyDeepSeek: string = "";
   apiKeyQwen: string = "";
   apiKeyGrok: string = "";
+  apiKeyMistral: string = "";
   selectedModel: string = 'gpt-4o';
   temperature: number = 0.7;
   maxTokens: number = 512;
@@ -42,6 +43,10 @@ export class SettingsService {
     const savedGrokApiKey = localStorage.getItem('apiKeyGrok');
     if (savedGrokApiKey) {
       this.apiKeyGrok = savedGrokApiKey;
+    }
+    const savedMistralApiKey = localStorage.getItem('apiKeyMistral');
+    if (savedMistralApiKey) {
+      this.apiKeyMistral = savedMistralApiKey;
     }
     const savedTemperature = localStorage.getItem('temperature');
     if (savedTemperature) {

@@ -16,6 +16,7 @@ export class SettingsComponent {
   showPassword4: boolean = false;
   showPassword5: boolean = false;
   showPassword6: boolean = false;
+  showPassword7: boolean = false;
   models: Model[] = [];
 
   constructor(public settings: SettingsService) {
@@ -34,10 +35,11 @@ export class SettingsComponent {
       this.fetchOpenAIModels(),
       this.fetchAnthropicModels(),
       this.fetchGeminiModels(),
-      this.fetchDeepSeekModels()
+      this.fetchDeepSeekModels(),
+      this.fetchMistralModels()
     ])
-      .then(([openAiModels, anthropicModels, geminiModels, deepSeekModels]) => {
-        const apiModels = [...(openAiModels || []), ...(anthropicModels || []), ...(geminiModels || []), ...(deepSeekModels || [])]
+      .then(([openAiModels, anthropicModels, geminiModels, deepSeekModels, mistralModels]) => {
+        const apiModels = [...(openAiModels || []), ...(anthropicModels || []), ...(geminiModels || []), ...(deepSeekModels || []), ...(mistralModels || [])]
           .filter(model => {
             if (!model || seenIds.has(model.id)) {
               return false;
@@ -149,6 +151,37 @@ export class SettingsComponent {
     }
   }
 
+  private async fetchMistralModels(): Promise<any[]> {
+    try {
+      const apiUrl = 'https://api.mistral.ai/v1/models';
+      const response = await fetch(apiUrl, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${this.settings.apiKeyMistral}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const modelsResponse = await response.json();
+      console.log('Fetched Mistral models:', modelsResponse);
+
+      // Extract model IDs and return them
+      return modelsResponse.data.map(model => ({
+        id: model.id,
+        object: model.object,
+        created: model.created,
+        owned_by: model.owned_by
+      })) || [];
+    } catch (error) {
+      console.error("Error fetching Mistral models:", error);
+      return [];
+    }
+  }
+
   private getPredefinedModels(): Model[] {
     return [
       {id: 'gpt-4o-2024-11-20', object: 'model', created: 0, owned_by: 'openai'},
@@ -171,6 +204,9 @@ export class SettingsComponent {
       {id: 'qwen-turbo', object: 'model', created: 0, owned_by: 'qwen'},
       {id: 'grok-2-latest', object: 'model', created: 0, owned_by: 'grok'},
       {id: 'grok-beta', object: 'model', created: 0, owned_by: 'grok'},
+      {id: 'codestral-latest', object: 'model', created: 0, owned_by: 'mistral'},
+      {id: 'mistral-large-latest', object: 'model', created: 0, owned_by: 'mistral'},
+      {id: 'mistral-small-latest', object: 'model', created: 0, owned_by: 'mistral'},
     ];
   }
 
@@ -210,6 +246,12 @@ export class SettingsComponent {
     this.settings.refreshApiKey.emit();
   }
 
+  onTypeApiKeyMistral() {
+    this.refreshModels();
+    localStorage.setItem('apiKeyMistral', this.settings.apiKeyMistral);
+    this.settings.refreshApiKey.emit();
+  }
+
   openApiKeyWebsite() {
     window.open("https://platform.openai.com/account/api-keys", "_blank");
   }
@@ -232,6 +274,10 @@ export class SettingsComponent {
 
   openApiKeyGrokWebsite() {
     window.open("https://console.x.ai/", "_blank");
+  }
+
+  openApiKeyMistralWebsite() {
+    window.open("https://console.mistral.ai/api-keys/", "_blank");
   }
 
   onInputOnlyAllowPositiveIntegers($event: KeyboardEvent) {
