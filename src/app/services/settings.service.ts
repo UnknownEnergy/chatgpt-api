@@ -11,6 +11,7 @@ export class SettingsService {
   apiKeyQwen: string = "";
   apiKeyGrok: string = "";
   apiKeyMistral: string = "";
+  apiKeyStepFun: string = "";
   selectedModel: string = 'gpt-4o';
   temperature: number = 0.7;
   maxTokens: number = 512;
@@ -47,6 +48,10 @@ export class SettingsService {
     const savedMistralApiKey = localStorage.getItem('apiKeyMistral');
     if (savedMistralApiKey) {
       this.apiKeyMistral = savedMistralApiKey;
+    }
+    const savedStepFunApiKey = localStorage.getItem('apiKeyStepFun');
+    if (savedStepFunApiKey) {
+      this.apiKeyStepFun = savedStepFunApiKey;
     }
     const savedTemperature = localStorage.getItem('temperature');
     if (savedTemperature) {

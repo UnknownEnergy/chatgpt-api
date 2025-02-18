@@ -104,5 +104,9 @@ export class UsageComponent implements AfterViewInit {
     window.open("https://console.mistral.ai/usage/", "_blank");
   }
 
+  openStepFunWebsite() {
+    window.open("https://platform.stepfun.com/account-overview", "_blank");
+  }
+
   protected readonly open = open;
 }

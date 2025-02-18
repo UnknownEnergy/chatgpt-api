@@ -60,6 +60,14 @@
         class="bi bi-eye"></i></button>
       <button class="api-button" (click)="openApiKeyMistralWebsite()">Get&nbsp;API&nbsp;Key</button>
     </div>
+    <div class="col-md-8 d-flex">
+      <input class="input-api" [type]="showPassword8 ? 'text' : 'password'" [(ngModel)]="settings.apiKeyStepFun"
+             placeholder="Enter StepFun API Key..."
+             (input)="onTypeApiKeyStepFun()">
+      <button aria-label="Show API Key" class="api-button" (click)="showPassword8 = !showPassword8;"><i
+        class="bi bi-eye"></i></button>
+      <button class="api-button" (click)="openApiKeyStepFunWebsite()">Get&nbsp;API&nbsp;Key</button>
+    </div>
     <div class="d-flex align-items-center">
       <p class="p-left-column">Active Model:</p>
       <div class="custom-dropdown">
@@ -96,10 +104,14 @@
       <a href="https://ai.google.dev/gemini-api/docs/models/gemini" target="_blank" class="text-info small">
         Gemini
       </a>&nbsp;
-    </div>
-    <div class="d-flex align-items-center">
       <a href="https://api-docs.deepseek.com/quick_start/pricing/" target="_blank" class="text-info small">
         Deepseek
+      </a>
+    </div>
+    <div class="d-flex align-items-center">
+      <a href="https://platform.stepfun.com/docs/llm/text" target="_blank"
+         class="text-info small">
+        StepFun
       </a>&nbsp;
       <a href="https://www.alibabacloud.com/help/en/model-studio/getting-started/models" target="_blank"
          class="text-info small">

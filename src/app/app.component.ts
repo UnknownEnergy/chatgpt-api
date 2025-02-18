@@ -73,6 +73,7 @@ export class AppComponent implements OnInit {
     const isDeepSeekModel = this.isDeepSeekModel(this.settings.selectedModel);
     const isQwenModel = this.isQwenModel(this.settings.selectedModel);
     const isMistralModel = this.isMistralModel(this.settings.selectedModel);
+    const isStepFunModel = this.isStepFunModel(this.settings.selectedModel);
 
     try {
       let response: any;
@@ -86,6 +87,8 @@ export class AppComponent implements OnInit {
         response = this.callOpenAIAPI(ai as OpenAI, message, image);
       } else if (isMistralModel) {
         response = this.callMistralAPI(ai as Mistral, message, image);
+      } else if (isStepFunModel) {
+        response = this.callOpenAIAPI(ai as OpenAI, message, image);
       } else {
         response = this.callOpenAIAPI(ai as OpenAI, message, image);
       }
@@ -122,6 +125,7 @@ export class AppComponent implements OnInit {
     localStorage.setItem('apiKeyAnthropic', this.settings.apiKeyAnthropic);
     localStorage.setItem('apiKeyGemini', this.settings.apiKeyGemini);
     localStorage.setItem('apiKeyMistral', this.settings.apiKeyMistral);
+    localStorage.setItem('apiKeyStepFun', this.settings.apiKeyStepFun);
     localStorage.setItem('temperature', this.settings.temperature.toString());
     localStorage.setItem('maxTokens', this.settings.maxTokens.toString());
     localStorage.setItem('selectedModel', this.settings.selectedModel);
@@ -229,6 +233,8 @@ export class AppComponent implements OnInit {
         message = response.choices[0].message.content;
       } else if (this.isMistralModel(this.settings.selectedModel)) {
         message = response.choices[0].message.content;
+      } else if (this.isStepFunModel(this.settings.selectedModel)) {
+        message = response.choices[0].message.content;
       } else if (response.choices && response.choices[0].message) {
         message = response.choices[0].message.content;
       } else if (response.data && response.data[0].url) {
@@ -316,6 +322,8 @@ export class AppComponent implements OnInit {
       return this.getGrokOpenAi();
     } else if (this.isMistralModel(this.settings.selectedModel)) {
       return this.getMistral();
+    } else if (this.isStepFunModel(this.settings.selectedModel)) {
+      return this.getStepFun();
     }
     return this.getOpenAi();
   }
@@ -342,6 +350,10 @@ export class AppComponent implements OnInit {
 
   private isMistralModel(model: string): boolean {
     return model.toLowerCase().includes('mistral');
+  }
+
+  private isStepFunModel(model: string): boolean {
+    return model.toLowerCase().includes('step');
   }
 
   private getOpenAi() {
@@ -388,6 +400,14 @@ export class AppComponent implements OnInit {
   private getMistral() {
     return new Mistral({
       apiKey: this.settings.apiKeyMistral
+    });
+  }
+
+  private getStepFun() {
+    return new OpenAI({
+      apiKey: this.settings.apiKeyStepFun,
+      baseURL: "https://api.stepfun.com/v1",
+      dangerouslyAllowBrowser: true
     });
   }
 }

@@ -17,6 +17,7 @@ export class SettingsComponent {
   showPassword5: boolean = false;
   showPassword6: boolean = false;
   showPassword7: boolean = false;
+  showPassword8: boolean = false;
   models: Model[] = [];
 
   constructor(public settings: SettingsService) {
@@ -36,10 +37,11 @@ export class SettingsComponent {
       this.fetchAnthropicModels(),
       this.fetchGeminiModels(),
       this.fetchDeepSeekModels(),
-      this.fetchMistralModels()
+      this.fetchMistralModels(),
+      this.fetchStepFunModels()
     ])
-      .then(([openAiModels, anthropicModels, geminiModels, deepSeekModels, mistralModels]) => {
-        const apiModels = [...(openAiModels || []), ...(anthropicModels || []), ...(geminiModels || []), ...(deepSeekModels || []), ...(mistralModels || [])]
+      .then(([openAiModels, anthropicModels, geminiModels, deepSeekModels, mistralModels, stepFunModels]) => {
+        const apiModels = [...(openAiModels || []), ...(anthropicModels || []), ...(geminiModels || []), ...(deepSeekModels || []), ...(mistralModels || []), ...(stepFunModels || [])]
           .filter(model => {
             if (!model || seenIds.has(model.id)) {
               return false;
@@ -182,6 +184,29 @@ export class SettingsComponent {
     }
   }
 
+  private async fetchStepFunModels(): Promise<any[]> {
+    try {
+      const openai = new OpenAI({
+        apiKey: this.settings.apiKeyStepFun,
+        baseURL: "https://api.stepfun.com/v1",
+        dangerouslyAllowBrowser: true
+      });
+
+      const response = await openai.models.list();
+      console.log('StepFun models:', response);
+
+      return response.data.map(model => ({
+        id: model.id,
+        object: model.object,
+        created: model.created,
+        owned_by: model.owned_by
+      })) || [];
+    } catch (error) {
+      console.error("Error fetching StepFun models:", error);
+      return [];
+    }
+  }
+
   private getPredefinedModels(): Model[] {
     return [
       {id: 'gpt-4o-2024-11-20', object: 'model', created: 0, owned_by: 'openai'},
@@ -207,6 +232,10 @@ export class SettingsComponent {
       {id: 'codestral-latest', object: 'model', created: 0, owned_by: 'mistral'},
       {id: 'mistral-large-latest', object: 'model', created: 0, owned_by: 'mistral'},
       {id: 'mistral-small-latest', object: 'model', created: 0, owned_by: 'mistral'},
+      {id: 'step-1', object: 'model', created: 0, owned_by: 'step'},
+      {id: 'step-1-flash', object: 'model', created: 0, owned_by: 'step'},
+      {id: 'step-2', object: 'model', created: 0, owned_by: 'step'},
+      {id: 'step-2-mini', object: 'model', created: 0, owned_by: 'step'},
     ];
   }
 
@@ -252,6 +281,12 @@ export class SettingsComponent {
     this.settings.refreshApiKey.emit();
   }
 
+  onTypeApiKeyStepFun() {
+    this.refreshModels();
+    localStorage.setItem('apiKeyStepFun', this.settings.apiKeyStepFun);
+    this.settings.refreshApiKey.emit();
+  }
+
   openApiKeyWebsite() {
     window.open("https://platform.openai.com/account/api-keys", "_blank");
   }
@@ -278,6 +313,10 @@ export class SettingsComponent {
 
   openApiKeyMistralWebsite() {
     window.open("https://console.mistral.ai/api-keys/", "_blank");
+  }
+
+  openApiKeyStepFunWebsite() {
+    window.open("https://platform.stepfun.com/interface-key", "_blank");
   }
 
   onInputOnlyAllowPositiveIntegers($event: KeyboardEvent) {
