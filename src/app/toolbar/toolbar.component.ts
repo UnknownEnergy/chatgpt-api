@@ -1,6 +1,5 @@
 import {Component, HostBinding, OnInit} from '@angular/core';
 import {TipAndCreditsModalComponent} from "./tip-and-credits-modal/tip-and-credits-modal.component";
-import {InfoModalComponent} from "./info-modal/info-modal.component";
 import {MatDialog} from "@angular/material/dialog";
 import {SavedChatsPanelComponent} from "./saved-chats-panel/saved-chats-panel.component";
 import {OverlayContainer} from "@angular/cdk/overlay";
@@ -50,10 +49,6 @@ export class ToolbarComponent implements OnInit {
 
   openTipDialog() {
     this.dialog.open(TipAndCreditsModalComponent);
-  }
-
-  openInfoDialog() {
-    this.dialog.open(InfoModalComponent);
   }
 
   toggleDarkMode() {

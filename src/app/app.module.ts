@@ -5,7 +5,6 @@ import {AppComponent} from './app.component';
 import {HttpClientModule} from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
 import {TipAndCreditsModalComponent} from './toolbar/tip-and-credits-modal/tip-and-credits-modal.component';
-import {InfoModalComponent} from "./toolbar/info-modal/info-modal.component";
 import {IntroModalComponent} from "./intro-modal/intro-modal.component";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatDialogModule} from "@angular/material/dialog";
@@ -45,7 +44,6 @@ const initializer = (pwaService: PwaService) => () => pwaService.initPwaPrompt()
     AppComponent,
     TipAndCreditsModalComponent,
     InfoComponent,
-    InfoModalComponent,
     IntroModalComponent,
     PwaPromptComponent,
     AudioComponent,

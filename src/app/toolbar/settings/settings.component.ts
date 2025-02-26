@@ -3,6 +3,7 @@ import OpenAI from "openai";
 import Anthropic from "@anthropic-ai/sdk";
 import {SettingsService} from "../../services/settings.service";
 import Model = OpenAI.Model;
+import {Mistral} from "@mistralai/mistralai";
 
 @Component({
   selector: 'app-settings',
@@ -38,10 +39,12 @@ export class SettingsComponent {
       this.fetchGeminiModels(),
       this.fetchDeepSeekModels(),
       this.fetchMistralModels(),
-      this.fetchStepFunModels()
+      this.fetchStepFunModels(),
+      this.fetchGrokModels(),
     ])
-      .then(([openAiModels, anthropicModels, geminiModels, deepSeekModels, mistralModels, stepFunModels]) => {
-        const apiModels = [...(openAiModels || []), ...(anthropicModels || []), ...(geminiModels || []), ...(deepSeekModels || []), ...(mistralModels || []), ...(stepFunModels || [])]
+      .then(([openAiModels, anthropicModels, geminiModels, deepSeekModels, mistralModels, stepFunModels, grokModels]) => {
+        const apiModels = [...(openAiModels || []), ...(anthropicModels || []), ...(geminiModels || []),
+          ...(deepSeekModels || []), ...(mistralModels || []), ...(stepFunModels || []), ...(grokModels || [])]
           .filter(model => {
             if (!model || seenIds.has(model.id)) {
               return false;
@@ -155,11 +158,32 @@ export class SettingsComponent {
 
   private async fetchMistralModels(): Promise<any[]> {
     try {
-      const apiUrl = 'https://api.mistral.ai/v1/models';
+      const mistral = new Mistral({
+        apiKey: this.settings.apiKeyMistral
+      });
+
+      const response = await mistral.models.list();
+      console.log('Mistral models:', response);
+
+      return response.data.map(model => ({
+        id: model.id,
+        object: model.object,
+        created: model.created,
+        owned_by: model.ownedBy
+      })) || [];
+    } catch (error) {
+      console.error("Error fetching Mistral models:", error);
+      return [];
+    }
+  }
+
+  private async fetchGrokModels(): Promise<any[]> {
+    try {
+      const apiUrl = 'https://api.x.ai/v1/models';
       const response = await fetch(apiUrl, {
         method: 'GET',
         headers: {
-          'Authorization': `Bearer ${this.settings.apiKeyMistral}`,
+          'Authorization': `Bearer ${this.settings.apiKeyGrok}`,
           'Content-Type': 'application/json'
         }
       });
@@ -169,17 +193,17 @@ export class SettingsComponent {
       }
 
       const modelsResponse = await response.json();
-      console.log('Fetched Mistral models:', modelsResponse);
+      console.log('Fetched Grok models:', modelsResponse);
 
       // Extract model IDs and return them
       return modelsResponse.data.map(model => ({
         id: model.id,
         object: model.object,
-        created: model.created,
-        owned_by: model.owned_by
+        created: 0,
+        owned_by: 'grok'
       })) || [];
     } catch (error) {
-      console.error("Error fetching Mistral models:", error);
+      console.error("Error fetching Grok models:", error);
       return [];
     }
   }
@@ -216,6 +240,7 @@ export class SettingsComponent {
       {id: 'o1-mini', object: 'model', created: 0, owned_by: 'openai'},
       {id: 'o3-mini', object: 'model', created: 0, owned_by: 'openai'},
       {id: 'dall-e-3', object: 'model', created: 0, owned_by: 'openai'},
+      {id: 'claude-3-7-sonnet-latest', object: 'model', created: 0, owned_by: 'anthropic'},
       {id: 'claude-3-5-sonnet-latest', object: 'model', created: 0, owned_by: 'anthropic'},
       {id: 'claude-3-5-haiku-latest', object: 'model', created: 0, owned_by: 'anthropic'},
       {id: 'deepseek-reasoner', object: 'model', created: 0, owned_by: 'deepseek'},
@@ -227,6 +252,7 @@ export class SettingsComponent {
       {id: 'qwen-max', object: 'model', created: 0, owned_by: 'qwen'},
       {id: 'qwen-plus', object: 'model', created: 0, owned_by: 'qwen'},
       {id: 'qwen-turbo', object: 'model', created: 0, owned_by: 'qwen'},
+      {id: 'grok-3-latest', object: 'model', created: 0, owned_by: 'grok'},
       {id: 'grok-2-latest', object: 'model', created: 0, owned_by: 'grok'},
       {id: 'grok-beta', object: 'model', created: 0, owned_by: 'grok'},
       {id: 'codestral-latest', object: 'model', created: 0, owned_by: 'mistral'},
