@@ -12,9 +12,10 @@ export class SettingsService {
   apiKeyGrok: string = "";
   apiKeyMistral: string = "";
   apiKeyStepFun: string = "";
-  selectedModel: string = 'gpt-4o';
-  temperature: number = 0.7;
-  maxTokens: number = 512;
+  selectedModel: string = 'gpt-4.1';
+  temperature: number = 1.0;
+  maxTokens: number = 2048;
+  reasoningEffort: string = 'medium';
   textToSpeechEnabled: boolean = true;
   voice: string = 'alloy';
   quickSendEnabled: boolean = true;
@@ -60,6 +61,10 @@ export class SettingsService {
     const saveMaxTokens = localStorage.getItem('maxTokens');
     if (saveMaxTokens) {
       this.maxTokens = parseInt(saveMaxTokens);
+    }
+    const savedReasoningEffort = localStorage.getItem('reasoningEffort');
+    if (savedReasoningEffort) {
+      this.reasoningEffort = savedReasoningEffort;
     }
     const savedSelectedModel = localStorage.getItem('selectedModel');
     if (savedSelectedModel) {

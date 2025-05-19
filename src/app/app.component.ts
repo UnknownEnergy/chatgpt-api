@@ -128,6 +128,7 @@ export class AppComponent implements OnInit {
     localStorage.setItem('apiKeyStepFun', this.settings.apiKeyStepFun);
     localStorage.setItem('temperature', this.settings.temperature.toString());
     localStorage.setItem('maxTokens', this.settings.maxTokens.toString());
+    localStorage.setItem('reasoningEffort', this.settings.reasoningEffort);
     localStorage.setItem('selectedModel', this.settings.selectedModel);
   }
 
@@ -172,7 +173,7 @@ export class AppComponent implements OnInit {
   }
 
   private callOpenAIAPI(openai: OpenAI, message: string, image: string) {
-    const isCompletionTokensModel = this.settings.selectedModel.includes('o1');
+    const isCompletionTokensModel = /o\d+/.test(this.settings.selectedModel);
 
     if (this.settings.selectedModel.includes('dall-e')) {
       return openai.images.generate({
@@ -185,6 +186,7 @@ export class AppComponent implements OnInit {
         messages: this.messageService.chatHistory,
         ...(isCompletionTokensModel ? {} : {temperature: this.settings.temperature}),
         ...(isCompletionTokensModel ? {max_completion_tokens: this.settings.maxTokens} : {max_tokens: this.settings.maxTokens}),
+        ...(isCompletionTokensModel ? {reasoning_effort: this.settings.reasoningEffort} : {}),
       } as OpenAI.Chat.ChatCompletionCreateParamsNonStreaming);
     }
   }
