@@ -1,22 +1,43 @@
-import {AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Output, ViewChild} from '@angular/core';
-import {SettingsService} from "../services/settings.service";
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import { SettingsService } from '../services/settings.service';
+import { AudioComponent } from './audio/audio.component';
+import { ImageCameraComponent } from './image-camera/image-camera.component';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { FormsModule } from '@angular/forms';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-chat-prompt-component',
+  standalone: true,
   templateUrl: './chat-prompt.component.html',
-  styleUrls: ['./chat-prompt.component.css']
+  imports: [
+    AudioComponent,
+    ImageCameraComponent,
+    CdkTextareaAutosize,
+    FormsModule,
+    MatProgressSpinner,
+  ],
+  styleUrls: ['./chat-prompt.component.css'],
 })
 export class ChatPromptComponent implements AfterViewInit {
   isLoading: boolean;
   messageInput: string = '';
   @ViewChild('messageInputArea') messageInputRef;
-  @Output() sendMessage = new EventEmitter<{ message: string, image: string }>();
+  @Output() sendMessage = new EventEmitter<{ message: string; image: string }>();
   @Output() resendMessage = new EventEmitter<any>();
   imagePreview: string = '';
 
-  constructor(private cdr: ChangeDetectorRef,
-              private settingsService: SettingsService) {
-  }
+  constructor(
+    private readonly cdr: ChangeDetectorRef,
+    private readonly settingsService: SettingsService,
+  ) {}
 
   ngAfterViewInit() {
     this.messageInputRef.nativeElement.focus();
@@ -26,7 +47,7 @@ export class ChatPromptComponent implements AfterViewInit {
     if (!this.messageInput) {
       this.resendMessage.emit();
     } else {
-      this.sendMessage.emit({message: this.messageInput, image: this.imagePreview});
+      this.sendMessage.emit({ message: this.messageInput, image: this.imagePreview });
       this.imagePreview = '';
       this.messageInput = '';
     }

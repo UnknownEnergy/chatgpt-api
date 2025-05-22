@@ -1,25 +1,43 @@
-import {Component, HostBinding, HostListener, Renderer2} from '@angular/core';
-import {MatDialogRef} from "@angular/material/dialog";
-import {MessageService} from "../../services/message.service";
-import {HighlightService} from "../../services/highlight.service";
-import OpenAI from "openai";
+import { Component, HostListener, Renderer2 } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
+import { MessageService } from '../../services/message.service';
+import { HighlightService } from '../../services/highlight.service';
+import OpenAI from 'openai';
+import { FormsModule } from '@angular/forms';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatDivider } from '@angular/material/divider';
+import {
+  MatAccordion,
+  MatExpansionPanel,
+  MatExpansionPanelDescription,
+  MatExpansionPanelHeader,
+  MatExpansionPanelTitle,
+} from '@angular/material/expansion';
 
 @Component({
   selector: 'app-saved-chats-panel',
+  standalone: true,
   templateUrl: './saved-chats-panel.component.html',
-  styleUrls: ['./saved-chats-panel.component.css']
+  imports: [
+    MatTooltip,
+    FormsModule,
+    MatDivider,
+    MatExpansionPanelDescription,
+    MatAccordion,
+    MatExpansionPanel,
+    MatExpansionPanelHeader,
+    MatExpansionPanelTitle,
+  ],
+  styleUrls: ['./saved-chats-panel.component.css'],
 })
 export class SavedChatsPanelComponent {
-  constructor(private dialogRef: MatDialogRef<SavedChatsPanelComponent>, private messageService: MessageService, private highlightService: HighlightService, private renderer: Renderer2) {
-  }
-
   steps: number;
   messageHistory: Chat[] = [];
   messageHistoryPaginated: Chat[] = [];
   chatSelected: boolean = false;
   aboutToDelete: boolean = false;
-  chatName: string = "";
-  currentLoadedChatName: string = "";
+  chatName: string = '';
+  currentLoadedChatName: string = '';
   containerHeight: string = '';
   dialogWidth: string = '';
   dialogHeight: string = '';
@@ -28,6 +46,12 @@ export class SavedChatsPanelComponent {
   descriptionWidth: string = '';
   confirmDeleteAllChats: boolean = false;
 
+  constructor(
+    private readonly dialogRef: MatDialogRef<SavedChatsPanelComponent>,
+    private readonly messageService: MessageService,
+    private readonly highlightService: HighlightService,
+    private readonly renderer: Renderer2,
+  ) {}
 
   ngOnInit(): void {
     this.renderer.addClass(document.body, 'indigo-pink');
@@ -44,12 +68,22 @@ export class SavedChatsPanelComponent {
     this.containerHeight = this.calculateAccordionHeight();
   }
 
-
   calculateAccordionHeight(): string {
     const height = window.innerHeight;
-    const {minWindowHeight, maxWindowHeight, minElementHeight, maxElementHeight} = this.dialogWidth === '80vw'
-      ? {minWindowHeight: 200, maxWindowHeight: 1100, minElementHeight: 0, maxElementHeight: 650}
-      : {minWindowHeight: 400, maxWindowHeight: 1300, minElementHeight: 25, maxElementHeight: 700};
+    const { minWindowHeight, maxWindowHeight, minElementHeight, maxElementHeight } =
+      this.dialogWidth === '80vw'
+        ? {
+            minWindowHeight: 200,
+            maxWindowHeight: 1100,
+            minElementHeight: 0,
+            maxElementHeight: 650,
+          }
+        : {
+            minWindowHeight: 400,
+            maxWindowHeight: 1300,
+            minElementHeight: 25,
+            maxElementHeight: 700,
+          };
 
     let containerHeight;
     if (height < minWindowHeight) {
@@ -65,7 +99,6 @@ export class SavedChatsPanelComponent {
     return containerHeight + 'px';
   }
 
-
   calculateDialogSize() {
     const width = window.innerWidth;
     const breakpoints = [1400];
@@ -78,16 +111,16 @@ export class SavedChatsPanelComponent {
 
     if (width < 1100) {
       this.loadButtonWidth = '50%';
-      this.deleteButtonWidth = "20%";
-      this.descriptionWidth = "75px"
+      this.deleteButtonWidth = '20%';
+      this.descriptionWidth = '75px';
     } else {
       this.loadButtonWidth = '85%';
-      this.deleteButtonWidth = "10%";
-      this.descriptionWidth = "150px"
+      this.deleteButtonWidth = '10%';
+      this.descriptionWidth = '150px';
     }
 
     this.dialogWidth = values[index];
-    if (this.dialogWidth === '80vw') this.dialogHeight = '80vh'
+    if (this.dialogWidth === '80vw') this.dialogHeight = '80vh';
     else this.dialogHeight = '70vh';
   }
 
@@ -104,7 +137,7 @@ export class SavedChatsPanelComponent {
     }
     let chat: Chat = new Chat();
 
-    const chatExists: Chat = this.messageHistory.find(c => c.name === this.chatName);
+    const chatExists: Chat = this.messageHistory.find((c) => c.name === this.chatName);
     if (chatExists) chat = chatExists;
 
     chat.name = this.chatName;
@@ -140,37 +173,46 @@ export class SavedChatsPanelComponent {
     this.dialogRef.close();
   }
 
-  private removeAudioAutoplay(chat: Chat) {
-    chat.messages = chat.messages.map((message) => {
-      return {
-        ...message,
-        audioAutoplay: false
-      };
-    });
-  }
-
   cancelLoadChat() {
     this.chatSelected = false;
   }
 
   deleteChat(chat: Chat) {
     this.aboutToDelete = false;
-    this.messageHistory = this.messageHistory.filter(c => c !== chat);
+    this.messageHistory = this.messageHistory.filter((c) => c !== chat);
     localStorage.setItem('chatHistory', JSON.stringify(this.messageHistory));
   }
 
   deleteAll() {
-    if(this.confirmDeleteAllChats) {
+    if (this.confirmDeleteAllChats) {
       this.messageHistory = [];
       localStorage.removeItem('chatHistory');
       this.confirmDeleteAllChats = false;
     }
+  }
+
+  private removeAudioAutoplay(chat: Chat) {
+    chat.messages = chat.messages.map((message) => {
+      return {
+        ...message,
+        audioAutoplay: false,
+      };
+    });
   }
 }
 
 export class Chat {
   name: string;
   createdOnDate: string;
-  messages: { content: string; contentRaw: string; isRaw?: boolean; timestamp: Date; avatar: string; isUser: boolean; audioUrl?: string, audioAutoplay?: boolean }[] = [];
+  messages: {
+    content: string;
+    contentRaw: string;
+    isRaw?: boolean;
+    timestamp: Date;
+    avatar: string;
+    isUser: boolean;
+    audioUrl?: string;
+    audioAutoplay?: boolean;
+  }[] = [];
   chatHistory: OpenAI.ChatCompletionMessage[] = [];
 }

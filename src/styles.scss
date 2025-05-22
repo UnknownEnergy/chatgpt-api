@@ -1,50 +1,47 @@
 /* You can add global styles to this file, and also import other style files */
-@use "@angular/material" as mat;
-@import "@angular/material";
-@import "~bootstrap/dist/css/bootstrap.min.css";
-@import "~bootstrap-icons/font/bootstrap-icons.css";
-@import "~highlight.js/styles/a11y-dark.css";
-@import "~highlightjs-copy/styles/highlightjs-copy.css";
+@use '@angular/material' as mat;
 
+@import "bootstrap/dist/css/bootstrap.min.css";
+@import "bootstrap-icons/font/bootstrap-icons.css";
+@import "highlight.js/styles/a11y-dark.css";
+@import "highlightjs-copy/styles/highlightjs-copy.css";
 
 @include mat.core();
 
+// Define Material Design 3 light theme
+$angular-light-theme: mat.define-theme((
+  color: (
+    theme-type: light,
+    primary: mat.$cyan-palette,
+    tertiary: mat.$magenta-palette,
+  )
+));
 
-$angular-primary: mat.define-palette(mat.$teal-palette, 500, 100, 900);
-$angular-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+// Define Material Design 3 dark theme
+$angular-dark-theme: mat.define-theme((
+  color: (
+    theme-type: dark,
+    primary: mat.$cyan-palette,
+    tertiary: mat.$magenta-palette,
+  )
+));
 
-$angular-warn: mat.define-palette(mat.$red-palette);
-
-$angular-default-theme: mat.define-light-theme(
-    (
-      color: (
-        primary: $angular-primary,
-        accent: $angular-accent,
-        warn: $angular-warn,
-      ),
-    )
-);
-
-.matLightMode {
-  @include mat.all-component-colors($angular-default-theme);
+// Apply light theme by default
+html {
+  @include mat.all-component-themes($angular-light-theme);
 }
 
-$angular-dark-theme: mat.define-dark-theme(
-    (
-      color: (
-        primary: $angular-primary,
-        accent: $angular-accent,
-        warn: $angular-warn,
-      ),
-    )
-);
-
+// Apply dark theme when .matDarkMode class is present
 .matDarkMode {
   @include mat.all-component-colors($angular-dark-theme);
 }
 
-
-
+// Alternative: system preference
+@media (prefers-color-scheme: dark) {
+  html:not(.matLightMode) {
+    @include mat.all-component-colors($angular-dark-theme);
+  }
+}
 
 @mixin all() {
   --header-size: 90px;
@@ -65,7 +62,7 @@ $angular-dark-theme: mat.define-dark-theme(
 
 // mixin that enables css variables in dark mode
 @mixin darken() {
-  --bgColor: rgba(52,53,65);
+  --bgColor: rgba(52, 53, 65);
   --bgColor2: rgba(68, 70, 84, 0.9);
   --bgColorInput: rgba(68, 70, 84, 0.9);
   --textColor: white;
@@ -106,11 +103,11 @@ body.dark {
     padding: 0 !important;
     margin: 0 !important;
 
-    .info-bubble, .info-bubble *{
+    .info-bubble, .info-bubble * {
       visibility: hidden;
     }
 
-    .raw, .raw *{
+    .raw, .raw * {
       visibility: hidden;
     }
   }
