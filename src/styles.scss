@@ -36,13 +36,6 @@ html {
   @include mat.all-component-colors($angular-dark-theme);
 }
 
-// Alternative: system preference
-@media (prefers-color-scheme: dark) {
-  html:not(.matLightMode) {
-    @include mat.all-component-colors($angular-dark-theme);
-  }
-}
-
 @mixin all() {
   --header-size: 90px;
   --toolbar-size: 50px;
