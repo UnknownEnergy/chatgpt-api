@@ -397,6 +397,8 @@ export class SettingsComponent {
       { id: 'gpt-4o', object: 'model', created: 0, owned_by: 'openai' },
       { id: 'chatgpt-4o-latest', object: 'model', created: 0, owned_by: 'openai' },
       { id: 'dall-e-3', object: 'model', created: 0, owned_by: 'openai' },
+      { id: 'claude-opus-4-20250514', object: 'model', created: 0, owned_by: 'anthropic' },
+      { id: 'claude-sonnet-4-20250514', object: 'model', created: 0, owned_by: 'anthropic' },
       { id: 'claude-3-7-sonnet-latest', object: 'model', created: 0, owned_by: 'anthropic' },
       { id: 'claude-3-5-sonnet-latest', object: 'model', created: 0, owned_by: 'anthropic' },
       { id: 'claude-3-5-haiku-latest', object: 'model', created: 0, owned_by: 'anthropic' },
