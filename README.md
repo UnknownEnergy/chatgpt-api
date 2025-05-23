@@ -17,7 +17,7 @@ https://chatworm.com/
 <a href="https://apps.microsoft.com/detail/Chatworm/9N1RF0VWV3SN?launch=true&mode=mini"><img src="https://get.microsoft.com/images/en-us%20dark.svg" width="120" height="50"/></a>
   
 Brand new Models of  
-🤖 OpenAI
+🤖 OpenAI  
 🤖 Anthropic  
 🤖 Google Gemini  
 🤖 Deepseek  
