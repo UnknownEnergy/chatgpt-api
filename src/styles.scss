@@ -1,12 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
 @use '@angular/material' as mat;
 
-@import "bootstrap/dist/css/bootstrap.min.css";
-@import "bootstrap-icons/font/bootstrap-icons.css";
+@include mat.core();
+
 @import "highlight.js/styles/a11y-dark.css";
 @import "highlightjs-copy/styles/highlightjs-copy.css";
+@import "bootstrap/dist/css/bootstrap.min.css";
+@import "bootstrap-icons/font/bootstrap-icons.css";
 
-@include mat.core();
 
 // Define Material Design 3 light theme
 $angular-light-theme: mat.define-theme((
@@ -104,4 +105,32 @@ body.dark {
       visibility: hidden;
     }
   }
+}
+
+.hljs-copy-wrapper {
+  position: relative !important;
+
+  .hljs-copy-button {
+    position: absolute !important;
+    top: 8px !important;
+    right: 8px !important;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    background: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-radius: 4px !important;
+    padding: 4px 8px !important;
+    font-size: 12px !important;
+    color: #fff !important;
+    cursor: pointer !important;
+    z-index: 10 !important;
+  }
+
+  &:hover .hljs-copy-button {
+    opacity: 1;
+  }
+}
+
+pre {
+  position: relative !important;
 }

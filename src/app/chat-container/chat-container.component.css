@@ -1,6 +1,6 @@
 
 .chat-messages {
-  top: calc( var(--header-size) + var(--toolbar-size));
+  top: calc(var(--header-size) + var(--toolbar-size));
   bottom: var(--chat-prompt-size);
   left: 0;
   right: 0;
@@ -75,14 +75,9 @@
   border-top: 10px solid transparent;
   border-bottom: 10px solid transparent;
   border-right: 10px solid #007bff;
-  transform: translateY(-50%);
-}
-
-.chat-message.user .message-content::after {
   right: auto;
-  left: -10px;
-  border-right: none;
   border-left: 10px solid #007bff;
+  transform: translateY(-50%);
 }
 
 .p-message-content {

@@ -18,8 +18,7 @@
         <div class="message-avatar" [innerHTML]="message.avatar"></div>
         <div class="message-content message-content-left">
           @if (!message.isRaw) {
-            <div [innerHTML]="message.content">
-            </div>
+            <div [innerHTML]="message.content"></div>
             @if (message.audioUrl) {
               <audio [autoplay]="message.audioAutoplay" [controls]="true" [src]="message.audioUrl"></audio>
             }
@@ -30,8 +29,8 @@
           }
           <div class="d-flex justify-content-end">
             <div class="message-timestamp">{{ message.timestamp | date:'shortTime' }}</div>
-            <button aria-label="raw" class="raw" (click)="message.isRaw = !message.isRaw; highlightCode()"><i
-              class="bi bi-braces"></i>
+            <button aria-label="raw" class="raw" (click)="message.isRaw = !message.isRaw; highlightCode()">
+              <i class="bi bi-braces"></i>
             </button>
           </div>
         </div>

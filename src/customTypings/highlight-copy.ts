@@ -10,8 +10,8 @@
  * Adds a copy button to highlightjs code blocks
  */
 class CopyButtonPlugin {
-  private hook: Hook;
-  private callback: CopyCallback;
+  private readonly hook: Hook;
+  private readonly callback: CopyCallback;
 
   /**
    * Create a new CopyButtonPlugin class instance
@@ -19,7 +19,7 @@ class CopyButtonPlugin {
    * @param {CopyCallback} [options.callback]
    * @param {Hook} [options.hook]
    */
-  constructor(options: {hook?: Hook, callback?: CopyCallback} = {}) {
+  constructor(options: { hook?: Hook; callback?: CopyCallback } = {}) {
     this.hook = options.hook;
     this.callback = options.callback;
   }
@@ -33,51 +33,51 @@ class CopyButtonPlugin {
    * @param {string} event.text - The text content of the code block
    * @returns {undefined}
    */
-  public "after:highlightElement"({ el, text }: {el: HTMLElement, text: string}): void {
+  public 'after:highlightElement'({ el, text }: { el: HTMLElement; text: string }): void {
     // Create the copy button and append it to the codeblock.
-    const button = Object.assign(document.createElement("button"), {
-      innerHTML: "Copy",
-      className: "hljs-copy-button",
+    const button = Object.assign(document.createElement('button'), {
+      innerHTML: 'Copy',
+      className: 'hljs-copy-button',
     });
-    button.dataset["copied"] = "false";
-    el.parentElement!.classList.add("hljs-copy-wrapper");
-    el.parentElement!.appendChild(button);
+    button.dataset['copied'] = 'false';
+    el.parentElement.classList.add('hljs-copy-wrapper');
+    el.parentElement.appendChild(button);
 
     // Add a custom property to the code block so that the copy button can reference and match its background-color value.
-    el.parentElement!.style.setProperty(
-      "--hljs-theme-background",
-      window.getComputedStyle(el).backgroundColor
+    el.parentElement.style.setProperty(
+      '--hljs-theme-background',
+      window.getComputedStyle(el).backgroundColor,
     );
 
     button.onclick = () => {
       if (!navigator.clipboard) return;
 
       let newText = text;
-      if (this.hook && typeof this.hook === "function") {
+      if (this.hook && typeof this.hook === 'function') {
         newText = this.hook(text, el) || text;
       }
 
       navigator.clipboard
         .writeText(newText)
         .then(() => {
-          button.innerHTML = "Copied!";
-          button.dataset["copied"] = "true";
+          button.innerHTML = 'Copied!';
+          button.dataset['copied'] = 'true';
 
-          const alert = Object.assign(document.createElement("div"), {
-            role: "status",
-            className: "hljs-copy-alert",
-            innerHTML: "Copied to clipboard",
+          const alert = Object.assign(document.createElement('div'), {
+            role: 'status',
+            className: 'hljs-copy-alert',
+            innerHTML: 'Copied to clipboard',
           });
-          el.parentElement!.appendChild(alert);
+          el.parentElement.appendChild(alert);
 
           setTimeout(() => {
-            button.innerHTML = "Copy";
-            button.dataset["copied"] = "false";
-            el.parentElement!.removeChild(alert);
+            button.innerHTML = 'Copy';
+            button.dataset['copied'] = 'false';
+            el.parentElement.removeChild(alert);
           }, 2000);
         })
         .then(() => {
-          if (typeof this.callback === "function") return this.callback(newText, el);
+          if (typeof this.callback === 'function') return this.callback(newText, el);
         });
     };
   }
