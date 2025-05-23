@@ -1,28 +1,28 @@
 <div class="chat-header d-flex justify-content-between">
   <div class="d-flex">
-    <button aria-label="Settings" class="btn btn-primary toggle-button" (click)="toggleSettings()"
-            [ngClass]="{'collapsed': isChatHeaderCollapsed}">
-      <ng-container *ngIf="!isChatHeaderCollapsed; else isCollapsed">
+    <button (click)="toggleSettings()" [ngClass]="{'collapsed': isChatHeaderCollapsed}" aria-label="Settings"
+            class="btn btn-primary toggle-button">
+      @if (!isChatHeaderCollapsed) {
         <i class="bi bi-chevron-up"></i>
-      </ng-container>
-      <ng-template #isCollapsed>
+      } @else {
         <i class="bi bi-chevron-down"></i>
-      </ng-template>
+      }
     </button>
-    <button aria-label="Chat history" class="btn btn-primary" (click)="toggleSavePanel()">
+    <button (click)="toggleSavePanel()" aria-label="Chat history" class="btn btn-primary">
       <i class="bi bi-save"></i>
     </button>
     <app-clear-messages></app-clear-messages>
-
   </div>
+
   <div class="d-flex">
     <app-usage></app-usage>
-    <button aria-label="Tip Dialog" class="btn btn-primary" (click)="openTipDialog()">
+    <button (click)="openTipDialog()" aria-label="Tip Dialog" class="btn btn-primary">
       <i class="bi bi-coin"></i>
     </button>
-    <button aria-label="Darkmode" class="btn btn-primary" (click)="toggleDarkMode()">
-      <i class="bi" [ngClass]="{'bi-moon': !darkModeEnabled, 'bi-sun': darkModeEnabled}"></i>
+    <button (click)="toggleDarkMode()" aria-label="Darkmode" class="btn btn-primary">
+      <i [ngClass]="{'bi-moon': !darkModeEnabled, 'bi-sun': darkModeEnabled}" class="bi"></i>
     </button>
   </div>
 </div>
+
 <app-settings></app-settings>

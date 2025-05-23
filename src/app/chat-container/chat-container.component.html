@@ -1,47 +1,60 @@
-<div class="chat-messages" #messageContainer>
-  <app-info *ngIf="getMessages().length === 0"></app-info>
-  <div class="chat-message" *ngFor="let message of getMessages()">
-    <ng-container *ngIf="message.isUser; else systemMessage">
-      <div class="message-content message-content-right">
-        <img *ngIf="message.image" [src]="message.image" height="300px" alt="preview image">
-        <p class="p-message-content">{{message.content}}</p>
-        <div class="message-timestamp">{{ message.timestamp | date:'shortTime' }}</div>
-      </div>
-      <div class="message-avatar" [innerHTML]="message.avatar"></div>
-    </ng-container>
-    <ng-template #systemMessage>
-      <div class="message-avatar" [innerHTML]="message.avatar"></div>
-      <div class="message-content message-content-left">
-        <ng-container *ngIf="!message.isRaw; else rawMessage">
-          <div [innerHTML]="message.content">
-          </div>
-          <audio *ngIf="message.audioUrl" [autoplay]="message.audioAutoplay" [controls]="true" [src]="message.audioUrl"></audio>
-        </ng-container>
-        <ng-template #rawMessage>
-          <div>
-            <pre>{{message.contentRaw}}</pre>
-          </div>
-        </ng-template>
-        <div class="d-flex justify-content-end">
+<div #messageContainer class="chat-messages">
+  @if (getMessages().length === 0) {
+    <app-info></app-info>
+  }
+
+  @for (message of getMessages(); track message) {
+    <div class="chat-message">
+      @if (message.isUser) {
+        <div class="message-content message-content-right">
+          @if (message.image) {
+            <img [src]="message.image" height="300px" alt="Preview">
+          }
+          <p class="p-message-content">{{ message.content }}</p>
           <div class="message-timestamp">{{ message.timestamp | date:'shortTime' }}</div>
-          <button aria-label="raw" class="raw" (click)="message.isRaw = !message.isRaw; highlightCode()"><i class="bi bi-braces"></i>
-          </button>
+        </div>
+        <div class="message-avatar" [innerHTML]="message.avatar"></div>
+      } @else {
+        <div class="message-avatar" [innerHTML]="message.avatar"></div>
+        <div class="message-content message-content-left">
+          @if (!message.isRaw) {
+            <div [innerHTML]="message.content"></div>
+            @if (message.audioUrl) {
+              <audio [autoplay]="message.audioAutoplay" [controls]="true" [src]="message.audioUrl"></audio>
+            }
+          } @else {
+            <div>
+              <pre>{{ message.contentRaw }}</pre>
+            </div>
+          }
+          <div class="d-flex justify-content-end">
+            <div class="message-timestamp">{{ message.timestamp | date:'shortTime' }}</div>
+            <button aria-label="raw" class="raw" (click)="message.isRaw = !message.isRaw; highlightCode()">
+              <i class="bi bi-braces"></i>
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+  }
+
+  @if (chatbotTyping) {
+    <div class="chat-message chatbot-typing">
+      <div class="message-avatar">
+        <img src="/assets/chatworm_simple.png" alt="Chatworm" width="50px"/>
+      </div>
+      <div class="message-content message-content-left">
+        <br/>
+        <div class="typing-indicator">
+          <span></span>
+          <span></span>
+          <span></span>
         </div>
       </div>
-    </ng-template>
-  </div>
-  <div class="chat-message chatbot-typing" *ngIf="chatbotTyping">
-    <div class="message-avatar">
-      <img src="/assets/chatworm_simple.png" alt="Chatworm" width="50px"/>
     </div>
-    <div class="message-content message-content-left">
-      <br/>
-      <div class="typing-indicator">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-    </div>
-  </div>
-  <app-save-as-pdf *ngIf="!chatbotTyping && getMessages().length > 0"></app-save-as-pdf>
+  }
+
+  @if (!chatbotTyping && getMessages().length > 0) {
+    <app-save-as-pdf></app-save-as-pdf>
+  }
 </div>

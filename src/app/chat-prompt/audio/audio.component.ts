@@ -1,25 +1,26 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import * as RecordRTC from 'recordrtc';
-import OpenAI from "openai";
-import {SettingsService} from "../../services/settings.service";
+import OpenAI from 'openai';
+import { SettingsService } from '../../services/settings.service';
+import { MatMenu, MatMenuTrigger } from '@angular/material/menu';
 
 @Component({
   selector: 'app-audio-component',
+  standalone: true,
   templateUrl: './audio.component.html',
-  styleUrls: ['./audio.component.css']
+  imports: [MatMenu, MatMenuTrigger],
+  styleUrls: ['./audio.component.css'],
 })
 export class AudioComponent implements OnInit {
-
   @Output() audioTextUpdated = new EventEmitter<string>();
   @Output() isLoading = new EventEmitter<boolean>();
+  recordIcon: string = 'bi bi-mic';
+  recordText: string = 'Hold to record';
   private stream: MediaStream;
   private recordRTC: RecordRTC;
   private openAi;
-  recordIcon: string = "bi bi-mic";
-  recordText: string = "Hold to record";
 
-  constructor(private settings: SettingsService) {
-  }
+  constructor(private readonly settings: SettingsService) {}
 
   ngOnInit(): void {
     this.openAi = this.getOpenAi();
@@ -31,15 +32,14 @@ export class AudioComponent implements OnInit {
   public getOpenAi() {
     return new OpenAI({
       apiKey: this.settings.apiKey,
-      dangerouslyAllowBrowser: true
+      dangerouslyAllowBrowser: true,
     });
   }
 
-
   startRecording() {
-    this.recordIcon = "bi bi-stop-circle";
-    this.recordText = "Release to stop";
-    navigator.mediaDevices.getUserMedia({audio: true}).then((stream) => {
+    this.recordIcon = 'bi bi-stop-circle';
+    this.recordText = 'Release to stop';
+    navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
       this.stream = stream;
       this.recordRTC = new RecordRTC(stream, {
         type: 'audio',
@@ -49,8 +49,8 @@ export class AudioComponent implements OnInit {
   }
 
   stopRecording() {
-    this.recordIcon = "bi bi-mic";
-    this.recordText = "Hold to record";
+    this.recordIcon = 'bi bi-mic';
+    this.recordText = 'Hold to record';
     this.recordRTC.stopRecording(() => {
       const blob = this.recordRTC.getBlob();
       const file = new File([blob], 'recorded-audio.wav');
@@ -73,17 +73,18 @@ export class AudioComponent implements OnInit {
 
   private callOpenAi(file: File) {
     this.isLoading.emit(true);
-    this.openAi.audio.transcriptions.create({
-      file: file,
-      model: 'whisper-1'
-    })
+    this.openAi.audio.transcriptions
+      .create({
+        file: file,
+        model: 'whisper-1',
+      })
       .then((response) => {
         this.audioTextUpdated.emit(response.text);
         this.isLoading.emit(false);
       })
-      .catch(error => {
+      .catch((error) => {
         this.isLoading.emit(false);
-        if (error.response && error.response && error.response.error) {
+        if (error.response?.error) {
           alert(error.response.error.message);
         } else {
           alert(error.message);
@@ -91,5 +92,4 @@ export class AudioComponent implements OnInit {
         }
       });
   }
-
 }

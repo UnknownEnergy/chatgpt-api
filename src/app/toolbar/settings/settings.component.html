@@ -1,178 +1,217 @@
 <div class="chat-settings">
   <div class="row">
     <div class="col-md-8 d-flex">
-      <input class="input-api" [type]="showPassword ? 'text' : 'password'" [(ngModel)]="settings.apiKey"
-             placeholder="Enter OpenAI API Key..."
-             (input)="onTypeApiKey()">
-      <button aria-label="Show API Key" class="api-button" (click)="showPassword = !showPassword;"><i
+      <input (input)="onTypeApiKey()" [(ngModel)]="settings.apiKey" [type]="showPassword ? 'text' : 'password'"
+             class="input-api"
+             placeholder="Enter OpenAI API Key...">
+      <button (click)="showPassword = !showPassword;" aria-label="Show API Key" class="api-button"><i
         class="bi bi-eye"></i></button>
-      <button class="api-button" (click)="openApiKeyWebsite()">Get&nbsp;API&nbsp;Key</button>
+      <button (click)="openApiKeyWebsite()" class="api-button">Get&nbsp;API&nbsp;Key</button>
     </div>
+
     <div class="col-md-8 d-flex">
-      <input class="input-api" [type]="showPassword2 ? 'text' : 'password'" [(ngModel)]="settings.apiKeyAnthropic"
-             placeholder="Enter Anthrophic API Key..."
-             (input)="onTypeApiKeyAnthropic()">
-      <button aria-label="Show API Key" class="api-button" (click)="showPassword2 = !showPassword2;"><i
+      <input (input)="onTypeApiKeyAnthropic()" [(ngModel)]="settings.apiKeyAnthropic"
+             [type]="showPassword2 ? 'text' : 'password'"
+             class="input-api"
+             placeholder="Enter Anthrophic API Key...">
+      <button (click)="showPassword2 = !showPassword2;" aria-label="Show API Key" class="api-button"><i
         class="bi bi-eye"></i></button>
-      <button class="api-button" (click)="openApiKeyAnthrophicWebsite()">Get&nbsp;API&nbsp;Key</button>
+      <button (click)="openApiKeyAnthrophicWebsite()" class="api-button">Get&nbsp;API&nbsp;Key</button>
     </div>
+
     <div class="col-md-8 d-flex">
-      <input class="input-api" [type]="showPassword3 ? 'text' : 'password'" [(ngModel)]="settings.apiKeyGemini"
-             placeholder="Enter Gemini API Key..."
-             (input)="onTypeApiKeyGemini()">
-      <button aria-label="Show API Key" class="api-button" (click)="showPassword3 = !showPassword3;"><i
+      <input (input)="onTypeApiKeyGemini()" [(ngModel)]="settings.apiKeyGemini"
+             [type]="showPassword3 ? 'text' : 'password'"
+             class="input-api"
+             placeholder="Enter Gemini API Key...">
+      <button (click)="showPassword3 = !showPassword3;" aria-label="Show API Key" class="api-button"><i
         class="bi bi-eye"></i></button>
-      <button class="api-button" (click)="openApiKeyGeminiWebsite()">Get&nbsp;API&nbsp;Key</button>
+      <button (click)="openApiKeyGeminiWebsite()" class="api-button">Get&nbsp;API&nbsp;Key</button>
     </div>
+
     <div class="col-md-8 d-flex">
-      <input class="input-api" [type]="showPassword4 ? 'text' : 'password'" [(ngModel)]="settings.apiKeyDeepSeek"
-             placeholder="Enter DeepSeek API Key..."
-             (input)="onTypeApiKeyDeepSeek()">
-      <button aria-label="Show API Key" class="api-button" (click)="showPassword4 = !showPassword4;"><i
+      <input (input)="onTypeApiKeyDeepSeek()" [(ngModel)]="settings.apiKeyDeepSeek"
+             [type]="showPassword4 ? 'text' : 'password'"
+             class="input-api"
+             placeholder="Enter DeepSeek API Key...">
+      <button (click)="showPassword4 = !showPassword4;" aria-label="Show API Key" class="api-button"><i
         class="bi bi-eye"></i></button>
-      <button class="api-button" (click)="openApiKeyDeepSeekWebsite()">Get&nbsp;API&nbsp;Key</button>
+      <button (click)="openApiKeyDeepSeekWebsite()" class="api-button">Get&nbsp;API&nbsp;Key</button>
     </div>
+
     <div class="col-md-8 d-flex">
-      <input class="input-api" [type]="showPassword5 ? 'text' : 'password'" [(ngModel)]="settings.apiKeyQwen"
-             placeholder="Enter Qwen API Key..."
-             (input)="onTypeApiKeyQwen()">
-      <button aria-label="Show API Key" class="api-button" (click)="showPassword5 = !showPassword5;"><i
+      <input (input)="onTypeApiKeyQwen()" [(ngModel)]="settings.apiKeyQwen" [type]="showPassword5 ? 'text' : 'password'"
+             class="input-api"
+             placeholder="Enter Qwen API Key...">
+      <button (click)="showPassword5 = !showPassword5;" aria-label="Show API Key" class="api-button"><i
         class="bi bi-eye"></i></button>
-      <button class="api-button" (click)="openApiKeyQwenWebsite()">Get&nbsp;API&nbsp;Key</button>
+      <button (click)="openApiKeyQwenWebsite()" class="api-button">Get&nbsp;API&nbsp;Key</button>
     </div>
+
     <div class="col-md-8 d-flex">
       <input
-        class="input-api"
-        [type]="showPassword6 ? 'text' : 'password'"
+        (input)="onTypeApiKeyGrok()"
         [(ngModel)]="settings.apiKeyGrok"
-        placeholder="Enter Grok API Key..."
-        (input)="onTypeApiKeyGrok()"/>
-      <button aria-label="Show API Key" class="api-button" (click)="showPassword6 = !showPassword6;">
+        [type]="showPassword6 ? 'text' : 'password'"
+        class="input-api"
+        placeholder="Enter Grok API Key..."/>
+      <button (click)="showPassword6 = !showPassword6;" aria-label="Show API Key" class="api-button">
         <i class="bi bi-eye"></i>
       </button>
-      <button class="api-button" (click)="openApiKeyGrokWebsite()">Get&nbsp;API&nbsp;Key</button>
+      <button (click)="openApiKeyGrokWebsite()" class="api-button">Get&nbsp;API&nbsp;Key</button>
     </div>
+
     <div class="col-md-8 d-flex">
-      <input class="input-api" [type]="showPassword7 ? 'text' : 'password'" [(ngModel)]="settings.apiKeyMistral"
-             placeholder="Enter Mistral AI API Key..."
-             (input)="onTypeApiKeyMistral()">
-      <button aria-label="Show API Key" class="api-button" (click)="showPassword7 = !showPassword7;"><i
+      <input (input)="onTypeApiKeyMistral()" [(ngModel)]="settings.apiKeyMistral"
+             [type]="showPassword7 ? 'text' : 'password'"
+             class="input-api"
+             placeholder="Enter Mistral AI API Key...">
+      <button (click)="showPassword7 = !showPassword7;" aria-label="Show API Key" class="api-button"><i
         class="bi bi-eye"></i></button>
-      <button class="api-button" (click)="openApiKeyMistralWebsite()">Get&nbsp;API&nbsp;Key</button>
+      <button (click)="openApiKeyMistralWebsite()" class="api-button">Get&nbsp;API&nbsp;Key</button>
     </div>
+
     <div class="col-md-8 d-flex">
-      <input class="input-api" [type]="showPassword8 ? 'text' : 'password'" [(ngModel)]="settings.apiKeyStepFun"
-             placeholder="Enter StepFun API Key..."
-             (input)="onTypeApiKeyStepFun()">
-      <button aria-label="Show API Key" class="api-button" (click)="showPassword8 = !showPassword8;"><i
+      <input (input)="onTypeApiKeyStepFun()" [(ngModel)]="settings.apiKeyStepFun"
+             [type]="showPassword8 ? 'text' : 'password'"
+             class="input-api"
+             placeholder="Enter StepFun API Key...">
+      <button (click)="showPassword8 = !showPassword8;" aria-label="Show API Key" class="api-button"><i
         class="bi bi-eye"></i></button>
-      <button class="api-button" (click)="openApiKeyStepFunWebsite()">Get&nbsp;API&nbsp;Key</button>
+      <button (click)="openApiKeyStepFunWebsite()" class="api-button">Get&nbsp;API&nbsp;Key</button>
     </div>
+
     <div class="d-flex align-items-center">
       <p class="p-left-column">Active Model:</p>
       <div class="custom-dropdown">
-        <div class="dropdown-header" (click)="toggleDropdown()">
+        <div (click)="toggleDropdown()" class="dropdown-header">
           {{ getSelectedModel() || 'Select a model' }} <span class="arrow">{{ isOpen ? '▲' : '▼' }}</span>
         </div>
-        <ul *ngIf="isOpen" class="dropdown-list">
-          <li *ngFor="let model of models"
-              [ngClass]="{'highlighted-model': isPredefinedModel(model)}"
-              (click)="selectModel(model.id)">
-            {{ model.id }}
-            <span *ngIf="model.id === 'gpt-4.1'">(default)</span>
-          </li>
-        </ul>
+
+        @if (isOpen) {
+          <ul class="dropdown-list">
+            @for (model of models; track model) {
+              <li
+                [ngClass]="{'highlighted-model': isPredefinedModel(model)}"
+                (click)="selectModel(model.id)">
+                {{ model.id }}
+                @if (model.id === 'gpt-4.1') {
+                  <span>(default)</span>
+                }
+              </li>
+            }
+          </ul>
+        }
       </div>
     </div>
+
     <div class="d-flex align-items-center">
       Compare different AI models and their capabilities:&nbsp;
-      <a href="https://livebench.ai/#/" target="_blank" class="text-info small">
+      <a class="text-info small" href="https://livebench.ai/#/" target="_blank">
         here
       </a>
     </div>
+
     <br/><br/>
+
     <div class="d-flex align-items-center">
       Further check models:&nbsp;
     </div>
+
     <div class="d-flex align-items-center">
-      <a href="https://platform.openai.com/docs/models" target="_blank" class="text-info small">
+      <a class="text-info small" href="https://platform.openai.com/docs/models" target="_blank">
         OpenAI
       </a>&nbsp;
-      <a href="https://docs.anthropic.com/en/docs/about-claude/models" target="_blank" class="text-info small">
+      <a class="text-info small" href="https://docs.anthropic.com/en/docs/about-claude/models" target="_blank">
         Anthropic
       </a>&nbsp;
-      <a href="https://ai.google.dev/gemini-api/docs/models/gemini" target="_blank" class="text-info small">
+      <a class="text-info small" href="https://ai.google.dev/gemini-api/docs/models/gemini" target="_blank">
         Gemini
       </a>&nbsp;
-      <a href="https://api-docs.deepseek.com/quick_start/pricing/" target="_blank" class="text-info small">
+      <a class="text-info small" href="https://api-docs.deepseek.com/quick_start/pricing/" target="_blank">
         Deepseek
       </a>
     </div>
+
     <div class="d-flex align-items-center">
-      <a href="https://platform.stepfun.com/docs/llm/text" target="_blank"
-         class="text-info small">
+      <a class="text-info small" href="https://platform.stepfun.com/docs/llm/text"
+         target="_blank">
         StepFun
       </a>&nbsp;
-      <a href="https://www.alibabacloud.com/help/en/model-studio/getting-started/models" target="_blank"
-         class="text-info small">
+      <a class="text-info small" href="https://www.alibabacloud.com/help/en/model-studio/getting-started/models"
+         target="_blank">
         Qwen
       </a>&nbsp;
-      <a href="https://docs.x.ai/docs/models" target="_blank" class="text-info small">
+      <a class="text-info small" href="https://docs.x.ai/docs/models" target="_blank">
         Grok
       </a>&nbsp;
-      <a href="https://docs.mistral.ai/getting-started/models/models_overview/" target="_blank" class="text-info small">
+      <a class="text-info small" href="https://docs.mistral.ai/getting-started/models/models_overview/" target="_blank">
         Mistral AI
       </a>
     </div>
+
     <div class="d-flex align-items-center">
       <div class="p-left-column">
         <p>Randomness: {{ settings.temperature }}
           <br>
-          <span *ngIf="settings.temperature === 1.0">(default)</span>
-          <span *ngIf="settings.temperature !== 1.0">(default: 1.0)</span>
+          @if (settings.temperature === 1.0) {
+            <span>(default)</span>
+          }
+          @if (settings.temperature !== 1.0) {
+            <span>(default: 1.0)</span>
+          }
         </p>
       </div>
-      <input class="input-randomness" type="range" min="0" max="2" step="0.1" [(ngModel)]="settings.temperature">
+      <input [(ngModel)]="settings.temperature" class="input-randomness" max="2" min="0" step="0.1" type="range">
     </div>
+
     <div class="d-flex align-items-center">
       <div class="p-left-column">
         <p>Max Tokens:
           <br>
-          <span *ngIf="settings.maxTokens === 2048">(default)</span>
-          <span *ngIf="settings.maxTokens !== 2048">(default: 2048)</span>
+          @if (settings.maxTokens === 2048) {
+            <span>(default)</span>
+          }
+          @if (settings.maxTokens !== 2048) {
+            <span>(default: 2048)</span>
+          }
         </p>
       </div>
-      <input class="input-max-tokens"
-             type="number"
+      <input (keypress)="onInputOnlyAllowPositiveIntegers($event)"
+             [(ngModel)]="settings.maxTokens"
+             class="input-max-tokens"
              min="1"
              step="1"
-             (keypress)="onInputOnlyAllowPositiveIntegers($event)"
-             [(ngModel)]="settings.maxTokens">
+             type="number">
     </div>
+
     <div class="d-flex align-items-center">
       <div class="p-left-column">
         <p>Reasoning Effort:</p>
       </div>
-      <select class="btn btn-primary" [(ngModel)]="settings.reasoningEffort">
+      <select [(ngModel)]="settings.reasoningEffort" class="btn btn-primary">
         <option value="high">High</option>
         <option value="medium">Medium</option>
         <option value="low">Low</option>
       </select>
     </div>
+
     <div class="d-flex align-items-center">
       <div class="p-left-column">
         <label for="textToSpeechCheckbox">Text to speech (Chatworm will talk to you):</label>
       </div>
       <div class="p-left-column">
-        <input type="checkbox" id="textToSpeechCheckbox" [(ngModel)]="settings.textToSpeechEnabled"
-               (change)="onTextToSpeechChange($event)">
+        <input (change)="onTextToSpeechChange($event)" [(ngModel)]="settings.textToSpeechEnabled"
+               id="textToSpeechCheckbox"
+               type="checkbox">
       </div>
     </div>
+
     <div class="d-flex align-items-center">
       <div class="p-left-column">
         <p>Used voice for text to speech:</p>
       </div>
-      <select class="btn btn-primary" [(ngModel)]="settings.voice" (change)="onVoiceChange($event)">
+      <select (change)="onVoiceChange($event)" [(ngModel)]="settings.voice" class="btn btn-primary">
         <option value="alloy">Alloy</option>
         <option value="echo">Echo</option>
         <option value="fable">Fable</option>
@@ -181,13 +220,14 @@
         <option value="shimmer">Shimmer</option>
       </select>
     </div>
+
     <div class="d-flex align-items-center">
       <div class="p-left-column">
         <label for="textToSpeechCheckbox">Quick send on speech to text (no enter/send click required):</label>
       </div>
       <div class="p-left-column">
-        <input type="checkbox" id="quickSendCheckbox" [(ngModel)]="settings.quickSendEnabled"
-               (change)="onQuickSendChange($event)">
+        <input (change)="onQuickSendChange($event)" [(ngModel)]="settings.quickSendEnabled" id="quickSendCheckbox"
+               type="checkbox">
       </div>
     </div>
   </div>

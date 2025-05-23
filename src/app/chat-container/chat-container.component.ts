@@ -1,22 +1,26 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
-import {HighlightService} from "../services/highlight.service";
-import {MessageService} from "../services/message.service";
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { HighlightService } from '../services/highlight.service';
+import { MessageService } from '../services/message.service';
+import { SaveAsPdfComponent } from './save-as-pdf/save-as-pdf.component';
+import { InfoComponent } from '../info-text/info.component';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-chat-container',
+  standalone: true,
   templateUrl: './chat-container.component.html',
-  styleUrls: ['./chat-container.component.css']
+  imports: [SaveAsPdfComponent, InfoComponent, DatePipe],
+  styleUrls: ['./chat-container.component.css'],
 })
 export class ChatContainerComponent {
-
   chatbotTyping = false;
 
-  @ViewChild('messageContainer') private messageContainer: ElementRef;
+  @ViewChild('messageContainer') private readonly messageContainer: ElementRef;
 
   constructor(
     /* ... */
-    private highlightService: HighlightService,
-    private messageService: MessageService
+    private readonly highlightService: HighlightService,
+    private readonly messageService: MessageService,
   ) {}
 
   public highlightCode() {
@@ -29,9 +33,11 @@ export class ChatContainerComponent {
 
   scrollToLastMessage(): void {
     setTimeout(() => {
-      const lastMessage = this.messageContainer.nativeElement.querySelector('.chat-message:last-of-type');
+      const lastMessage = this.messageContainer.nativeElement.querySelector(
+        '.chat-message:last-of-type',
+      );
       if (lastMessage) {
-        lastMessage.scrollIntoView({behavior: 'smooth', block: 'start'});
+        lastMessage.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     }, 0);
   }

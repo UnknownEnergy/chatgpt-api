@@ -93,12 +93,19 @@
               "src/policy.html"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.scss",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/bootstrap-icons/font/bootstrap-icons.css",
+              "node_modules/highlight.js/styles/a11y-dark.css",
+              "node_modules/highlightjs-copy/styles/highlightjs-copy.css"
             ],
             "scripts": []
           }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }

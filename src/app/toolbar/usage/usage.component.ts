@@ -1,26 +1,27 @@
-import {AfterViewInit, Component} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {SettingsService} from "../../services/settings.service";
+import { AfterViewInit, Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { SettingsService } from '../../services/settings.service';
+import { MatMenu, MatMenuTrigger } from '@angular/material/menu';
 
 @Component({
   selector: 'app-usage',
+  standalone: true,
   templateUrl: './usage.component.html',
-  styleUrls: ['./usage.component.css']
+  imports: [MatMenuTrigger, MatMenu],
+  styleUrls: ['./usage.component.css'],
 })
 export class UsageComponent implements AfterViewInit {
   total_granted: number = 0;
   total_used: number = 0;
+  protected readonly open = open;
 
-  constructor(private http: HttpClient,
-              private settings: SettingsService) {
+  constructor(
+    private readonly http: HttpClient,
+    private readonly settings: SettingsService,
+  ) {
     this.settings.refreshApiKey.subscribe(() => {
       // this.refreshCredits();
     });
-  }
-
-  ngAfterViewInit(): void {
-    // this.refreshCredits();
-    // setInterval(this.refreshCredits, 300000);
   }
 
   // INFO: for free credits activate this:
@@ -37,6 +38,18 @@ export class UsageComponent implements AfterViewInit {
   //   });
   // }
 
+  private static convertDateToString(date: Date) {
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
+  ngAfterViewInit(): void {
+    // this.refreshCredits();
+    // setInterval(this.refreshCredits, 300000);
+  }
+
   refreshCredits() {
     this.getTotalUsageUSD();
     this.getHardLimitUSD();
@@ -49,7 +62,7 @@ export class UsageComponent implements AfterViewInit {
     const url = `https://api.openai.com/dashboard/billing/usage?start_date=${UsageComponent.convertDateToString(firstDayOfMonth)}&end_date=${UsageComponent.convertDateToString(firstDayOfNextMonth)}`;
     const options = {
       headers: {
-        "authorization": "Bearer " + this.settings.apiKey,
+        authorization: 'Bearer ' + this.settings.apiKey,
       },
     };
     this.http.get(url, options).subscribe((response: any) => {
@@ -57,18 +70,11 @@ export class UsageComponent implements AfterViewInit {
     });
   }
 
-  private static convertDateToString(date: Date) {
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const day = date.getDate().toString().padStart(2, '0');
-    return `${year}-${month}-${day}`;
-  }
-
   getHardLimitUSD() {
     const url = 'https://api.openai.com/dashboard/billing/subscription';
     const options = {
       headers: {
-        "authorization": "Bearer " + this.settings.apiKey,
+        authorization: 'Bearer ' + this.settings.apiKey,
       },
     };
     this.http.get(url, options).subscribe((response: any) => {
@@ -77,36 +83,34 @@ export class UsageComponent implements AfterViewInit {
   }
 
   openOpenAIWebsite() {
-    window.open("https://platform.openai.com/account/usage", "_blank");
+    window.open('https://platform.openai.com/account/usage', '_blank');
   }
 
   openAnthropicWebsite() {
-    window.open("https://console.anthropic.com/settings/usage", "_blank");
+    window.open('https://console.anthropic.com/settings/usage', '_blank');
   }
 
   openGeminiWebsite() {
-    window.open("https://console.cloud.google.com/apis/dashboard", "_blank");
+    window.open('https://console.cloud.google.com/apis/dashboard', '_blank');
   }
 
   openDeepSeekWebsite() {
-    window.open("https://platform.deepseek.com/usage", "_blank");
+    window.open('https://platform.deepseek.com/usage', '_blank');
   }
 
   openQwenWebsite() {
-    window.open("https://bailian.console.alibabacloud.com/#/data-analysis", "_blank");
+    window.open('https://bailian.console.alibabacloud.com/#/data-analysis', '_blank');
   }
 
   openGrokWebsite() {
-    window.open("https://console.x.ai/", "_blank");
+    window.open('https://console.x.ai/', '_blank');
   }
 
   openMistralWebsite() {
-    window.open("https://console.mistral.ai/usage/", "_blank");
+    window.open('https://console.mistral.ai/usage/', '_blank');
   }
 
   openStepFunWebsite() {
-    window.open("https://platform.stepfun.com/account-overview", "_blank");
+    window.open('https://platform.stepfun.com/account-overview', '_blank');
   }
-
-  protected readonly open = open;
 }

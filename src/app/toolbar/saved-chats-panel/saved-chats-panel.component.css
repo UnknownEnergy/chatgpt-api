@@ -1,8 +1,6 @@
 .outer-container {
   position: relative;
   padding: 10px;
-  width: 70vw;
-  height:70vh;
   border: 1px solid var(--border);
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -36,8 +34,8 @@ h1 h2 h3 h4 h5 h6 {
 .footer {
   position: absolute;
   bottom: 20px;
-  left: 0;
-  right: 0;
+  left: 10px;
+  right: 10px;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -132,11 +130,11 @@ h1 h2 h3 h4 h5 h6 {
   justify-content: space-evenly;
 }
 
-.loadChatButton{
+.loadChatButton {
   height: 60px;
 }
 
-mat-expansion-panel-header{
+mat-expansion-panel-header {
   height: auto;
   min-height: 50px;
   padding-top: 5px;
