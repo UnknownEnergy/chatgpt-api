@@ -1,17 +1,18 @@
-import { EventEmitter, Injectable } from "@angular/core";
+import { EventEmitter, Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SettingsService {
+  refreshApiKey = new EventEmitter<string>();
   apiKey: string = '';
   apiKeyAnthropic: string = '';
-  apiKeyGemini: string = "";
-  apiKeyDeepSeek: string = "";
-  apiKeyQwen: string = "";
-  apiKeyGrok: string = "";
-  apiKeyMistral: string = "";
-  apiKeyStepFun: string = "";
+  apiKeyGemini: string = '';
+  apiKeyDeepSeek: string = '';
+  apiKeyQwen: string = '';
+  apiKeyGrok: string = '';
+  apiKeyMistral: string = '';
+  apiKeyStepFun: string = '';
   selectedModel: string = 'gpt-4.1';
   temperature: number = 1.0;
   maxTokens: number = 2048;
@@ -19,7 +20,6 @@ export class SettingsService {
   textToSpeechEnabled: boolean = true;
   voice: string = 'alloy';
   quickSendEnabled: boolean = true;
-  refreshApiKey = new EventEmitter<string>();
 
   constructor() {
     const savedApiKey = localStorage.getItem('apiKey');

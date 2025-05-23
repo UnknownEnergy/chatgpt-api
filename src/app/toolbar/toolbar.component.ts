@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { TipAndCreditsModalComponent } from './tip-and-credits-modal/tip-and-credits-modal.component';
 import { MatDialog } from '@angular/material/dialog';
 import { SavedChatsPanelComponent } from './saved-chats-panel/saved-chats-panel.component';
@@ -16,13 +16,13 @@ import { ClearMessagesComponent } from './clear-messages/clear-messages.componen
   styleUrls: ['./toolbar.component.css'],
 })
 export class ToolbarComponent implements OnInit {
+  private readonly dialog = inject(MatDialog);
+  private readonly overlay = inject(OverlayContainer);
+
   isChatHeaderCollapsed: any = true;
   darkModeEnabled: boolean = false;
 
-  constructor(
-    private readonly dialog: MatDialog,
-    private readonly overlay: OverlayContainer,
-  ) {
+  constructor() {
     const savedIsChatHeaderCollapsed = localStorage.getItem('isChatHeaderCollapsed');
     if (savedIsChatHeaderCollapsed) {
       this.isChatHeaderCollapsed = JSON.parse(savedIsChatHeaderCollapsed);

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit, viewChild } from '@angular/core';
 import OpenAI from 'openai';
 import showdown from 'showdown';
 import { IntroModalComponent } from './intro-modal/intro-modal.component';
@@ -24,6 +24,14 @@ type SpeechCreateParams = Audio.SpeechCreateParams;
   imports: [ChatPromptComponent, ChatContainerComponent, ToolbarComponent, HeaderComponent],
 })
 export class AppComponent implements OnInit {
+  private readonly dialog = inject(MatDialog);
+  private readonly settings = inject(SettingsService);
+  private readonly messageService = inject(MessageService);
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  readonly toolbarComponent = viewChild<ToolbarComponent>('toolbarComponent');
+  readonly chatContainer = viewChild<ChatContainerComponent>('chatContainerComponent');
+
   converter = new showdown.Converter({
     tables: true,
     emoji: true,
@@ -33,16 +41,6 @@ export class AppComponent implements OnInit {
     strikethrough: true,
     simplifiedAutoLink: true,
   });
-
-  @ViewChild('toolbarComponent') toolbarComponent: ToolbarComponent;
-  @ViewChild('chatContainerComponent') chatContainer: ChatContainerComponent;
-
-  constructor(
-    private readonly dialog: MatDialog,
-    public settings: SettingsService,
-    private readonly messageService: MessageService,
-    private readonly cdr: ChangeDetectorRef,
-  ) {}
 
   ngOnInit(): void {
     if (!this.settings.apiKey) {
@@ -70,9 +68,9 @@ export class AppComponent implements OnInit {
     this.saveSettings();
     this.addUserMessage(message, image);
 
-    this.chatContainer.chatbotTyping = true;
+    this.chatContainer().chatbotTyping = true;
     setTimeout(() => {
-      this.chatContainer.scrollToLastMessage();
+      this.chatContainer().scrollToLastMessage();
     }, 100);
 
     this.cdr.detectChanges();
@@ -106,15 +104,15 @@ export class AppComponent implements OnInit {
     } catch (error) {
       this.handleErrorResponse(error);
     } finally {
-      this.chatContainer.chatbotTyping = false;
-      this.chatContainer.scrollToLastMessage();
+      this.chatContainer().chatbotTyping = false;
+      this.chatContainer().scrollToLastMessage();
       this.cdr.detectChanges();
     }
   }
 
   resendLastMessage() {
     if (this.messageService.chatHistory.length > 0) {
-      let lastMessage = this.messageService.chatHistory
+      const lastMessage = this.messageService.chatHistory
         // @ts-ignore
         .filter((message) => message.role === 'user')
         .pop().content;
@@ -245,7 +243,7 @@ export class AppComponent implements OnInit {
 
   private handleSuccessResponse(promise: any) {
     promise
-      .then((response) => {
+      .then(async (response) => {
         let message = '';
 
         if (this.isDeepSeekModel(this.settings.selectedModel)) {
@@ -268,22 +266,22 @@ export class AppComponent implements OnInit {
           role: 'assistant',
           refusal: '',
         });
-        let messageObj = {
+        const messageObj = {
           content: this.converter.makeHtml(message),
           contentRaw: messageRaw,
           timestamp: new Date(),
-          avatar: '<img src="/assets/chatworm_simple.png" alt="Chatworm" width="50px"/>',
+          avatar: '<img src="../assets/chatworm_simple.png" alt="Chatworm" width="50px"/>',
           isUser: false,
         };
 
         if (!response.data || !response.data[0].url) {
-          this.textToSpeak(messageRaw, messageObj);
+          await this.textToSpeak(messageRaw, messageObj);
         }
 
         this.messageService.messages.push(messageObj);
-        this.chatContainer.highlightCode();
-        this.chatContainer.chatbotTyping = false;
-        this.chatContainer.scrollToLastMessage();
+        this.chatContainer().highlightCode();
+        this.chatContainer().chatbotTyping = false;
+        this.chatContainer().scrollToLastMessage();
         this.cdr.detectChanges();
       })
       .catch((error: any) => {
@@ -292,8 +290,8 @@ export class AppComponent implements OnInit {
   }
 
   private handleErrorResponse(error: any) {
-    this.chatContainer.chatbotTyping = false;
-    this.chatContainer.scrollToLastMessage();
+    this.chatContainer().chatbotTyping = false;
+    this.chatContainer().scrollToLastMessage();
 
     if (error.response?.error) {
       alert(error.response.error.message);
@@ -303,14 +301,14 @@ export class AppComponent implements OnInit {
     }
   }
 
-  private textToSpeak(messageRaw: string, messageObj: any) {
+  private async textToSpeak(messageRaw: string, messageObj: any) {
     if (!this.settings.textToSpeechEnabled) {
       return;
     }
 
     const ai = this.getAIClient();
     if (ai instanceof OpenAI) {
-      ai.audio.speech
+      await ai.audio.speech
         .create(<SpeechCreateParams>{
           model: 'tts-1',
           voice: this.settings.voice,

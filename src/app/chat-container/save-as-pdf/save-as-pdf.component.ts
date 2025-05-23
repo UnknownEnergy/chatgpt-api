@@ -6,7 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./save-as-pdf.component.css'],
 })
 export class SaveAsPdfComponent {
-
   public saveAsPdf(): void {
     window.print();
     //the actual styling is in the main styles.scss for pdfs!

@@ -1,15 +1,23 @@
-import {Injectable} from '@angular/core';
-import OpenAI from "openai";
-import {ChatCompletionMessage} from "openai/src/resources/chat/completions";
+import { Injectable } from '@angular/core';
+import OpenAI from 'openai';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MessageService {
-  messages: { content: string; contentRaw: string; isRaw?: boolean; timestamp: Date; avatar: string; isUser: boolean; audioUrl?: string, audioAutoplay?: boolean, image?: string}[] = [];
+  messages: {
+    content: string;
+    contentRaw: string;
+    isRaw?: boolean;
+    timestamp: Date;
+    avatar: string;
+    isUser: boolean;
+    audioUrl?: string;
+    audioAutoplay?: boolean;
+    image?: string;
+  }[] = [];
   chatHistory: Array<OpenAI.ChatCompletionMessage> = [];
   currentChatName: string = '';
 
-  constructor() {
-  }
+  constructor() {}
 }

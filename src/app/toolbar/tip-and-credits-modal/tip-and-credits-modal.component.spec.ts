@@ -1,6 +1,7 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {TipAndCreditsModalComponent} from './tip-and-credits-modal.component';
+import { TipAndCreditsModalComponent } from './tip-and-credits-modal.component';
+import { beforeEach, describe, it } from 'node:test';
 
 describe('TipModalComponent', () => {
   let component: TipAndCreditsModalComponent;
@@ -8,9 +9,8 @@ describe('TipModalComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [TipAndCreditsModalComponent]
-    })
-      .compileComponents();
+      imports: [TipAndCreditsModalComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(TipAndCreditsModalComponent);
     component = fixture.componentInstance;

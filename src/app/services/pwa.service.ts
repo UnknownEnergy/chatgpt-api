@@ -1,19 +1,17 @@
 import { Platform } from '@angular/cdk/platform';
-import {Injectable} from "@angular/core";
-import {MatBottomSheet} from "@angular/material/bottom-sheet";
-import {take, timer} from "rxjs";
-import {PwaPromptComponent} from "../pwa-prompt/pwa-prompt.component";
+import { inject, Injectable } from '@angular/core';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { take, timer } from 'rxjs';
+import { PwaPromptComponent } from '../pwa-prompt/pwa-prompt.component';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PwaService {
-  private promptEvent: any;
+  private readonly bottomSheet = inject(MatBottomSheet);
+  private readonly platform = inject(Platform);
 
-  constructor(
-    private bottomSheet: MatBottomSheet,
-    private platform: Platform
-  ) { }
+  private promptEvent: any;
 
   public initPwaPrompt() {
     if (this.platform.ANDROID) {
@@ -24,7 +22,7 @@ export class PwaService {
       });
     }
     if (this.platform.IOS) {
-      const isInStandaloneMode = ('standalone' in window.navigator) && (window.navigator['standalone']);
+      const isInStandaloneMode = 'standalone' in window.navigator && window.navigator['standalone'];
       if (!isInStandaloneMode) {
         this.openPromptComponent('ios');
       }
@@ -34,6 +32,13 @@ export class PwaService {
   private openPromptComponent(mobileType: 'ios' | 'android') {
     timer(3000)
       .pipe(take(1))
-      .subscribe(() => this.bottomSheet.open(PwaPromptComponent, { data: { mobileType, promptEvent: this.promptEvent } }));
+      .subscribe(() =>
+        this.bottomSheet.open(PwaPromptComponent, {
+          data: {
+            mobileType,
+            promptEvent: this.promptEvent,
+          },
+        }),
+      );
   }
 }

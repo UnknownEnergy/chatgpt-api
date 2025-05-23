@@ -1,4 +1,4 @@
-import { AfterViewInit, Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { SettingsService } from '../../services/settings.service';
 import { MatMenu, MatMenuTrigger } from '@angular/material/menu';
@@ -10,15 +10,14 @@ import { MatMenu, MatMenuTrigger } from '@angular/material/menu';
   imports: [MatMenuTrigger, MatMenu],
   styleUrls: ['./usage.component.css'],
 })
-export class UsageComponent implements AfterViewInit {
+export class UsageComponent {
+  private readonly http = inject(HttpClient);
+  private readonly settings = inject(SettingsService);
   total_granted: number = 0;
   total_used: number = 0;
   protected readonly open = open;
 
-  constructor(
-    private readonly http: HttpClient,
-    private readonly settings: SettingsService,
-  ) {
+  constructor() {
     this.settings.refreshApiKey.subscribe(() => {
       // this.refreshCredits();
     });
@@ -43,11 +42,6 @@ export class UsageComponent implements AfterViewInit {
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const day = date.getDate().toString().padStart(2, '0');
     return `${year}-${month}-${day}`;
-  }
-
-  ngAfterViewInit(): void {
-    // this.refreshCredits();
-    // setInterval(this.refreshCredits, 300000);
   }
 
   refreshCredits() {

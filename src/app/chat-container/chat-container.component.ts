@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, viewChild } from '@angular/core';
 import { HighlightService } from '../services/highlight.service';
 import { MessageService } from '../services/message.service';
 import { SaveAsPdfComponent } from './save-as-pdf/save-as-pdf.component';
@@ -13,15 +13,12 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./chat-container.component.css'],
 })
 export class ChatContainerComponent {
+  private readonly highlightService = inject(HighlightService);
+  private readonly messageService = inject(MessageService);
+
+  private readonly messageContainer = viewChild.required<ElementRef>('messageContainer');
+
   chatbotTyping = false;
-
-  @ViewChild('messageContainer') private readonly messageContainer: ElementRef;
-
-  constructor(
-    /* ... */
-    private readonly highlightService: HighlightService,
-    private readonly messageService: MessageService,
-  ) {}
 
   public highlightCode() {
     this.highlightService.highlightAll();
@@ -33,7 +30,7 @@ export class ChatContainerComponent {
 
   scrollToLastMessage(): void {
     setTimeout(() => {
-      const lastMessage = this.messageContainer.nativeElement.querySelector(
+      const lastMessage = this.messageContainer().nativeElement.querySelector(
         '.chat-message:last-of-type',
       );
       if (lastMessage) {

@@ -11,11 +11,11 @@ import { NgClass } from '@angular/common';
 export class ApiStatusComponent implements OnInit {
   statusCode: number;
 
-  ngOnInit() {
-    this.refreshStatus();
+  async ngOnInit() {
+    await this.refreshStatus();
     setInterval(
-      () => {
-        this.refreshStatus();
+      async () => {
+        await this.refreshStatus();
       },
       5 * 60 * 1000,
     ); // refresh every 5 minutes
@@ -43,8 +43,8 @@ export class ApiStatusComponent implements OnInit {
     return 0;
   }
 
-  refreshStatus() {
-    this.getAPIStatusCode().then((statusCode) => {
+  async refreshStatus() {
+    await this.getAPIStatusCode().then((statusCode) => {
       this.statusCode = statusCode;
     });
   }

@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ChatPromptComponent } from './chat-prompt.component';
+import { beforeEach, describe, it } from 'node:test';
 
 describe('ChatPromptComponentComponent', () => {
   let component: ChatPromptComponent;
@@ -8,9 +9,8 @@ describe('ChatPromptComponentComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ChatPromptComponent ]
-    })
-    .compileComponents();
+      imports: [ChatPromptComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ChatPromptComponent);
     component = fixture.componentInstance;

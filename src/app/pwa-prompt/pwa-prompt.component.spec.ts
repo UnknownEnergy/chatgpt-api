@@ -8,8 +8,8 @@ describe('PromptComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PwaPromptComponent ]
-    })
+    imports: [PwaPromptComponent]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(PwaPromptComponent);

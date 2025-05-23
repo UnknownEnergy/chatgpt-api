@@ -2,9 +2,10 @@ import {
   AfterViewInit,
   ChangeDetectorRef,
   Component,
-  EventEmitter,
-  Output,
-  ViewChild,
+  ElementRef,
+  inject,
+  output,
+  viewChild,
 } from '@angular/core';
 import { SettingsService } from '../services/settings.service';
 import { AudioComponent } from './audio/audio.component';
@@ -27,25 +28,25 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
   styleUrls: ['./chat-prompt.component.css'],
 })
 export class ChatPromptComponent implements AfterViewInit {
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly settingsService = inject(SettingsService);
+
+  readonly messageInputRef = viewChild.required<ElementRef>('messageInputArea');
+
+  sendMessage = output<{ message: string; image: string }>();
+  resendMessage = output<any>();
+
   isLoading: boolean;
   messageInput: string = '';
-  @ViewChild('messageInputArea') messageInputRef;
-  @Output() sendMessage = new EventEmitter<{ message: string; image: string }>();
-  @Output() resendMessage = new EventEmitter<any>();
   imagePreview: string = '';
 
-  constructor(
-    private readonly cdr: ChangeDetectorRef,
-    private readonly settingsService: SettingsService,
-  ) {}
-
   ngAfterViewInit() {
-    this.messageInputRef.nativeElement.focus();
+    this.messageInputRef().nativeElement.focus();
   }
 
   onSendClick() {
     if (!this.messageInput) {
-      this.resendMessage.emit();
+      this.resendMessage.emit(null);
     } else {
       this.sendMessage.emit({ message: this.messageInput, image: this.imagePreview });
       this.imagePreview = '';
