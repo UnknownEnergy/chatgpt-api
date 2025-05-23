@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component, output, viewChild } from '@angular/core';
 import { MatMenu, MatMenuTrigger } from '@angular/material/menu';
 import { Camera, CameraResultType } from '@capacitor/camera';
 
@@ -10,11 +10,11 @@ import { Camera, CameraResultType } from '@capacitor/camera';
   styleUrls: ['./image-camera.component.css'],
 })
 export class ImageCameraComponent {
-  @ViewChild('imageMenu') imageMenu: MatMenuTrigger; // Use ViewChild to access the mat-menu
-  imagePreview: string;
-  @Output() imagePreviewChanged: EventEmitter<string> = new EventEmitter();
+  readonly imageMenu = viewChild<MatMenuTrigger>('imageMenu');
 
-  constructor() {}
+  imagePreviewChanged = output<string>();
+
+  imagePreview: string;
 
   onFileSelected(event: any) {
     const file = event.target.files[0];
@@ -33,7 +33,7 @@ export class ImageCameraComponent {
     if (
       /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
     ) {
-      let main = this;
+      const main = this;
 
       async function takePicture() {
         const image = await Camera.getPhoto({
@@ -46,14 +46,14 @@ export class ImageCameraComponent {
         main.imagePreviewChanged.emit(main.imagePreview);
       }
 
-      takePicture();
+      void takePicture();
     } else if (navigator.mediaDevices?.getUserMedia) {
       navigator.mediaDevices
         .getUserMedia({ video: true })
         .then((stream) => {
           const video = document.createElement('video');
           video.srcObject = stream;
-          video.play();
+          void video.play();
 
           setTimeout(() => {
             const canvas = document.createElement('canvas');

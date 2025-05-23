@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import OpenAI from 'openai';
 import Anthropic from '@anthropic-ai/sdk';
 import { SettingsService } from '../../services/settings.service';
@@ -16,6 +16,8 @@ type Model = OpenAI.Model;
   styleUrls: ['./settings.component.css'],
 })
 export class SettingsComponent {
+  public readonly settings = inject(SettingsService);
+
   showPassword: boolean = false;
   showPassword2: boolean = false;
   showPassword3: boolean = false;
@@ -27,7 +29,7 @@ export class SettingsComponent {
   models: Model[] = [];
   isOpen: boolean = false;
 
-  constructor(public settings: SettingsService) {
+  constructor() {
     this.refreshModels();
     this.settings.refreshApiKey.subscribe(() => {
       this.refreshModels();

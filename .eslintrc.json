@@ -1,0 +1,64 @@
+{
+  "root": true,
+  "ignorePatterns": [
+    "projects/**/*"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "*.ts"
+      ],
+      "parser": "@typescript-eslint/parser",
+      "parserOptions": {
+        "project": [
+          "tsconfig.json"
+        ],
+        "sourceType": "module"
+      },
+      "plugins": [
+        "@typescript-eslint",
+        "@angular-eslint",
+        "prettier"
+      ],
+      "extends": [
+        "plugin:@angular-eslint/recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/recommended-requiring-type-checking",
+        "plugin:prettier/recommended"
+      ],
+      "rules": {
+        "@typescript-eslint/no-unsafe-member-access": "off",
+        "@typescript-eslint/no-unsafe-assignment": "off",
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-unsafe-call": "off",
+        "@typescript-eslint/no-unsafe-return": "off",
+        "@typescript-eslint/no-base-to-string": "off",
+        "@typescript-eslint/no-misused-promises": "off",
+        "@typescript-eslint/member-ordering": [
+          "warn",
+          {
+            "default": [
+              "private-readonly-field",
+              "decorated-field",
+              "public-instance-field",
+              "protected-instance-field",
+              "constructor",
+              "public-instance-method",
+              "private-instance-method"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": [
+        "*.html"
+      ],
+      "extends": [
+        "plugin:@angular-eslint/template/recommended"
+      ],
+      "parser": "@angular-eslint/template-parser",
+      "rules": {}
+    }
+  ]
+}

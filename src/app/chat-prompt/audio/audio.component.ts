@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, inject, OnInit, output } from '@angular/core';
 import * as RecordRTC from 'recordrtc';
 import OpenAI from 'openai';
 import { SettingsService } from '../../services/settings.service';
@@ -12,15 +12,16 @@ import { MatMenu, MatMenuTrigger } from '@angular/material/menu';
   styleUrls: ['./audio.component.css'],
 })
 export class AudioComponent implements OnInit {
-  @Output() audioTextUpdated = new EventEmitter<string>();
-  @Output() isLoading = new EventEmitter<boolean>();
+  private readonly settings = inject(SettingsService);
+
+  audioTextUpdated = output<string>();
+  isLoading = output<boolean>();
+
   recordIcon: string = 'bi bi-mic';
   recordText: string = 'Hold to record';
   private stream: MediaStream;
   private recordRTC: RecordRTC;
   private openAi;
-
-  constructor(private readonly settings: SettingsService) {}
 
   ngOnInit(): void {
     this.openAi = this.getOpenAi();
@@ -36,10 +37,10 @@ export class AudioComponent implements OnInit {
     });
   }
 
-  startRecording() {
+  async startRecording() {
     this.recordIcon = 'bi bi-stop-circle';
     this.recordText = 'Release to stop';
-    navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
+    await navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
       this.stream = stream;
       this.recordRTC = new RecordRTC(stream, {
         type: 'audio',

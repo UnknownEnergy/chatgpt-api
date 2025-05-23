@@ -8,8 +8,8 @@ describe('SaveAsPdfComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SaveAsPdfComponent ]
-    })
+    imports: [SaveAsPdfComponent]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(SaveAsPdfComponent);

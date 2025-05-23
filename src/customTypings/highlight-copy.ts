@@ -49,7 +49,7 @@ class CopyButtonPlugin {
       window.getComputedStyle(el).backgroundColor,
     );
 
-    button.onclick = () => {
+    button.onclick = async () => {
       if (!navigator.clipboard) return;
 
       let newText = text;
@@ -57,7 +57,7 @@ class CopyButtonPlugin {
         newText = this.hook(text, el) || text;
       }
 
-      navigator.clipboard
+      await navigator.clipboard
         .writeText(newText)
         .then(() => {
           button.innerHTML = 'Copied!';

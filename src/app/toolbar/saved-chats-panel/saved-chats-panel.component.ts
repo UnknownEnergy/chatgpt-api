@@ -1,4 +1,4 @@
-import { Component, HostListener, Renderer2 } from '@angular/core';
+import { Component, HostListener, inject, OnInit, Renderer2 } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MessageService } from '../../services/message.service';
 import { HighlightService } from '../../services/highlight.service';
@@ -30,7 +30,12 @@ import {
   ],
   styleUrls: ['./saved-chats-panel.component.css'],
 })
-export class SavedChatsPanelComponent {
+export class SavedChatsPanelComponent implements OnInit {
+  private readonly dialogRef = inject(MatDialogRef<SavedChatsPanelComponent>);
+  private readonly messageService = inject(MessageService);
+  private readonly highlightService = inject(HighlightService);
+  private readonly renderer = inject(Renderer2);
+
   steps: number;
   messageHistory: Chat[] = [];
   messageHistoryPaginated: Chat[] = [];
@@ -45,13 +50,6 @@ export class SavedChatsPanelComponent {
   deleteButtonWidth: string = '';
   descriptionWidth: string = '';
   confirmDeleteAllChats: boolean = false;
-
-  constructor(
-    private readonly dialogRef: MatDialogRef<SavedChatsPanelComponent>,
-    private readonly messageService: MessageService,
-    private readonly highlightService: HighlightService,
-    private readonly renderer: Renderer2,
-  ) {}
 
   ngOnInit(): void {
     this.renderer.addClass(document.body, 'indigo-pink');
@@ -150,6 +148,7 @@ export class SavedChatsPanelComponent {
     try {
       localStorage.setItem('chatHistory', JSON.stringify(this.messageHistory));
     } catch (e) {
+      console.log(e);
       alert('Chat history is full! Cant save! Please clear some space.');
     }
     this.close();
