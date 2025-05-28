@@ -7,12 +7,13 @@ import { NgClass } from '@angular/common';
 import { UsageComponent } from './usage/usage.component';
 import { SettingsComponent } from './settings/settings.component';
 import { ClearMessagesComponent } from './clear-messages/clear-messages.component';
+import {ApiKeySettingsComponent} from "./api-key-settings/api-key-settings.component";
 
 @Component({
   selector: 'app-toolbar',
   standalone: true,
   templateUrl: './toolbar.component.html',
-  imports: [NgClass, UsageComponent, SettingsComponent, ClearMessagesComponent],
+  imports: [NgClass, UsageComponent, SettingsComponent, ClearMessagesComponent, ApiKeySettingsComponent],
   styleUrls: ['./toolbar.component.css'],
 })
 export class ToolbarComponent implements OnInit {
@@ -20,12 +21,17 @@ export class ToolbarComponent implements OnInit {
   private readonly overlay = inject(OverlayContainer);
 
   isChatHeaderCollapsed: any = true;
+  isApiSettingsHeaderCollapsed: any = true;
   darkModeEnabled: boolean = false;
 
   constructor() {
     const savedIsChatHeaderCollapsed = localStorage.getItem('isChatHeaderCollapsed');
     if (savedIsChatHeaderCollapsed) {
       this.isChatHeaderCollapsed = JSON.parse(savedIsChatHeaderCollapsed);
+    }
+    const apiSettingsHeaderCollapsed = localStorage.getItem('isApiSettingsHeaderCollapsed');
+    if (apiSettingsHeaderCollapsed) {
+      this.isApiSettingsHeaderCollapsed = JSON.parse(apiSettingsHeaderCollapsed);
     }
     const savedIsDarkModeEnabled = localStorage.getItem('darkModeEnabled');
     if (savedIsDarkModeEnabled) {
@@ -34,12 +40,17 @@ export class ToolbarComponent implements OnInit {
 
     window.addEventListener('beforeunload', () => {
       localStorage.setItem('isChatHeaderCollapsed', JSON.stringify(this.isChatHeaderCollapsed));
+      localStorage.setItem('isApiSettingsHeaderCollapsed', JSON.stringify(this.isApiSettingsHeaderCollapsed));
     });
   }
 
   ngOnInit(): void {
     if (this.isChatHeaderCollapsed) {
       const chatHeader = document.getElementsByClassName('chat-settings')[0];
+      chatHeader.classList.toggle('collapsed');
+    }
+    if (this.isApiSettingsHeaderCollapsed) {
+      const chatHeader = document.getElementsByClassName('chat-api-key-settings')[0];
       chatHeader.classList.toggle('collapsed');
     }
     if (this.darkModeEnabled) {
@@ -50,9 +61,44 @@ export class ToolbarComponent implements OnInit {
   }
 
   toggleSettings() {
-    const chatHeader = document.getElementsByClassName('chat-settings')[0];
-    chatHeader.classList.toggle('collapsed');
-    this.isChatHeaderCollapsed = !this.isChatHeaderCollapsed;
+    const chatSettingsHeader = document.getElementsByClassName('chat-settings')[0];
+    const apiKeySettingsHeader = document.getElementsByClassName('chat-api-key-settings')[0];
+
+    if (this.isChatHeaderCollapsed) {
+      // Opening settings: close api key settings if open
+      this.isChatHeaderCollapsed = false;
+      this.isApiSettingsHeaderCollapsed = true;
+
+      chatSettingsHeader.classList.remove('collapsed');
+      apiKeySettingsHeader.classList.add('collapsed');
+    } else {
+      // Closing settings
+      this.isChatHeaderCollapsed = true;
+      chatSettingsHeader.classList.add('collapsed');
+    }
+
+    localStorage.setItem('isChatHeaderCollapsed', JSON.stringify(this.isChatHeaderCollapsed));
+    localStorage.setItem('isApiSettingsHeaderCollapsed', JSON.stringify(this.isApiSettingsHeaderCollapsed));
+  }
+
+  toggleApiKeySettings() {
+    const chatSettingsHeader = document.getElementsByClassName('chat-settings')[0];
+    const apiKeySettingsHeader = document.getElementsByClassName('chat-api-key-settings')[0];
+
+    if (this.isApiSettingsHeaderCollapsed) {
+      // Opening api key settings: close regular settings if open
+      this.isApiSettingsHeaderCollapsed = false;
+      this.isChatHeaderCollapsed = true;
+
+      apiKeySettingsHeader.classList.remove('collapsed');
+      chatSettingsHeader.classList.add('collapsed');
+    } else {
+      // Closing api key settings
+      this.isApiSettingsHeaderCollapsed = true;
+      apiKeySettingsHeader.classList.add('collapsed');
+    }
+
+    localStorage.setItem('isApiSettingsHeaderCollapsed', JSON.stringify(this.isApiSettingsHeaderCollapsed));
     localStorage.setItem('isChatHeaderCollapsed', JSON.stringify(this.isChatHeaderCollapsed));
   }
 

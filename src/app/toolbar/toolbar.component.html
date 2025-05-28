@@ -8,6 +8,14 @@
         <i class="bi bi-chevron-down"></i>
       }
     </button>
+    <button (click)="toggleApiKeySettings()" [ngClass]="{'collapsed': isApiSettingsHeaderCollapsed}" aria-label="Settings"
+            class="btn btn-primary toggle-button">
+      @if (!isApiSettingsHeaderCollapsed) {
+        <i class="bi bi-chevron-up"></i>
+      } @else {
+        <i class="bi bi-chevron-down"></i>
+      }
+    </button>
     <button (click)="toggleSavePanel()" aria-label="Chat history" class="btn btn-primary">
       <i class="bi bi-save"></i>
     </button>
@@ -26,3 +34,4 @@
 </div>
 
 <app-settings></app-settings>
+<app-api-key-settings></app-api-key-settings>

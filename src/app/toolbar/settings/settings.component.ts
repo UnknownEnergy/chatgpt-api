@@ -1,10 +1,10 @@
-import { Component, inject } from '@angular/core';
+import {Component, inject} from '@angular/core';
 import OpenAI from 'openai';
 import Anthropic from '@anthropic-ai/sdk';
-import { SettingsService } from '../../services/settings.service';
-import { Mistral } from '@mistralai/mistralai';
-import { FormsModule } from '@angular/forms';
-import { NgClass } from '@angular/common';
+import {SettingsService} from '../../services/settings.service';
+import {Mistral} from '@mistralai/mistralai';
+import {FormsModule} from '@angular/forms';
+import {NgClass} from '@angular/common';
 
 type Model = OpenAI.Model;
 
@@ -17,15 +17,6 @@ type Model = OpenAI.Model;
 })
 export class SettingsComponent {
   public readonly settings = inject(SettingsService);
-
-  showPassword: boolean = false;
-  showPassword2: boolean = false;
-  showPassword3: boolean = false;
-  showPassword4: boolean = false;
-  showPassword5: boolean = false;
-  showPassword6: boolean = false;
-  showPassword7: boolean = false;
-  showPassword8: boolean = false;
   models: Model[] = [];
   isOpen: boolean = false;
 
@@ -52,14 +43,14 @@ export class SettingsComponent {
     ])
       .then(
         ([
-          openAiModels,
-          anthropicModels,
-          geminiModels,
-          deepSeekModels,
-          mistralModels,
-          stepFunModels,
-          grokModels,
-        ]) => {
+           openAiModels,
+           anthropicModels,
+           geminiModels,
+           deepSeekModels,
+           mistralModels,
+           stepFunModels,
+           grokModels,
+         ]) => {
           const apiModels = [
             ...(openAiModels || []),
             ...(anthropicModels || []),
@@ -97,86 +88,6 @@ export class SettingsComponent {
         owned_by: 'gemini',
       };
     });
-  }
-
-  onTypeApiKey() {
-    this.refreshModels();
-    localStorage.setItem('apiKey', this.settings.apiKey);
-    this.settings.refreshApiKey.emit();
-  }
-
-  onTypeApiKeyAnthropic() {
-    this.refreshModels();
-    localStorage.setItem('apiKeyAnthropic', this.settings.apiKeyAnthropic);
-    this.settings.refreshApiKey.emit();
-  }
-
-  onTypeApiKeyGemini() {
-    this.refreshModels();
-    localStorage.setItem('apiKeyGemini', this.settings.apiKeyGemini);
-    this.settings.refreshApiKey.emit();
-  }
-
-  onTypeApiKeyDeepSeek() {
-    this.refreshModels();
-    localStorage.setItem('apiKeyDeepSeek', this.settings.apiKeyDeepSeek);
-    this.settings.refreshApiKey.emit();
-  }
-
-  onTypeApiKeyQwen() {
-    this.refreshModels();
-    localStorage.setItem('apiKeyQwen', this.settings.apiKeyQwen);
-    this.settings.refreshApiKey.emit();
-  }
-
-  onTypeApiKeyGrok() {
-    this.refreshModels();
-    localStorage.setItem('apiKeyGrok', this.settings.apiKeyGrok);
-    this.settings.refreshApiKey.emit();
-  }
-
-  onTypeApiKeyMistral() {
-    this.refreshModels();
-    localStorage.setItem('apiKeyMistral', this.settings.apiKeyMistral);
-    this.settings.refreshApiKey.emit();
-  }
-
-  onTypeApiKeyStepFun() {
-    this.refreshModels();
-    localStorage.setItem('apiKeyStepFun', this.settings.apiKeyStepFun);
-    this.settings.refreshApiKey.emit();
-  }
-
-  openApiKeyWebsite() {
-    window.open('https://platform.openai.com/account/api-keys', '_blank');
-  }
-
-  openApiKeyAnthrophicWebsite() {
-    window.open('https://console.anthropic.com/settings/keys', '_blank');
-  }
-
-  openApiKeyGeminiWebsite() {
-    window.open('https://aistudio.google.com/app/apikey', '_blank');
-  }
-
-  openApiKeyDeepSeekWebsite() {
-    window.open('https://platform.deepseek.com/api_keys', '_blank');
-  }
-
-  openApiKeyQwenWebsite() {
-    window.open('https://bailian.console.alibabacloud.com/?apiKey=1#/api-key', '_blank');
-  }
-
-  openApiKeyGrokWebsite() {
-    window.open('https://console.x.ai/', '_blank');
-  }
-
-  openApiKeyMistralWebsite() {
-    window.open('https://console.mistral.ai/api-keys/', '_blank');
-  }
-
-  openApiKeyStepFunWebsite() {
-    window.open('https://platform.stepfun.com/interface-key', '_blank');
   }
 
   onInputOnlyAllowPositiveIntegers($event: KeyboardEvent) {
@@ -386,43 +297,43 @@ export class SettingsComponent {
 
   private getPredefinedModels(): Model[] {
     return [
-      { id: 'o4-mini', object: 'model', created: 0, owned_by: 'openai' },
-      { id: 'o3', object: 'model', created: 0, owned_by: 'openai' },
-      { id: 'o3-mini', object: 'model', created: 0, owned_by: 'openai' },
-      { id: 'o1', object: 'model', created: 0, owned_by: 'openai' },
-      { id: 'o1-pro', object: 'model', created: 0, owned_by: 'openai' },
-      { id: 'gpt-4.1', object: 'model', created: 0, owned_by: 'openai' },
-      { id: 'gpt-4.1-mini', object: 'model', created: 0, owned_by: 'openai' },
-      { id: 'gpt-4.1-nano', object: 'model', created: 0, owned_by: 'openai' },
-      { id: 'gpt-4o', object: 'model', created: 0, owned_by: 'openai' },
-      { id: 'chatgpt-4o-latest', object: 'model', created: 0, owned_by: 'openai' },
-      { id: 'dall-e-3', object: 'model', created: 0, owned_by: 'openai' },
-      { id: 'claude-opus-4-20250514', object: 'model', created: 0, owned_by: 'anthropic' },
-      { id: 'claude-sonnet-4-20250514', object: 'model', created: 0, owned_by: 'anthropic' },
-      { id: 'claude-3-7-sonnet-latest', object: 'model', created: 0, owned_by: 'anthropic' },
-      { id: 'claude-3-5-sonnet-latest', object: 'model', created: 0, owned_by: 'anthropic' },
-      { id: 'claude-3-5-haiku-latest', object: 'model', created: 0, owned_by: 'anthropic' },
-      { id: 'deepseek-reasoner', object: 'model', created: 0, owned_by: 'deepseek' },
-      { id: 'deepseek-chat', object: 'model', created: 0, owned_by: 'deepseek' },
-      { id: 'deepseek-coder', object: 'model', created: 0, owned_by: 'deepseek' },
-      { id: 'gemini-2.5-pro-preview-05-06', object: 'model', created: 0, owned_by: 'gemini' },
-      { id: 'gemini-2.5-flash-preview-04-17', object: 'model', created: 0, owned_by: 'gemini' },
-      { id: 'gemini-2.0-flash', object: 'model', created: 0, owned_by: 'gemini' },
-      { id: 'qwen-max', object: 'model', created: 0, owned_by: 'qwen' },
-      { id: 'qwen-plus', object: 'model', created: 0, owned_by: 'qwen' },
-      { id: 'qwen-turbo', object: 'model', created: 0, owned_by: 'qwen' },
-      { id: 'grok-3-latest', object: 'model', created: 0, owned_by: 'grok' },
-      { id: 'grok-3-fast-latest', object: 'model', created: 0, owned_by: 'grok' },
-      { id: 'grok-3-mini-latest', object: 'model', created: 0, owned_by: 'grok' },
-      { id: 'grok-2-latest', object: 'model', created: 0, owned_by: 'grok' },
-      { id: 'grok-beta', object: 'model', created: 0, owned_by: 'grok' },
-      { id: 'codestral-latest', object: 'model', created: 0, owned_by: 'mistral' },
-      { id: 'mistral-large-latest', object: 'model', created: 0, owned_by: 'mistral' },
-      { id: 'mistral-small-latest', object: 'model', created: 0, owned_by: 'mistral' },
-      { id: 'step-1', object: 'model', created: 0, owned_by: 'step' },
-      { id: 'step-1-flash', object: 'model', created: 0, owned_by: 'step' },
-      { id: 'step-2', object: 'model', created: 0, owned_by: 'step' },
-      { id: 'step-2-mini', object: 'model', created: 0, owned_by: 'step' },
+      {id: 'o4-mini', object: 'model', created: 0, owned_by: 'openai'},
+      {id: 'o3', object: 'model', created: 0, owned_by: 'openai'},
+      {id: 'o3-mini', object: 'model', created: 0, owned_by: 'openai'},
+      {id: 'o1', object: 'model', created: 0, owned_by: 'openai'},
+      {id: 'o1-pro', object: 'model', created: 0, owned_by: 'openai'},
+      {id: 'gpt-4.1', object: 'model', created: 0, owned_by: 'openai'},
+      {id: 'gpt-4.1-mini', object: 'model', created: 0, owned_by: 'openai'},
+      {id: 'gpt-4.1-nano', object: 'model', created: 0, owned_by: 'openai'},
+      {id: 'gpt-4o', object: 'model', created: 0, owned_by: 'openai'},
+      {id: 'chatgpt-4o-latest', object: 'model', created: 0, owned_by: 'openai'},
+      {id: 'dall-e-3', object: 'model', created: 0, owned_by: 'openai'},
+      {id: 'claude-opus-4-20250514', object: 'model', created: 0, owned_by: 'anthropic'},
+      {id: 'claude-sonnet-4-20250514', object: 'model', created: 0, owned_by: 'anthropic'},
+      {id: 'claude-3-7-sonnet-latest', object: 'model', created: 0, owned_by: 'anthropic'},
+      {id: 'claude-3-5-sonnet-latest', object: 'model', created: 0, owned_by: 'anthropic'},
+      {id: 'claude-3-5-haiku-latest', object: 'model', created: 0, owned_by: 'anthropic'},
+      {id: 'deepseek-reasoner', object: 'model', created: 0, owned_by: 'deepseek'},
+      {id: 'deepseek-chat', object: 'model', created: 0, owned_by: 'deepseek'},
+      {id: 'deepseek-coder', object: 'model', created: 0, owned_by: 'deepseek'},
+      {id: 'gemini-2.5-pro-preview-05-06', object: 'model', created: 0, owned_by: 'gemini'},
+      {id: 'gemini-2.5-flash-preview-04-17', object: 'model', created: 0, owned_by: 'gemini'},
+      {id: 'gemini-2.0-flash', object: 'model', created: 0, owned_by: 'gemini'},
+      {id: 'qwen-max', object: 'model', created: 0, owned_by: 'qwen'},
+      {id: 'qwen-plus', object: 'model', created: 0, owned_by: 'qwen'},
+      {id: 'qwen-turbo', object: 'model', created: 0, owned_by: 'qwen'},
+      {id: 'grok-3-latest', object: 'model', created: 0, owned_by: 'grok'},
+      {id: 'grok-3-fast-latest', object: 'model', created: 0, owned_by: 'grok'},
+      {id: 'grok-3-mini-latest', object: 'model', created: 0, owned_by: 'grok'},
+      {id: 'grok-2-latest', object: 'model', created: 0, owned_by: 'grok'},
+      {id: 'grok-beta', object: 'model', created: 0, owned_by: 'grok'},
+      {id: 'codestral-latest', object: 'model', created: 0, owned_by: 'mistral'},
+      {id: 'mistral-large-latest', object: 'model', created: 0, owned_by: 'mistral'},
+      {id: 'mistral-small-latest', object: 'model', created: 0, owned_by: 'mistral'},
+      {id: 'step-1', object: 'model', created: 0, owned_by: 'step'},
+      {id: 'step-1-flash', object: 'model', created: 0, owned_by: 'step'},
+      {id: 'step-2', object: 'model', created: 0, owned_by: 'step'},
+      {id: 'step-2-mini', object: 'model', created: 0, owned_by: 'step'},
     ];
   }
 

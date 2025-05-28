@@ -1,0 +1,238 @@
+.chat-api-key-settings {
+  flex-direction: column;
+  flex-shrink: 0;
+  align-items: center;
+  padding: 10px 20px;
+  color: var(--textColor);
+  background-color: var(--bgColor);
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom: 1px solid var(--border);
+  margin: 0 10px;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.chat-api-key-settings::-webkit-scrollbar {
+  width: 8px;
+}
+
+.chat-api-key-settings::-webkit-scrollbar-track {
+  background: var(--bgColorInput);
+  border-radius: 4px;
+}
+
+.chat-api-key-settings::-webkit-scrollbar-thumb {
+  background: #00A67E;
+  border-radius: 4px;
+}
+
+.chat-api-key-settings::-webkit-scrollbar-thumb:hover {
+  background: #005a44;
+}
+
+.chat-api-key-settings.collapsed {
+  display: none;
+}
+
+.input-api {
+  max-width: 50%;
+  color: var(--textColor);
+  background-color: var(--bgColorInput);
+}
+
+.api-button {
+  margin-top: 2px;
+  margin-bottom: 14px;
+}
+
+.p-left-column {
+  min-width: 140px;
+}
+
+.input-randomness {
+  color: var(--textColor);
+  background-color: var(--bgColorInput);
+}
+
+.input-max-tokens {
+  color: var(--textColor);
+  background-color: var(--bgColorInput);
+  text-align: left;
+  width: 150px;
+  max-width: 150px;
+}
+
+button {
+  margin-bottom: 5px;
+  margin-left: 2px;
+  margin-right: 2px;
+  padding: 5px 10px;
+  background-color: #00A67E;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+button:hover {
+  background-color: #005a44;
+}
+
+.btn-primary {
+  background-color: #00A67E;
+}
+
+input {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+  outline: none;
+}
+
+/*Chrome*/
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  input[type='range'] {
+    overflow: hidden;
+    -webkit-appearance: none;
+  }
+
+  input[type='range']::-webkit-slider-runnable-track {
+    height: 10px;
+    -webkit-appearance: none;
+    background-color: #00A67E;
+    margin-top: -1px;
+  }
+
+  input[type='range']::-webkit-slider-thumb {
+    width: 12px;
+    height: 12px;
+    -webkit-appearance: none;
+    cursor: ew-resize;
+    background-color: #005a44;
+  }
+
+}
+
+/** FF*/
+input[type="range"]::-moz-range-progress {
+  background-color: #00A67E;
+}
+
+input[type="range"]::-moz-range-track {
+  background-color: #00A67E;
+}
+
+/* IE*/
+input[type="range"]::-ms-fill-lower {
+  background-color: #00A67E;
+}
+
+input[type="range"]::-ms-fill-upper {
+  background-color: #00A67E;
+}
+
+input[type="range"] {
+  max-width: 300px;
+}
+
+@media (max-width: 576px) {
+  select {
+    font-size: 12px;
+    font-weight: bold;
+  }
+
+  .chat-api-key-settings {
+    padding: 5px 10px;
+  }
+
+  .input-api {
+    max-width: 100%;
+  }
+
+  .api-button {
+    margin-top: 0;
+    margin-bottom: 5px;
+  }
+
+  .p-left-column {
+    min-width: 120px;
+    font-size: 14px;
+  }
+
+  .input-max-tokens {
+    width: 100px;
+    max-width: 100px;
+  }
+
+  button {
+    font-size: 12px;
+    padding: 3px 8px;
+  }
+
+  input {
+    padding: 5px;
+    font-size: 14px;
+  }
+
+  input[type="range"] {
+    max-width: 200px;
+  }
+}
+
+.custom-dropdown {
+  position: relative;
+  display: inline-block;
+  width: 500px;
+}
+
+.dropdown-header {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  color: var(--textColor);
+  background-color: var(--bgColorInput);
+  cursor: pointer;
+}
+
+.dropdown-list {
+  position: absolute;
+  z-index: 1;
+  color: var(--textColor);
+  background-color: var(--bgColorInput);
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-top: 5px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.dropdown-list li {
+  cursor: pointer;
+}
+
+.dropdown-list li:hover {
+  background-color: #f0f0f0;
+}
+
+.highlighted-model {
+  background-color: var(--message-right);
+  font-weight: bold;
+}
+
+.api-label {
+  display: inline-block;
+  width: 100px; /* fixed width for alignment */
+  font-weight: 600;
+  margin-right: 8px;
+  text-align: right;
+}
