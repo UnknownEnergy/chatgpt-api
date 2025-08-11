@@ -191,7 +191,8 @@ export class AppComponent implements OnInit {
   }
 
   private callOpenAIAPI(openai: OpenAI, message: string, image: string) {
-    const isCompletionTokensModel = /o\d+/.test(this.settings.selectedModel);
+    const model = this.settings.selectedModel;
+    const isCompletionTokensModel = /o\d+/.test(model) || model.startsWith('gpt-5');
 
     if (this.settings.selectedModel.includes('dall-e')) {
       return openai.images.generate({

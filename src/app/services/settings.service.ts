@@ -13,7 +13,7 @@ export class SettingsService {
   apiKeyGrok: string = '';
   apiKeyMistral: string = '';
   apiKeyStepFun: string = '';
-  selectedModel: string = 'gpt-4.1';
+  selectedModel: string = 'gpt-5';
   temperature: number = 1.0;
   maxTokens: number = 2048;
   reasoningEffort: string = 'medium';
