@@ -59,14 +59,35 @@ export class AppComponent implements OnInit {
     });
   }
 
-  sendMessage(message: string, image: string) {
-    if (!message) {
+  async getFileMessageStr(file?: File): Promise<string> {
+    if (!file) return '';
+    return new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const base64 = reader.result as string; // e.g. "data:application/pdf;base64,JVBERi0xL..."
+        const base64Content = base64.split(',')[1]; // remove prefix, get pure base64
+        resolve(`[File uploaded: ${file.name}, base64: ${base64Content}]`);
+      };
+      reader.onerror = (err) => reject(err);
+      reader.readAsDataURL(file);
+    });
+  }
+
+  async sendMessage(message: string, image: string, file?: File | null) {
+    if (!message && !image && !file) {
       return;
     }
 
-    this.updateChatHistory(message, image);
+    let fileMessageStr = '';
+    if (file) {
+      fileMessageStr = await this.getFileMessageStr(file);
+    }
+
+    const fullMessage = message + (fileMessageStr ? '\n' + fileMessageStr : '');
+
+    this.updateChatHistory(fullMessage, image);
     this.saveSettings();
-    this.addUserMessage(message, image);
+    this.addUserMessage(fullMessage, image);
 
     this.chatContainer().chatbotTyping = true;
     setTimeout(() => {

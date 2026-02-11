@@ -33,25 +33,33 @@ export class ChatPromptComponent implements AfterViewInit {
 
   readonly messageInputRef = viewChild.required<ElementRef>('messageInputArea');
 
-  sendMessage = output<{ message: string; image: string }>();
-  resendMessage = output<any>();
+  sendMessage = output<{ message: string; image?: string; file?: File | null }>();
+  resendMessage = output<void>();
 
-  isLoading: boolean;
-  messageInput: string = '';
-  imagePreview: string = '';
+  isLoading = false;
+  messageInput = '';
+  imagePreview = '';
+  uploadedFile: File | null = null;
 
   ngAfterViewInit() {
     this.messageInputRef().nativeElement.focus();
   }
 
   onSendClick() {
-    if (!this.messageInput) {
-      this.resendMessage.emit(null);
-    } else {
-      this.sendMessage.emit({ message: this.messageInput, image: this.imagePreview });
-      this.imagePreview = '';
-      this.messageInput = '';
+    if (!this.messageInput && !this.imagePreview && !this.uploadedFile) {
+      this.resendMessage.emit();
+      return;
     }
+    this.sendMessage.emit({
+      message: this.messageInput,
+      image: this.imagePreview,
+      file: this.uploadedFile,
+    });
+    // clear inputs after send
+    this.messageInput = '';
+    this.imagePreview = '';
+    this.uploadedFile = null;
+    this.cdr.detectChanges();
   }
 
   changeLoading(loading: boolean) {
@@ -74,5 +82,40 @@ export class ChatPromptComponent implements AfterViewInit {
   onEnterSend($event) {
     $event.preventDefault();
     this.onSendClick();
+  }
+
+  onFileUploadSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.uploadedFile = input.files[0];
+      // Optionally, you can generate a preview or filename display here
+      this.cdr.detectChanges();
+    }
+  }
+
+  isDragOver = false;
+
+  onDragOver(event: DragEvent) {
+    event.preventDefault();
+    this.isDragOver = true;
+    this.cdr.detectChanges();
+  }
+
+  onDragLeave(event: DragEvent) {
+    event.preventDefault();
+    this.isDragOver = false;
+    this.cdr.detectChanges();
+  }
+
+  onFileDrop(event: DragEvent) {
+    event.preventDefault();
+    this.isDragOver = false;
+
+    if (event.dataTransfer?.files && event.dataTransfer.files.length > 0) {
+      this.uploadedFile = event.dataTransfer.files[0];
+      this.cdr.detectChanges();
+
+      event.dataTransfer.clearData();
+    }
   }
 }
