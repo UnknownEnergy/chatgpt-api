@@ -13,6 +13,7 @@ import { ImageCameraComponent } from './image-camera/image-camera.component';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { FormsModule } from '@angular/forms';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-chat-prompt-component',
@@ -24,6 +25,7 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
     CdkTextareaAutosize,
     FormsModule,
     MatProgressSpinner,
+    NgIf,
   ],
   styleUrls: ['./chat-prompt.component.css'],
 })
@@ -117,5 +119,18 @@ export class ChatPromptComponent implements AfterViewInit {
 
       event.dataTransfer.clearData();
     }
+  }
+
+  downloadFile() {
+    if (!this.uploadedFile) return;
+
+    const url = window.URL.createObjectURL(this.uploadedFile);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = this.uploadedFile.name;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
   }
 }

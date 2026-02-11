@@ -28,16 +28,30 @@
       [class.dragover]="isDragOver"
     ></textarea>
 
-    <div class="d-flex send-buttons">
-      <button (click)="onSendClick()" aria-label="Send"><i
-        [class]="messageInput ? 'bi bi-send' : 'bi bi-arrow-repeat'"></i></button>
+    <div class="d-flex send-buttons" style="align-items: center;">
+      <button (click)="onSendClick()" aria-label="Send">
+        <i [class]="messageInput ? 'bi bi-send' : 'bi bi-arrow-repeat'"></i>
+      </button>
+
+      <!-- File icon shown if uploadedFile is present -->
+      <button
+        *ngIf="uploadedFile"
+        (click)="downloadFile()"
+        title="Download attached file"
+        type="button"
+        aria-label="Download file"
+      >
+        <i class="bi bi-file-earmark"></i>
+      </button>
+
       <app-image-camera-component (imagePreviewChanged)="updateImagePreview($event)"></app-image-camera-component>
+
       <input type="file" id="fileUploadInput" (change)="onFileUploadSelected($event)" />
       <label for="fileUploadInput" class="upload-file-label" title="Upload file">
         <i class="bi bi-upload"></i>
       </label>
-      <app-audio-component (audioTextUpdated)="updateMessage($event)"
-                           (isLoading)="changeLoading($event)"></app-audio-component>
+
+      <app-audio-component (audioTextUpdated)="updateMessage($event)" (isLoading)="changeLoading($event)"></app-audio-component>
     </div>
   </div>
 </div>
